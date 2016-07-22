@@ -3,17 +3,32 @@ html(lang="ja")
   head
     meta(charset="utf-8")
     title Suggestrap Demo
+    link(rel="stylesheet" type="text/css" href="../css/suggestrap.css")
+    style.
+      h1{
+        font-weight: bold;
+      }
+      body{
+        background-color: #f2f9ff;
+      }
+      .container{
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0px 15px;
+        width: 500px;
+      }
     script(src="../js/suggestrap.js")
     script.
       window.onload = function(){
         suggestrap = new window.Suggestrap({
           target: "name",
           url: "http://localhost:3000/search_json/%QUERY",
+          key: "name",
           minlength: 2
         });
         console.log(suggestrap);
       }
   body
-    h1 Suggestrapデモ
-    label Name
-    input#name(type="text")
+    .container
+      h1 Suggestrapデモ
+      input#name(type="text")
