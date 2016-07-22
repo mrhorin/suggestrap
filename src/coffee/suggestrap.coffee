@@ -1,7 +1,7 @@
 _ = require 'underscore'
 
 class window.Suggestrap
-  # keyup だとローマ字入力する度に発火してJSONリクエストしまう問題
+  # サジェストの表示を切り替えれない不具合
   # サジェスト表示時に上下入力で選択できるように
   # れどめ書く
 
@@ -12,13 +12,19 @@ class window.Suggestrap
     @setEventListener()
     # @targetFormのkeyupイベントハンドラ
     @keyupHandler = _.debounce((event)=>
-      _jsonUrl = @getJsonUrl(event.target.value)
-      @fetchSuggestJson _jsonUrl, (json)=>
-        @showSuggest json
-    , 300)
+      # 文字数がminlength以上か
+      if event.target.value.length >= @option["minlength"]
+        _jsonUrl = @getJsonUrl(event.target.value)
+        @fetchSuggestJson _jsonUrl, (json)=>
+          @showSuggest json
+      else
+        @suggest.style = "display: none;"
+        @removeSuggest()
+    , 500)
 
   setSelector: ->
     @targetForm = document.getElementById @option["target"]
+    @targetForm.autocomplete = "off"
 
   setEventListener: ->
     # フォーム入力時
@@ -26,9 +32,7 @@ class window.Suggestrap
       keyPtn = new RegExp "(Up)|(Down)|(Left)|(Right)|(Shift)|(Control)", "ig"
       # 無効なキー入力じゃないか
       if event.keyIdentifier.match(keyPtn) == null
-        # 文字数がminlength以上か
-        if event.target.value.length >= @option["minlength"]
-          @keyupHandler(event)
+        @keyupHandler(event)
     # フォームのフォーカス時
     @targetForm.addEventListener "focus", (event)=>
       if event.target.value.length >= @option["minlength"]
