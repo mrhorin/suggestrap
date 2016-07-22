@@ -1,5 +1,4 @@
 class window.Suggestrap
-  # 矢印でもイベントが発生するから keyup 以外に
   # keyup だとローマ字入力する度に発火してJSONリクエストしまう問題
   # サジェスト表示時に上下入力で選択できるように
   # れどめ書く
@@ -16,11 +15,14 @@ class window.Suggestrap
   setEventListener: ->
     # フォーム入力時
     @targetForm.addEventListener "keyup", (event)=>
-      if event.target.value.length >= @option["minlength"]
-        _jsonUrl = @getJsonUrl(event.target.value)
-        # _jsonUrlにajaxでリクエスト
-        @fetchSuggestJson _jsonUrl, (json)=>
-          @showSuggest json
+      keyPtn = new RegExp "(Up)|(Down)|(Left)|(Right)|(Shift)|(Control)", "ig"
+      # 無効なキー入力じゃないか
+      if event.keyIdentifier.match(keyPtn) == null
+        # 文字数がminlength以上か
+        if event.target.value.length >= @option["minlength"]
+          _jsonUrl = @getJsonUrl(event.target.value)
+          @fetchSuggestJson _jsonUrl, (json)=>
+            @showSuggest json
     # フォームのフォーカス時
     @targetForm.addEventListener "focus", (event)=>
       if event.target.value.length >= @option["minlength"]
