@@ -9,10 +9,18 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "browserify": "^13.0.1",
     "gulp": "^3.9.1",
     "gulp-coffee": "^2.3.2",
     "gulp-jade": "^1.1.0",
     "gulp-plumber": "^1.1.0",
-    "gulp-sass": "^2.3.2"
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^1.5.4",
+    "licensify": "^3.1.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "underscore": "^1.8.3"
   }
 }

@@ -1,3 +1,5 @@
+_ = require 'underscore'
+
 class window.Suggestrap
   # keyup だとローマ字入力する度に発火してJSONリクエストしまう問題
   # サジェスト表示時に上下入力で選択できるように
