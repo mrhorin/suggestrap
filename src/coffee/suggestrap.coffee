@@ -10,6 +10,12 @@ class window.Suggestrap
     @setSelector()
     @createSuggest()
     @setEventListener()
+    # @targetFormのkeyupイベントハンドラ
+    @keyupHandler = _.debounce((event)=>
+      _jsonUrl = @getJsonUrl(event.target.value)
+      @fetchSuggestJson _jsonUrl, (json)=>
+        @showSuggest json
+    , 300)
 
   setSelector: ->
     @targetForm = document.getElementById @option["target"]
@@ -22,9 +28,7 @@ class window.Suggestrap
       if event.keyIdentifier.match(keyPtn) == null
         # 文字数がminlength以上か
         if event.target.value.length >= @option["minlength"]
-          _jsonUrl = @getJsonUrl(event.target.value)
-          @fetchSuggestJson _jsonUrl, (json)=>
-            @showSuggest json
+          @keyupHandler(event)
     # フォームのフォーカス時
     @targetForm.addEventListener "focus", (event)=>
       if event.target.value.length >= @option["minlength"]
