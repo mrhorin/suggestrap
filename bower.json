@@ -13,5 +13,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {},
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
 }
