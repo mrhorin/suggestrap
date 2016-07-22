@@ -3,7 +3,16 @@ html(lang="ja")
   head
     meta(charset="utf-8")
     title Suggestrap Demo
-    meta(name="description", content="説明")
+    script(src="../js/suggestrap.js")
+    script.
+      window.onload = function(){
+        suggestrap = new window.Suggestrap({
+          target: "name",
+          url: "http://localhost:3000/search_json/%QUERY",
+          minlength: 2
+        });
+        console.log(suggestrap);
+      }
   body
     h1 Suggestrapデモ
     label Name
