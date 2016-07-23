@@ -1,7 +1,6 @@
 _ = require 'underscore'
 
 class window.Suggestrap
-  # 一回サジェストをしてクリックで選択した後にblurして再度focusした時にクリック前のサジェストが表示される不具合
   # サジェスト表示時に上下入力でサジェストを選択できるように
   # れどめ書く
 
@@ -41,12 +40,11 @@ class window.Suggestrap
         @keyupHandler(event)
     # フォームのフォーカス時
     @targetForm.addEventListener "focus", (event)=>
-      if event.target.value.length >= @option["minlength"]
-        @suggest.style.display = "block"
+      @keyupHandler(event)
     # フォームのフォーカスがはずれた時
     @targetForm.addEventListener "blur", (event)=>
+      # @suggest.childNodesのclickイベント発火を優先させる為にdelay
       _.delay(()=>
-        console.log @suggest
         @suggest.style.display = "none"
       , 200)
 
