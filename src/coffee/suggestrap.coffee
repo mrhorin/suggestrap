@@ -1,14 +1,13 @@
 _ = require 'underscore'
 
 class window.Suggestrap
-  # サジェストの表示を切り替えれない不具合
-  # サジェスト表示時に上下入力で選択できるように
+  # 一回サジェストをしてクリックで選択した後にblurして再度focusした時にクリック前のサジェストが表示される不具合
+  # サジェスト表示時に上下入力でサジェストを選択できるように
   # れどめ書く
 
   constructor: (option)->
     @option = _optionInitialize(option)
     @setSelector()
-    @createSuggest()
     @setEventListener()
     # @targetFormのkeyupイベントハンドラ
     @keyupHandler = _.debounce((event)=>
@@ -18,13 +17,20 @@ class window.Suggestrap
         @fetchSuggestJson _jsonUrl, (json)=>
           @showSuggest json
       else
-        @suggest.style = "display: none;"
+        @suggest.style.display = "none"
         @removeSuggest()
-    , 500)
+    , 400)
 
   setSelector: ->
+    # サジェストしたいinputフォーム
     @targetForm = document.getElementById @option["target"]
     @targetForm.autocomplete = "off"
+    # サジェスト表示用エレメント
+    @suggest = document.createElement "ul"
+    @suggest.id = "suggestrap-space"
+    @suggest.style.display = "none"
+    # @suggestを@targetFormの次に追加
+    @targetForm.parentNode.insertBefore @suggest, @targetForm.nextSibling
 
   setEventListener: ->
     # フォーム入力時
@@ -36,10 +42,13 @@ class window.Suggestrap
     # フォームのフォーカス時
     @targetForm.addEventListener "focus", (event)=>
       if event.target.value.length >= @option["minlength"]
-        @suggest.style = "display: block;"
+        @suggest.style.display = "block"
     # フォームのフォーカスがはずれた時
     @targetForm.addEventListener "blur", (event)=>
-      @suggest.style = "display: none;"
+      _.delay(()=>
+        console.log @suggest
+        @suggest.style.display = "none"
+      , 200)
 
   # サジェスト用JSONをjsonUrlから取得
   fetchSuggestJson: (jsonUrl, callbackFunc)->
@@ -66,21 +75,14 @@ class window.Suggestrap
       _suggest_li.innerHTML = val[@option["key"]]
       _suggest_li.addEventListener "click", (event)=>
         @targetForm.value = event.target.innerHTML
-        @suggest.style = "display: none;"
+        @suggest.style.display = "none"
       @suggest.appendChild _suggest_li
-    @suggest.style = "display: block;"
+    @suggest.style.display = "block"
 
   # @suggestの子ノードを全削除
   removeSuggest: ()->
     for node, index in @suggest.childNodes
       @suggest.removeChild @suggest.childNodes[0]
-
-  # @suggestを生成
-  createSuggest: ->
-    @suggest = document.createElement "ul"
-    @suggest.id = "suggestrap-space"
-    @suggest.style = "display: none;"
-    @targetForm.parentNode.insertBefore @suggest, @targetForm.nextSibling
 
   # optionの初期化
   _optionInitialize = (option)->
