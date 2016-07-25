@@ -1,18 +1,18 @@
 _ = require 'underscore'
 
 class window.Suggestrap
-  # サジェスト表示時に上下入力でサジェストを選択できるように
   # れどめ書く
 
-  constructor: (option)->
-    @option = _optionInitialize(option)
+  constructor: (req, option)->
+    option = option || {}
+    @args = _argsInitialize(req, option)
     @suggestInfoInitialize()
     @setSelector()
     @setEventListener()
     # @targetFormのkeyupイベントハンドラ
     @keyupHandler = _.debounce((event)=>
       # 文字数がminlength以上か
-      if event.target.value.length >= @option["minlength"]
+      if event.target.value.length >= @args["minlength"]
         _jsonUrl = @getJsonUrl(event.target.value)
         # JSONの取得
         @fetchSuggestJson _jsonUrl, (json)=>
@@ -25,7 +25,7 @@ class window.Suggestrap
 
   setSelector: ->
     # サジェストしたいinputフォーム
-    @targetForm = document.getElementById @option["target"]
+    @targetForm = document.getElementById @args["target"]
     @targetForm.autocomplete = "off"
     # サジェスト表示用エレメント
     @suggest = document.createElement "ul"
@@ -60,7 +60,7 @@ class window.Suggestrap
 
   # JSON取得URLを取得
   getJsonUrl: (targetValue)->
-    return @option["url"].replace(///#{@option["wildcard"]}///gi, targetValue)
+    return @args["url"].replace(///#{@args["wildcard"]}///gi, targetValue)
 
   # サジェスト用JSONをjsonUrlから取得
   fetchSuggestJson: (jsonUrl, callbackFunc)->
@@ -80,7 +80,7 @@ class window.Suggestrap
     # json要素の数だけelementを生成して追加
     for val in json
       _suggest_li = document.createElement "li"
-      _suggest_li.innerHTML = val[@option["key"]]
+      _suggest_li.innerHTML = val[@args["key"]]
       # サジェストclick時
       _suggest_li.addEventListener "click", (event)=>
         @targetForm.value = event.target.innerHTML
@@ -138,17 +138,19 @@ class window.Suggestrap
   suggestInfoInitialize: ()->
     @suggestInfo = { show: false, length: 0, currentIndex: -1 }
 
-  # optionの初期化
-  _optionInitialize = (option)->
+  # コンストラクタ引数の初期化
+  _argsInitialize = (req, option)->
     # optionが未指定の場合デフォルト値を設定
-    unless option["target"]?
-      throw "target is not found. This option is necessary."
-    unless option["url"]?
-      throw "url is not found. This option is necessary."
-    unless option["key"]?
-      throw "key is not found. This option is necessary."
-    unless option["wildcard"]?
-      option["wildcard"] = "%QUERY"
-    unless option["minlength"]?
-      option["minlength"] = 2
-    return option
+    unless req["target"]?
+      throw "target is not found. This argument is necessary."
+    unless req["url"]?
+      throw "url is not found. This argument is necessary."
+    unless req["key"]?
+      throw "key is not found. This argument is necessary."
+    args =
+      target: req["target"]
+      url: req["url"]
+      key: req["key"]
+    args["wildcard"] = option["wildcard"] || "%QUERY"
+    args["minlength"] = option["minlength"] || 2
+    return args
