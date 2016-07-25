@@ -13,7 +13,7 @@
     text-align: left;
     padding: 1px 6px;
   }
-  li:hover{
+  li.active, li:hover{
     cursor: pointer;
     background-color: #4b89bf;
     color: #fff;

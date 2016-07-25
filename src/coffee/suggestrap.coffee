@@ -6,6 +6,7 @@ class window.Suggestrap
 
   constructor: (option)->
     @option = _optionInitialize(option)
+    @suggestInfoInitialize()
     @setSelector()
     @setEventListener()
     # @targetFormのkeyupイベントハンドラ
@@ -36,14 +37,17 @@ class window.Suggestrap
   setEventListener: ->
     # フォーム入力時
     @targetForm.addEventListener "keyup", (event)=>
-      # 無効なキー入力
-      disabledKeyPtn = new RegExp "(Up)|(Down)|(Left)|(Right)|(Shift)|(Control)", "ig"
+      # 無効なキー入力パターン
+      disabledKeyPtn = new RegExp "(Up)|(Down)|(Left)|(Right)|(Shift)|(Control)|(Enter)", "ig"
       if event.keyIdentifier.match(disabledKeyPtn) == null
+        # 有効なキー入力時
         @keyupHandler(event)
       else if event.keyIdentifier.match(/Up/ig)
-        console.log "Up"
+        @upSelectSeggest()
       else if event.keyIdentifier.match(/Down/ig)
-        console.log "Down"
+        @downSelectSeggest()
+      else if event.keyIdentifier.match(/Enter/ig)
+        @hideSuggest()
     # フォームのフォーカス時
     @targetForm.addEventListener "focus", (event)=>
       @keyupHandler(event)
@@ -73,7 +77,7 @@ class window.Suggestrap
   # @suggestに追加
   addSuggest: (json)->
     @removeSuggest()
-    # json要素の数だけelementを生成して追加するループ
+    # json要素の数だけelementを生成して追加
     for val in json
       _suggest_li = document.createElement "li"
       _suggest_li.innerHTML = val[@option["key"]]
@@ -82,19 +86,57 @@ class window.Suggestrap
         @targetForm.value = event.target.innerHTML
         @hideSuggest()
       @suggest.appendChild _suggest_li
+    @suggestInfo["length"] = @suggest.childNodes.length
+    @suggestInfo["currentIndex"] = -1
 
   # @suggestの子ノードを全削除
   removeSuggest: ()->
     for node, index in @suggest.childNodes
       @suggest.removeChild @suggest.childNodes[0]
+    @suggestInfoInitialize()
 
   # @suggestを表示
   showSuggest: ()->
     @suggest.style.display = "block"
+    @suggestInfo["show"] = true
 
   # @suggestを非表示
   hideSuggest: ()->
     @suggest.style.display = "none"
+    @suggestInfo["show"] = false
+
+  # 選択中のサジェストを上へ
+  upSelectSeggest: ()->
+    if @suggestInfo["show"]
+      if @suggestInfo["currentIndex"] > -1
+        @suggestInfo["currentIndex"] = @suggestInfo["currentIndex"] - 1
+      else
+        @suggestInfo["currentIndex"] = @suggestInfo["length"] - 1
+      @activeSelectSuggest()
+
+  # 選択中のサジェストを下へ
+  downSelectSeggest: ()->
+    if @suggestInfo["show"]
+      if @suggestInfo["currentIndex"] == @suggestInfo["length"] - 1
+        @suggestInfo["currentIndex"] = -1
+      else
+        @suggestInfo["currentIndex"] = @suggestInfo["currentIndex"] + 1
+      @activeSelectSuggest()
+
+  # 選択中のサジェストをアクティブに
+  activeSelectSuggest: ()->
+    for node in @suggest.childNodes
+      node.className = ""
+    switch @suggestInfo["currentIndex"]
+      when -1
+        break
+      else
+        @suggest.childNodes[@suggestInfo["currentIndex"]].className = "active"
+        @targetForm.value =  @suggest.childNodes[@suggestInfo["currentIndex"]].innerHTML
+
+  # サジェスト情報の初期化
+  suggestInfoInitialize: ()->
+    @suggestInfo = { show: false, length: 0, currentIndex: -1 }
 
   # optionの初期化
   _optionInitialize = (option)->
