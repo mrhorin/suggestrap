@@ -1,7 +1,6 @@
 _ = require 'underscore'
 
 class window.Suggestrap
-  # れどめ書く
 
   constructor: (req, option)->
     option = option || {}
