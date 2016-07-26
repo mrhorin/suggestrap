@@ -46,7 +46,11 @@ class window.Suggestrap
       else if event.key.match(/ArrowDown/ig)
         @downSelectSeggest()
       else if event.key.match(/Enter/ig)
-        @hideSuggest()
+        if @suggestInfo["show"]
+          # サジェスト表示時は非表示に切り替え
+          @hideSuggest()
+        else
+          @keyupHandler(event)
     # フォームのフォーカス時
     @targetForm.addEventListener "focus", (event)=>
       @keyupHandler(event)

@@ -50,7 +50,11 @@
           } else if (event.key.match(/ArrowDown/ig)) {
             return _this.downSelectSeggest();
           } else if (event.key.match(/Enter/ig)) {
-            return _this.hideSuggest();
+            if (_this.suggestInfo["show"]) {
+              return _this.hideSuggest();
+            } else {
+              return _this.keyupHandler(event);
+            }
           }
         };
       })(this));
