@@ -50,7 +50,7 @@
           } else if (event.key.match(/ArrowDown/ig)) {
             return _this.downSelectSeggest();
           } else if (event.key.match(/Enter/ig)) {
-            if (_this.suggestInfo["show"]) {
+            if (_this.suggestInfo["show"] && _this.suggestInfo["currentIndex"] !== -1) {
               return _this.hideSuggest();
             } else {
               return _this.keyupHandler(event);

@@ -46,7 +46,7 @@ class window.Suggestrap
       else if event.key.match(/ArrowDown/ig)
         @downSelectSeggest()
       else if event.key.match(/Enter/ig)
-        if @suggestInfo["show"]
+        if @suggestInfo["show"] && @suggestInfo["currentIndex"] != -1
           # サジェスト表示時は非表示に切り替え
           @hideSuggest()
         else
