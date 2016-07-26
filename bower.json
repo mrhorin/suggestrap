@@ -3,10 +3,10 @@
   "authors": [
     "mrhorin <u0813mb@gmail.com>"
   ],
-  "description": "",
-  "main": "",
+  "description": "The UI component of sugestrap is able to show suggestions from JSON.",
+  "main": "dist/suggestrap.main.min.js",
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/mrhorin/suggestrap",
   "ignore": [
     "**/.*",
     "node_modules",
