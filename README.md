@@ -1,5 +1,10 @@
 # suggestrap
 The UI component of sugestrap is able to show suggestions from JSON.
+## Install
+Install with [Bower](https://bower.io/).
+```
+bower install suggestrap
+```
 ## Usage
 ```html
 <input id="target" type="text">
