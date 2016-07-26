@@ -47,3 +47,18 @@ The second argument hash in Suggestrap object is optional item.
 - `wildcard`: Request params's wild card for JSON. Defaults to '%QUERY'.
 
 If you don't understand about this README.md document, there are demo.html file in './dist/html/' directory, please show this file from your browser.
+## Customize
+If you want to customize Suggestions css style, you would override css styles on '#suggestrap-space' and list elements.
+```css
+/* For example */
+#suggestrap-space {
+  background-color: #fefefe;
+}
+#suggestrap-space li {
+  font-size: 15px;
+}
+#suggestrap-space li.active, #suggestrap-space li:hover {
+  background-color: #5bc0de;
+}
+
+```
