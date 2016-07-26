@@ -42,14 +42,14 @@
       this.targetForm.addEventListener("keyup", (function(_this) {
         return function(event) {
           var disabledKeyPtn;
-          disabledKeyPtn = new RegExp("(Up)|(Down)|(Left)|(Right)|(Shift)|(Control)|(Enter)", "ig");
-          if (event.keyIdentifier.match(disabledKeyPtn) === null) {
+          disabledKeyPtn = new RegExp("(ArrowUp)|(ArrowDown)|(ArrowLeft)|(ArrowRight)|(Shift)|(Control)|(Enter)", "ig");
+          if (event.key.match(disabledKeyPtn) === null) {
             return _this.keyupHandler(event);
-          } else if (event.keyIdentifier.match(/Up/ig)) {
+          } else if (event.key.match(/ArrowUp/ig)) {
             return _this.upSelectSeggest();
-          } else if (event.keyIdentifier.match(/Down/ig)) {
+          } else if (event.key.match(/ArrowDown/ig)) {
             return _this.downSelectSeggest();
-          } else if (event.keyIdentifier.match(/Enter/ig)) {
+          } else if (event.key.match(/Enter/ig)) {
             return _this.hideSuggest();
           }
         };

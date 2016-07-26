@@ -37,15 +37,15 @@ class window.Suggestrap
     # フォーム入力時
     @targetForm.addEventListener "keyup", (event)=>
       # 無効なキー入力パターン
-      disabledKeyPtn = new RegExp "(Up)|(Down)|(Left)|(Right)|(Shift)|(Control)|(Enter)", "ig"
-      if event.keyIdentifier.match(disabledKeyPtn) == null
+      disabledKeyPtn = new RegExp "(ArrowUp)|(ArrowDown)|(ArrowLeft)|(ArrowRight)|(Shift)|(Control)|(Enter)", "ig"
+      if event.key.match(disabledKeyPtn) == null
         # 有効なキー入力時
         @keyupHandler(event)
-      else if event.keyIdentifier.match(/Up/ig)
+      else if event.key.match(/ArrowUp/ig)
         @upSelectSeggest()
-      else if event.keyIdentifier.match(/Down/ig)
+      else if event.key.match(/ArrowDown/ig)
         @downSelectSeggest()
-      else if event.keyIdentifier.match(/Enter/ig)
+      else if event.key.match(/Enter/ig)
         @hideSuggest()
     # フォームのフォーカス時
     @targetForm.addEventListener "focus", (event)=>
