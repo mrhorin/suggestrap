@@ -8,9 +8,13 @@
   margin: 0;
   width: auto;
   height: auto;
-  position: static; }
+  position: absolute;
+  top: 95%;
+  z-index: 100; }
   #suggestrap-space li {
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
     padding: 1px 6px; }
   #suggestrap-space li.active, #suggestrap-space li:hover {
     cursor: pointer;

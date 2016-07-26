@@ -6,9 +6,12 @@ Install with [Bower](https://bower.io/).
 bower install suggestrap
 ```
 ## Usage
+Suggestions element position depend on target tag's parent element. The parent element css style must be relative.
 ```html
-<input id="target" type="text">
-<input type="submit" value="submit">
+<form style="position: relative;">
+  <input id="target" type="text">
+  <input type="submit" value="submit">
+</form>
 ```
 Suggestrap must receive JSON which is nest one hash.
 ```json

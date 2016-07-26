@@ -18,7 +18,7 @@
       window.onload = function(){
         req = {
           target: "target",
-          url: "http://localhost:3000/search_json/%QUERY",
+          url: "http://localhost:3000/suggest/json/%QUERY",
           key: "name",
         };
         suggestrap = new window.Suggestrap(req);
@@ -28,8 +28,10 @@
   <body>
     <div class="container">
       <h1>Suggestrap Demo</h1>
-      <input id="target" type="text">
-      <input type="submit" value="submit">
+      <form style="position: relative;">
+        <input id="target" type="text">
+        <input type="submit" value="submit">
+      </form>
     </div>
   </body>
 </html>
