@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Suggestrap Demo</title>
+    <link rel="stylesheet" type="text/css" href="../suggestrap.main.min.css">
+    <script src="../suggestrap.main.min.js"></script>
+    <style>
+      h1{ font-weight: bold; }
+      body{ background-color: #f2f9ff; }
+      .container{
+        margin-left: auto;
+        margin-right: auto;
+        width: 500px;
+      }
+    </style>
+    <script>
+      window.onload = function(){
+        req = {
+          target: "target",
+          url: "http://localhost:3000/search_json/%QUERY",
+          key: "name",
+        };
+        suggestrap = new window.Suggestrap(req);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Suggestrap Demo</h1>
+      <input id="target" type="text">
+      <input type="submit" value="submit">
+    </div>
+  </body>
+</html>

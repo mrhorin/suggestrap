@@ -1,34 +1,29 @@
 doctype html
-html(lang="ja")
+html(lang="en")
   head
     meta(charset="utf-8")
     title Suggestrap Demo
-    link(rel="stylesheet" type="text/css" href="../css/suggestrap.css")
+    link(rel="stylesheet" type="text/css" href="../suggestrap.main.min.css")
+    script(src="../suggestrap.main.min.js")
     style.
-      h1{
-        font-weight: bold;
-      }
-      body{
-        background-color: #f2f9ff;
-      }
+      h1{ font-weight: bold; }
+      body{ background-color: #f2f9ff; }
       .container{
         margin-left: auto;
         margin-right: auto;
-        padding: 0px 15px;
         width: 500px;
       }
-    script(src="../suggestrap.main.js")
     script.
       window.onload = function(){
-        suggestrap = new window.Suggestrap({
-          target: "name",
+        req = {
+          target: "target",
           url: "http://localhost:3000/search_json/%QUERY",
           key: "name",
-          minlength: 2
-        });
-        console.log(suggestrap);
+        };
+        suggestrap = new window.Suggestrap(req);
       }
   body
     .container
-      h1 Suggestrapデモ
-      input#name(type="text")
+      h1 Suggestrap Demo
+      input#target(type="text")
+      input(type="submit" value="submit")

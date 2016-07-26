@@ -5,7 +5,7 @@ The UI component of sugestrap is able to show suggestions from JSON.
 <input id="target" type="text">
 <input type="submit" value="submit">
 ```
-Suggestrap receive this JSON, so it need to nest one.
+Suggestrap must receive JSON which is nest one hash.
 ```json
 [
   {"id":1, "name":"satoru"},
@@ -29,11 +29,13 @@ window.onload = function(){
   suggestrap = new window.Suggestrap(req, option);
 }
 ```
-The first argument hash is required items.
-- `target`: The input tag element's id that you want to suggest.
+The first argument hash in Suggestrap object is required items.
+- `target`: The input tag element's id of target that you would like to suggest.
 - `url`: Link to JSON. '%QUERY' is request params. Inputed value in target element is set into in its.
 - `key`: if you would like to show JSON's 'name' key in suggestions, Its value is 'key'.
 
-The second argument hash is optional item.
+The second argument hash in Suggestrap object is optional item.
 - `minlength`: The minimum character length needed before suggestions start getting rendered. Defaults to '2'.
 - `wildcard`: Request params's wild card for JSON. Defaults to '%QUERY'.
+
+If you don't understand about this README.md document, there are demo.html file in './dist/html/' directory, please show this file from your browser.
