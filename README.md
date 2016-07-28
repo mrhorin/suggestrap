@@ -65,3 +65,8 @@ If you want to customize suggestions css style, you have to override css styles 
 }
 
 ```
+## Browser Support
+- Google Chrome 51
+- Firefox 38
+- Safari 9
+- Microsoft Edge 25

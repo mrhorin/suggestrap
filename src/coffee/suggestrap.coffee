@@ -3,24 +3,25 @@ _ = require 'underscore'
 class window.Suggestrap
 
   constructor: (req, option)->
-    option = option || {}
-    @args = _argsInitialize(req, option)
-    @suggestInfoInitialize()
-    @setSelector()
-    @setEventListener()
-    # @targetFormのkeyupイベントハンドラ
-    @keyupHandler = _.debounce((event)=>
-      # 文字数がminlength以上か
-      if event.target.value.length >= @args["minlength"]
-        _jsonUrl = @getJsonUrl(event.target.value)
-        # JSONの取得
-        @fetchSuggestJson _jsonUrl, (json)=>
-          @addSuggest json
-          @showSuggest()
-      else
-        @hideSuggest()
-        @removeSuggest()
-    , 400)
+    if @isSupport()
+      option = option || {}
+      @args = _argsInitialize(req, option)
+      @suggestInfoInitialize()
+      @setSelector()
+      @setEventListener()
+      # @targetFormのkeyupイベントハンドラ
+      @keyupHandler = _.debounce((event)=>
+        # 文字数がminlength以上か
+        if event.target.value.length >= @args["minlength"]
+          _jsonUrl = @getJsonUrl(event.target.value)
+          # JSONの取得
+          @fetchSuggestJson _jsonUrl, (json)=>
+            @addSuggest json
+            @showSuggest()
+        else
+          @hideSuggest()
+          @removeSuggest()
+      , 400)
 
   setSelector: ->
     # サジェストしたいinputフォーム
@@ -141,6 +142,15 @@ class window.Suggestrap
   # サジェスト情報の初期化
   suggestInfoInitialize: ()->
     @suggestInfo = { show: false, length: 0, currentIndex: -1 }
+
+  # サポートしているブラウザか
+  isSupport: ()->
+    _ua = window.navigator.userAgent.toLowerCase()
+    # サポートブラウザ一覧
+    _support = ["chrome", "firefox", "safari", "edge"]
+    for browser in _support
+      return true if _ua.indexOf(browser) > -1
+    return false
 
   # コンストラクタ引数の初期化
   _argsInitialize = (req, option)->

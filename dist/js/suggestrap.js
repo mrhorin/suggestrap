@@ -7,26 +7,28 @@
     var _argsInitialize;
 
     function Suggestrap(req, option) {
-      option = option || {};
-      this.args = _argsInitialize(req, option);
-      this.suggestInfoInitialize();
-      this.setSelector();
-      this.setEventListener();
-      this.keyupHandler = _.debounce((function(_this) {
-        return function(event) {
-          var _jsonUrl;
-          if (event.target.value.length >= _this.args["minlength"]) {
-            _jsonUrl = _this.getJsonUrl(event.target.value);
-            return _this.fetchSuggestJson(_jsonUrl, function(json) {
-              _this.addSuggest(json);
-              return _this.showSuggest();
-            });
-          } else {
-            _this.hideSuggest();
-            return _this.removeSuggest();
-          }
-        };
-      })(this), 400);
+      if (this.isSupport()) {
+        option = option || {};
+        this.args = _argsInitialize(req, option);
+        this.suggestInfoInitialize();
+        this.setSelector();
+        this.setEventListener();
+        this.keyupHandler = _.debounce((function(_this) {
+          return function(event) {
+            var _jsonUrl;
+            if (event.target.value.length >= _this.args["minlength"]) {
+              _jsonUrl = _this.getJsonUrl(event.target.value);
+              return _this.fetchSuggestJson(_jsonUrl, function(json) {
+                _this.addSuggest(json);
+                return _this.showSuggest();
+              });
+            } else {
+              _this.hideSuggest();
+              return _this.removeSuggest();
+            }
+          };
+        })(this), 400);
+      }
     }
 
     Suggestrap.prototype.setSelector = function() {
@@ -175,6 +177,19 @@
         length: 0,
         currentIndex: -1
       };
+    };
+
+    Suggestrap.prototype.isSupport = function() {
+      var _support, _ua, browser, i, len;
+      _ua = window.navigator.userAgent.toLowerCase();
+      _support = ["chrome", "firefox", "safari", "edge"];
+      for (i = 0, len = _support.length; i < len; i++) {
+        browser = _support[i];
+        if (_ua.indexOf(browser) > -1) {
+          return true;
+        }
+      }
+      return false;
     };
 
     _argsInitialize = function(req, option) {
