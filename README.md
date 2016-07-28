@@ -52,7 +52,9 @@ If you want to customize suggestions css style, you have to override css styles 
 ```css
 /* For example */
 #suggestrap-space {
-  background-color: #fefefe;
+  top: 50px;
+  border-radius: 0px;
+  padding: 10px 0px;
 }
 #suggestrap-space li {
   font-size: 15px;
