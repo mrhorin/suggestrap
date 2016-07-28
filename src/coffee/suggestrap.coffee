@@ -36,16 +36,17 @@ class window.Suggestrap
   setEventListener: ->
     # フォーム入力時
     @targetForm.addEventListener "keyup", (event)=>
-      # 無効なキー入力パターン
-      disabledKeyPtn = new RegExp "(ArrowUp)|(ArrowDown)|(ArrowLeft)|(ArrowRight)|(Shift)|(Control)|(Enter)", "ig"
-      if event.key.match(disabledKeyPtn) == null
+      # 無効なkeyCode
+      disabledKeyCode = [38, 40, 37, 39, 16, 17, 13]
+      keyCode = event.keyCode
+      if disabledKeyCode.indexOf(keyCode) == -1
         # 有効なキー入力時
         @keyupHandler(event)
-      else if event.key.match(/ArrowUp/ig)
+      else if keyCode == 38
         @upSelectSeggest()
-      else if event.key.match(/ArrowDown/ig)
+      else if keyCode == 40
         @downSelectSeggest()
-      else if event.key.match(/Enter/ig)
+      else if keyCode == 13
         if @suggestInfo["show"] && @suggestInfo["currentIndex"] != -1
           # サジェスト表示時は非表示に切り替え
           @hideSuggest()

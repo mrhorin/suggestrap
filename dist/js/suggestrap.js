@@ -41,15 +41,16 @@
     Suggestrap.prototype.setEventListener = function() {
       this.targetForm.addEventListener("keyup", (function(_this) {
         return function(event) {
-          var disabledKeyPtn;
-          disabledKeyPtn = new RegExp("(ArrowUp)|(ArrowDown)|(ArrowLeft)|(ArrowRight)|(Shift)|(Control)|(Enter)", "ig");
-          if (event.key.match(disabledKeyPtn) === null) {
+          var disabledKeyCode, keyCode;
+          disabledKeyCode = [38, 40, 37, 39, 16, 17, 13];
+          keyCode = event.keyCode;
+          if (disabledKeyCode.indexOf(keyCode) === -1) {
             return _this.keyupHandler(event);
-          } else if (event.key.match(/ArrowUp/ig)) {
+          } else if (keyCode === 38) {
             return _this.upSelectSeggest();
-          } else if (event.key.match(/ArrowDown/ig)) {
+          } else if (keyCode === 40) {
             return _this.downSelectSeggest();
-          } else if (event.key.match(/Enter/ig)) {
+          } else if (keyCode === 13) {
             if (_this.suggestInfo["show"] && _this.suggestInfo["currentIndex"] !== -1) {
               return _this.hideSuggest();
             } else {
