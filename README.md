@@ -6,7 +6,7 @@ Install with [Bower](https://bower.io/).
 bower install suggestrap
 ```
 ## Usage
-Suggestions element position depend on target tag's parent element. The parent element css style must be relative.
+Suggestions elements as absolute css style will be inserted after the target element by suggestrap. Its position depend on parent element of the target element, so the parent element css style must be relative.
 ```html
 <form style="position: relative;">
   <input id="target" type="text">
@@ -48,7 +48,7 @@ The second argument hash in Suggestrap object is optional item.
 
 If you don't understand about this README.md document, there are demo.html file in './dist/html/' directory, please show this file from your browser.
 ## Customize
-If you want to customize Suggestions css style, you would override css styles on '#suggestrap-space' and list elements.
+If you want to customize suggestions css style, you have to override css styles on '#suggestrap-space' or its inner list elements.
 ```css
 /* For example */
 #suggestrap-space {
@@ -57,7 +57,8 @@ If you want to customize Suggestions css style, you would override css styles on
 #suggestrap-space li {
   font-size: 15px;
 }
-#suggestrap-space li.active, #suggestrap-space li:hover {
+#suggestrap-space li.active,
+#suggestrap-space li:hover {
   background-color: #5bc0de;
 }
 
