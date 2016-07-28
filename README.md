@@ -39,8 +39,8 @@ window.onload = function(){
 ```
 The first argument hash in Suggestrap object is required items.
 - `target`: The input tag element's id of target that you would like to suggest.
-- `url`: Link to JSON. '%QUERY' is request params. Inputed value in target element is set into in its.
-- `key`: if you would like to show JSON's 'name' key in suggestions, Its value is 'key'.
+- `url`: Link to JSON. '%QUERY' is request params, inputed value in target element is set into its.
+- `key`: if you would like to show JSON's 'name' key in suggestions, this value is 'name'.
 
 The second argument hash in Suggestrap object is optional item.
 - `minlength`: The minimum character length needed before suggestions start getting rendered. Defaults to '2'.
