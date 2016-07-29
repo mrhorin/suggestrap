@@ -7,28 +7,29 @@
     var _argsInitialize;
 
     function Suggestrap(req, option) {
-      if (this.isSupport()) {
-        option = option || {};
-        this.args = _argsInitialize(req, option);
-        this.suggestInfoInitialize();
-        this.setSelector();
-        this.setEventListener();
-        this.keyupHandler = _.debounce((function(_this) {
-          return function(event) {
-            var _jsonUrl;
-            if (event.target.value.length >= _this.args["minlength"]) {
-              _jsonUrl = _this.getJsonUrl(event.target.value);
-              return _this.fetchSuggestJson(_jsonUrl, function(json) {
-                _this.addSuggest(json);
-                return _this.showSuggest();
-              });
-            } else {
-              _this.hideSuggest();
-              return _this.removeSuggest();
-            }
-          };
-        })(this), 400);
+      if (!this.isSupport()) {
+        throw "This browser doesn't support suggestrap.";
       }
+      option = option || {};
+      this.args = _argsInitialize(req, option);
+      this.suggestInfoInitialize();
+      this.setSelector();
+      this.setEventListener();
+      this.keyupHandler = _.debounce((function(_this) {
+        return function(event) {
+          var _jsonUrl;
+          if (event.target.value.length >= _this.args["minlength"]) {
+            _jsonUrl = _this.getJsonUrl(event.target.value);
+            return _this.fetchSuggestJson(_jsonUrl, function(json) {
+              _this.addSuggest(json);
+              return _this.showSuggest();
+            });
+          } else {
+            _this.hideSuggest();
+            return _this.removeSuggest();
+          }
+        };
+      })(this), 400);
     }
 
     Suggestrap.prototype.setSelector = function() {

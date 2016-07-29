@@ -3,25 +3,25 @@ _ = require 'underscore'
 class window.Suggestrap
 
   constructor: (req, option)->
-    if @isSupport()
-      option = option || {}
-      @args = _argsInitialize(req, option)
-      @suggestInfoInitialize()
-      @setSelector()
-      @setEventListener()
-      # @targetFormのkeyupイベントハンドラ
-      @keyupHandler = _.debounce((event)=>
-        # 文字数がminlength以上か
-        if event.target.value.length >= @args["minlength"]
-          _jsonUrl = @getJsonUrl(event.target.value)
-          # JSONの取得
-          @fetchSuggestJson _jsonUrl, (json)=>
-            @addSuggest json
-            @showSuggest()
-        else
-          @hideSuggest()
-          @removeSuggest()
-      , 400)
+    throw "This browser doesn't support suggestrap." unless @isSupport()
+    option = option || {}
+    @args = _argsInitialize(req, option)
+    @suggestInfoInitialize()
+    @setSelector()
+    @setEventListener()
+    # @targetFormのkeyupイベントハンドラ
+    @keyupHandler = _.debounce((event)=>
+      # 文字数がminlength以上か
+      if event.target.value.length >= @args["minlength"]
+        _jsonUrl = @getJsonUrl(event.target.value)
+        # JSONの取得
+        @fetchSuggestJson _jsonUrl, (json)=>
+          @addSuggest json
+          @showSuggest()
+      else
+        @hideSuggest()
+        @removeSuggest()
+    , 400)
 
   setSelector: ->
     # サジェストしたいinputフォーム
