@@ -29,7 +29,7 @@
             return _this.removeSuggest();
           }
         };
-      })(this), 400);
+      })(this), this.args["delay"]);
     }
 
     Suggestrap.prototype.setSelector = function() {
@@ -211,6 +211,7 @@
       };
       args["wildcard"] = option["wildcard"] || "%QUERY";
       args["minlength"] = option["minlength"] || 2;
+      args["delay"] = option["delay"] || 400;
       return args;
     };
 

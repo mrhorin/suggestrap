@@ -21,7 +21,7 @@ class window.Suggestrap
       else
         @hideSuggest()
         @removeSuggest()
-    , 400)
+    , @args["delay"])
 
   setSelector: ->
     # サジェストしたいinputフォーム
@@ -154,7 +154,7 @@ class window.Suggestrap
 
   # コンストラクタ引数の初期化
   _argsInitialize = (req, option)->
-    # optionが未指定の場合デフォルト値を設定
+    # 必須項目
     unless req["target"]?
       throw "target is not found. This argument is necessary."
     unless req["url"]?
@@ -165,6 +165,8 @@ class window.Suggestrap
       target: req["target"]
       url: req["url"]
       key: req["key"]
+    # optionが未指定の場合デフォルト値を設定
     args["wildcard"] = option["wildcard"] || "%QUERY"
     args["minlength"] = option["minlength"] || 2
+    args["delay"] = option["delay"] || 400
     return args

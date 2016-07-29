@@ -45,6 +45,7 @@ The first argument hash in Suggestrap object is required items.
 The second argument hash in Suggestrap object is optional item.
 - `minlength`: The minimum character length needed before suggestions start getting rendered. Defaults to '2'.
 - `wildcard`: Request params's wild card for JSON. Defaults to '%QUERY'.
+- `delay`: If target element fire the keyup event and don't fire the next keyup event until over 400ms, suggestrap would show the suggestions from inputed value. This option meaning is that don't increase request for JSON URL. Defaults is '400'.
 
 If you don't understand about this README.md document, there are demo.html file in './dist/html/' directory, please show this file from your browser.
 ## Customize
