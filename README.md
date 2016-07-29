@@ -8,7 +8,7 @@ bower install suggestrap
 ## Usage
 Suggestions elements as absolute css style will be inserted after the target element by suggestrap. Its position depend on parent element of the target element, so the parent element css style must be relative.
 ```html
-<form style="position: relative;">
+<div style="position: relative;">
   <input id="target" type="text">
   <input type="submit" value="submit">
 </form>
@@ -66,6 +66,7 @@ If you want to customize suggestions css style, you have to override css styles 
 
 ```
 ## Browser Support
+I have checked operation by these browsers.
 - Google Chrome 51
 - Firefox 38
 - Safari 9
