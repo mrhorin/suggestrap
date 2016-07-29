@@ -11,7 +11,7 @@ Suggestions elements as absolute css style will be inserted after the target ele
 <div style="position: relative;">
   <input id="target" type="text">
   <input type="submit" value="submit">
-</form>
+</div>
 ```
 Suggestrap must receive JSON which is nest one hash.
 ```json
