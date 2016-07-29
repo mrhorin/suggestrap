@@ -21,8 +21,10 @@
           if (event.target.value.length >= _this.args["minlength"]) {
             _jsonUrl = _this.getJsonUrl(event.target.value);
             return _this.fetchSuggestJson(_jsonUrl, function(json) {
-              _this.addSuggest(json);
-              return _this.showSuggest();
+              if (json.length > 0) {
+                _this.addSuggest(json);
+                return _this.showSuggest();
+              }
             });
           } else {
             _this.hideSuggest();
@@ -59,6 +61,13 @@
             } else {
               return _this.keyupHandler(event);
             }
+          }
+        };
+      })(this));
+      this.targetForm.addEventListener("textInput", (function(_this) {
+        return function(event) {
+          if (!_this.suggestInfo["show"]) {
+            return _this.keyupHandler(event);
           }
         };
       })(this));

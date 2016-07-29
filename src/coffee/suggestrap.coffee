@@ -16,8 +16,9 @@ class window.Suggestrap
         _jsonUrl = @getJsonUrl(event.target.value)
         # JSONの取得
         @fetchSuggestJson _jsonUrl, (json)=>
-          @addSuggest json
-          @showSuggest()
+          if json.length > 0
+            @addSuggest json
+            @showSuggest()
       else
         @hideSuggest()
         @removeSuggest()
@@ -53,6 +54,9 @@ class window.Suggestrap
           @hideSuggest()
         else
           @keyupHandler(event)
+    # Mobile Safariで変換押下時にkeyupが発火しない時対策
+    @targetForm.addEventListener "textInput", (event)=>
+      @keyupHandler(event) unless @suggestInfo["show"]
     # フォームのフォーカス時
     @targetForm.addEventListener "focus", (event)=>
       @keyupHandler(event)
