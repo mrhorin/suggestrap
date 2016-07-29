@@ -96,8 +96,9 @@
     };
 
     Suggestrap.prototype.addSuggest = function(json) {
-      var _suggest_li, i, len, val;
+      var _displayed_count, _suggest_li, i, len, val;
       this.removeSuggest();
+      _displayed_count = 0;
       for (i = 0, len = json.length; i < len; i++) {
         val = json[i];
         _suggest_li = document.createElement("li");
@@ -109,6 +110,10 @@
           };
         })(this));
         this.suggest.appendChild(_suggest_li);
+        _displayed_count += 1;
+        if (_displayed_count >= this.args["count"]) {
+          break;
+        }
       }
       this.suggestInfo["length"] = this.suggest.childNodes.length;
       return this.suggestInfo["currentIndex"] = -1;
@@ -212,6 +217,7 @@
       args["wildcard"] = option["wildcard"] || "%QUERY";
       args["minlength"] = option["minlength"] || 2;
       args["delay"] = option["delay"] || 400;
+      args["count"] = option["count"] || 5;
       return args;
     };
 

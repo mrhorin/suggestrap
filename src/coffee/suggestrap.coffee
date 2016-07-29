@@ -82,6 +82,8 @@ class window.Suggestrap
   # @suggestに追加
   addSuggest: (json)->
     @removeSuggest()
+    # 表示したサジェスト件数
+    _displayed_count = 0
     # json要素の数だけelementを生成して追加
     for val in json
       _suggest_li = document.createElement "li"
@@ -91,6 +93,9 @@ class window.Suggestrap
         @targetForm.value = event.target.innerHTML
         @hideSuggest()
       @suggest.appendChild _suggest_li
+      # @args["count"]に達したら追加処理を抜ける
+      _displayed_count += 1
+      break if  _displayed_count >= @args["count"]
     @suggestInfo["length"] = @suggest.childNodes.length
     @suggestInfo["currentIndex"] = -1
 
@@ -141,6 +146,7 @@ class window.Suggestrap
 
   # サジェスト情報の初期化
   suggestInfoInitialize: ()->
+    # show:表示状態, length:候補の件数, currentIndex:何番目の候補にいるか
     @suggestInfo = { show: false, length: 0, currentIndex: -1 }
 
   # サポートしているブラウザか
@@ -169,4 +175,5 @@ class window.Suggestrap
     args["wildcard"] = option["wildcard"] || "%QUERY"
     args["minlength"] = option["minlength"] || 2
     args["delay"] = option["delay"] || 400
+    args["count"] = option["count"] || 5
     return args
