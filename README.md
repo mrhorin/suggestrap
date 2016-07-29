@@ -73,5 +73,6 @@ If you want to customize suggestions css style, you have to override css styles 
 I have checked operation by these browsers.
 - Google Chrome 51
 - Firefox 38
-- Safari 9
 - Microsoft Edge 25
+- Safari 9 OS X El Capitan
+- Safari 9 iOS 9
