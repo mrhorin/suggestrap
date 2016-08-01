@@ -76,4 +76,4 @@ I've confirmed operation by these browsers.
 - Safari 9 OS X El Capitan
 - Safari 9 iOS 9
 - Microsoft Edge 25
-- Internet　Explorer 11
+- Internet Explorer 10-11

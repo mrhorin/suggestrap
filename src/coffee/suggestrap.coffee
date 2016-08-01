@@ -73,21 +73,21 @@ class window.Suggestrap
 
   # サジェスト用JSONをjsonUrlから取得
   fetchSuggestJson: (jsonUrl, callbackFunc)->
-    xmlHttpRequest = new XMLHttpRequest();
-    xmlHttpRequest.onreadystatechange = ()->
+    xhr = new XMLHttpRequest();
+    xhr.open 'GET', jsonUrl, true
+    xhr.responseType = 'json'
+    xhr.onreadystatechange = ()->
       if this.readyState == 4 && this.status == 200
         if this.response
           # 読み込んだ後の処理
           callbackFunc this.response
-    xmlHttpRequest.open 'GET', jsonUrl, true
-    xmlHttpRequest.responseType = 'json'
-    xmlHttpRequest.send(null)
+    xhr.send(null)
 
   # @suggestに追加
   addSuggest: (json)->
     @removeSuggest()
     # ie11対策
-    if @checkBrowser("ie11")
+    if @checkBrowser("ie11") || @checkBrowser("ie10")
       _json = window.JSON.parse json
     else
       _json = json
@@ -174,12 +174,15 @@ class window.Suggestrap
   _getSuportedBrowsers = ->
     _ua = window.navigator.userAgent.toLowerCase()
     _ver = window.navigator.appVersion.toLowerCase()
+    # IE11以外のIE
+    _isMSIE = (_ua.indexOf('msie') > -1) && (_ua.indexOf('opera') == -1)
     return _supported =
       chrome: (_ua.indexOf('chrome') > -1) && (_ua.indexOf('edge') == -1)
       firefox: (_ua.indexOf('firefox') > -1)
       safari: (_ua.indexOf('safari') > -1) && (_ua.indexOf('chrome') == -1)
       edge: (_ua.indexOf('edge') > -1)
-      ie11: (_ua.indexOf('trident/7') > -1)
+      ie11: (!_isMSIE && (_ua.indexOf('trident/7') > -1))
+      ie10: (_isMSIE && (_ver.indexOf('msie 10.') > -1))
 
   # コンストラクタ引数の初期化
   _argsInitialize = (req, option)->
