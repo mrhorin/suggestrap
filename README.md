@@ -6,6 +6,7 @@ Install with [Bower](https://bower.io/).
 bower install suggestrap
 ```
 ## Usage
+You need to include `suggestrap.main.min.js` in the head tag element.  
 Suggestions elements as absolute css style will be inserted after the target element by suggestrap. Its position depend on parent element of the target element, so the parent element css style must be relative.
 ```html
 <div style="position: relative;">
@@ -42,12 +43,12 @@ window.onload = function(){
 The first argument hash in Suggestrap object is required items.
 - `target`: The input tag element's id of target that you would like to suggest.
 - `url`: Link to JSON. '%QUERY' is request params, inputed value in target element is set into its.
-- `key`: if you would like to show JSON's 'name' key in suggestions, this value is 'name'.
+- `key`: if you would like to show name key of JSON in suggestions, this value is 'name'.
 
 The second argument hash in Suggestrap object is optional item.
-- `minlength`: The minimum character length needed before suggestions start getting rendered. Defaults to '2'.
+- `minlength`: The minimum character length needed before suggestions start getting rendered. Defaults to 2.
 - `wildcard`: Request params's wild card for JSON. Defaults to '%QUERY'.
-- `delay`: If target element fire the keyup event and don't fire the next keyup event until over 400ms, suggestrap would show the suggestions from inputed value. This option meaning is that don't increase request for JSON URL. Defaults to '400'.
+- `delay`: If target element fire the keyup event and don't fire the next keyup event until over 400ms, suggestrap would show the suggestions from inputed value. The  option purpose is that don't increase request for JSON URL. Defaults to 400.
 - `count`: If this option is 10, suggestrap would show maxium 10 suggestions. Defaults to 5.
 
 If you don't understand about this README.md document, there are demo.html file in './dist/html/' directory, please show this file from your browser.
