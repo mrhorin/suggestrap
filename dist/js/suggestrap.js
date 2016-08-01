@@ -223,9 +223,10 @@
       _ver = window.navigator.appVersion.toLowerCase();
       _isMSIE = (_ua.indexOf('msie') > -1) && (_ua.indexOf('opera') === -1);
       return _supported = {
-        chrome: (_ua.indexOf('chrome') > -1) && (_ua.indexOf('edge') === -1),
+        chrome: (_ua.indexOf('chrome') > -1) && (_ua.indexOf('edge') === -1) && (_ua.indexOf('opr/') === -1),
         firefox: _ua.indexOf('firefox') > -1,
         safari: (_ua.indexOf('safari') > -1) && (_ua.indexOf('chrome') === -1),
+        opera: _ua.indexOf('opr/') !== -1,
         edge: _ua.indexOf('edge') > -1,
         ie11: !_isMSIE && (_ua.indexOf('trident/7') > -1),
         ie10: _isMSIE && (_ver.indexOf('msie 10.') > -1)

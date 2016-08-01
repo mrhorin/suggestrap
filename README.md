@@ -75,5 +75,6 @@ I've confirmed operation by these browsers.
 - Firefox 38
 - Safari 9 OS X El Capitan
 - Safari 9 iOS 9
+- Opera 38
 - Microsoft Edge 25
 - Internet Explorer 10-11
