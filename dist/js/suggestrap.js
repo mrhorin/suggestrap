@@ -4,7 +4,7 @@
   _ = require('underscore');
 
   window.Suggestrap = (function() {
-    var _argsInitialize;
+    var _argsInitialize, _getSuportedBrowsers;
 
     function Suggestrap(req, option) {
       if (!this.isSupport()) {
@@ -105,11 +105,16 @@
     };
 
     Suggestrap.prototype.addSuggest = function(json) {
-      var _displayed_count, _suggest_li, i, len, val;
+      var _displayed_count, _json, _suggest_li, idx, val;
       this.removeSuggest();
+      if (this.checkBrowser("ie11")) {
+        _json = window.JSON.parse(json);
+      } else {
+        _json = json;
+      }
       _displayed_count = 0;
-      for (i = 0, len = json.length; i < len; i++) {
-        val = json[i];
+      for (idx in _json) {
+        val = _json[idx];
         _suggest_li = document.createElement("li");
         _suggest_li.innerHTML = val[this.args["key"]];
         _suggest_li.addEventListener("click", (function(_this) {
@@ -195,16 +200,34 @@
     };
 
     Suggestrap.prototype.isSupport = function() {
-      var _support, _ua, browser, i, len;
-      _ua = window.navigator.userAgent.toLowerCase();
-      _support = ["chrome", "firefox", "safari", "edge"];
-      for (i = 0, len = _support.length; i < len; i++) {
-        browser = _support[i];
-        if (_ua.indexOf(browser) > -1) {
+      var _supported, idx, val;
+      _supported = _getSuportedBrowsers();
+      for (idx in _supported) {
+        val = _supported[idx];
+        if (val) {
           return true;
         }
       }
       return false;
+    };
+
+    Suggestrap.prototype.checkBrowser = function(browser) {
+      var _supported;
+      _supported = _getSuportedBrowsers();
+      return _supported[browser];
+    };
+
+    _getSuportedBrowsers = function() {
+      var _supported, _ua, _ver;
+      _ua = window.navigator.userAgent.toLowerCase();
+      _ver = window.navigator.appVersion.toLowerCase();
+      return _supported = {
+        chrome: (_ua.indexOf('chrome') > -1) && (_ua.indexOf('edge') === -1),
+        firefox: _ua.indexOf('firefox') > -1,
+        safari: (_ua.indexOf('safari') > -1) && (_ua.indexOf('chrome') === -1),
+        edge: _ua.indexOf('edge') > -1,
+        ie11: _ua.indexOf('trident/7') > -1
+      };
     };
 
     _argsInitialize = function(req, option) {

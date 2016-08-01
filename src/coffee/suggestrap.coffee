@@ -86,10 +86,15 @@ class window.Suggestrap
   # @suggestに追加
   addSuggest: (json)->
     @removeSuggest()
+    # ie11対策
+    if @checkBrowser("ie11")
+      _json = window.JSON.parse json
+    else
+      _json = json
     # 表示したサジェスト件数
     _displayed_count = 0
     # json要素の数だけelementを生成して追加
-    for val in json
+    for idx, val of _json
       _suggest_li = document.createElement "li"
       _suggest_li.innerHTML = val[@args["key"]]
       # サジェストclick時
@@ -153,14 +158,28 @@ class window.Suggestrap
     # show:表示状態, length:候補の件数, currentIndex:何番目の候補にいるか
     @suggestInfo = { show: false, length: 0, currentIndex: -1 }
 
-  # サポートしているブラウザか
+  # 使用中のブラウザが対応しているか
   isSupport: ()->
-    _ua = window.navigator.userAgent.toLowerCase()
-    # サポートブラウザ一覧
-    _support = ["chrome", "firefox", "safari", "edge"]
-    for browser in _support
-      return true if _ua.indexOf(browser) > -1
+    _supported = _getSuportedBrowsers()
+    for idx, val of _supported
+      return true if val
     return false
+
+  # browserが使用中のブラウザか
+  checkBrowser: (browser)->
+    _supported = _getSuportedBrowsers()
+    return _supported[browser]
+
+  # サポートしているブラウザ一覧
+  _getSuportedBrowsers = ->
+    _ua = window.navigator.userAgent.toLowerCase()
+    _ver = window.navigator.appVersion.toLowerCase()
+    return _supported =
+      chrome: (_ua.indexOf('chrome') > -1) && (_ua.indexOf('edge') == -1)
+      firefox: (_ua.indexOf('firefox') > -1)
+      safari: (_ua.indexOf('safari') > -1) && (_ua.indexOf('chrome') == -1)
+      edge: (_ua.indexOf('edge') > -1)
+      ie11: (_ua.indexOf('trident/7') > -1)
 
   # コンストラクタ引数の初期化
   _argsInitialize = (req, option)->

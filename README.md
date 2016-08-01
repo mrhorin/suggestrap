@@ -1,5 +1,5 @@
 # suggestrap
-The UI component of sugestrap is able to show suggestions from JSON.
+The UI component of suggestrap is able to show suggestions from JSON.
 ## Install
 Install with [Bower](https://bower.io/).
 ```
@@ -47,12 +47,12 @@ The first argument hash in Suggestrap object is required items.
 The second argument hash in Suggestrap object is optional item.
 - `minlength`: The minimum character length needed before suggestions start getting rendered. Defaults to '2'.
 - `wildcard`: Request params's wild card for JSON. Defaults to '%QUERY'.
-- `delay`: If target element fire the keyup event and don't fire the next keyup event until over 400ms, suggestrap would show the suggestions from inputed value. This option meaning is that don't increase request for JSON URL. Defaults is '400'.
-- `count`: If this option is 10, suggestrap would show maxium 10 suggestions. Defaults is 5.
+- `delay`: If target element fire the keyup event and don't fire the next keyup event until over 400ms, suggestrap would show the suggestions from inputed value. This option meaning is that don't increase request for JSON URL. Defaults to '400'.
+- `count`: If this option is 10, suggestrap would show maxium 10 suggestions. Defaults to 5.
 
 If you don't understand about this README.md document, there are demo.html file in './dist/html/' directory, please show this file from your browser.
 ## Customize
-If you want to customize suggestions css style, you have to override css styles on '#suggestrap-space' or its inner list elements.
+If you want to customize suggestions css style, you've to override css styles on '#suggestrap-space' or its inner list elements.
 ```css
 /* For example */
 #suggestrap-space {
@@ -70,9 +70,10 @@ If you want to customize suggestions css style, you have to override css styles 
 
 ```
 ## Browser Support
-I have checked operation by these browsers.
+I've confirmed operation by these browsers.
 - Google Chrome 51
 - Firefox 38
-- Microsoft Edge 25
 - Safari 9 OS X El Capitan
 - Safari 9 iOS 9
+- Microsoft Edge 25
+- Internet　Explorer 11
