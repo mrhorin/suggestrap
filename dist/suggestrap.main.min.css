@@ -1,3 +1,0 @@
-#suggestrap-space{background-color:#fff;border-radius:5px;box-shadow:-2px 2px 7px rgba(0,0,0,0.3);list-style:none;padding:3px 0;font-size:1em;margin:0;width:auto;height:auto;position:absolute;top:95%;z-index:100}
-#suggestrap-space li{text-align:left;white-space:nowrap;overflow:hidden;padding:1px 6px}
-#suggestrap-space li.active,#suggestrap-space li:hover{cursor:pointer;background-color:#4b89bf;color:#fff}

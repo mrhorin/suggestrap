@@ -13,7 +13,7 @@ var concat = require("gulp-concat");
 // 監視
 gulp.task('watch', function(){
   gulp.watch(['src/coffee/**/*.coffee'], ['coffee', 'build-js']);
-  gulp.watch(['src/scss/**/*.scss'], ['sass', 'build-css']);
+  gulp.watch(['src/scss/**/*.scss'], ['sass']);
   gulp.watch(['src/jade/**/*.jade'], ['jade']);
 });
 

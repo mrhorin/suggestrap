@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>Suggestrap Demo</title>
-    <link rel="stylesheet" type="text/css" href="../suggestrap.main.min.css">
     <script src="../suggestrap.main.min.js"></script>
     <style>
       h1{ font-weight: bold; }
@@ -18,7 +17,7 @@
       window.onload = function(){
         req = {
           target: "target",
-          url: "http://localhost:3000/suggest/json/%QUERY",
+          url: "http://example.com/suggest/json/%QUERY",
           key: "name",
         };
         suggestrap = new window.Suggestrap(req);

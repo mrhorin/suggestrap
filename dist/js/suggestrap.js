@@ -4,7 +4,7 @@
   _ = require('underscore');
 
   window.Suggestrap = (function() {
-    var _argsInitialize, _getSuportedBrowsers;
+    var _argsInitialize, _getSuportedBrowsers, _styleInitialize;
 
     function Suggestrap(req, option) {
       if (!this.isSupport()) {
@@ -12,6 +12,7 @@
       }
       option = option || {};
       this.args = _argsInitialize(req, option);
+      _styleInitialize();
       this.suggestInfoInitialize();
       this.setSelector();
       this.setEventListener();
@@ -39,6 +40,18 @@
       this.targetForm.autocomplete = "off";
       this.suggest = document.createElement("ul");
       this.suggest.id = "suggestrap-space";
+      this.suggest.style.backgroundColor = "#fff";
+      this.suggest.style.borderRadius = "5px";
+      this.suggest.style.boxShadow = "-2px 2px 7px rgba(0,0,0,0.3)";
+      this.suggest.style.listStyle = "none";
+      this.suggest.style.padding = "3px 0px";
+      this.suggest.style.fontSize = "1em";
+      this.suggest.style.position = "absolute";
+      this.suggest.style.top = "95%";
+      this.suggest.style.zIndex = "100";
+      this.suggest.style.margin = "0";
+      this.suggest.style.width = "auto";
+      this.suggest.style.height = "auto";
       this.hideSuggest();
       return this.targetForm.parentNode.insertBefore(this.suggest, this.targetForm.nextSibling);
     };
@@ -116,6 +129,10 @@
       for (idx in _json) {
         val = _json[idx];
         _suggest_li = document.createElement("li");
+        _suggest_li.style.textAlign = "left";
+        _suggest_li.style.whiteSpace = "nowrap";
+        _suggest_li.style.overflow = "hidden";
+        _suggest_li.style.padding = "1px 6px";
         _suggest_li.innerHTML = val[this.args["key"]];
         _suggest_li.addEventListener("click", (function(_this) {
           return function(event) {
@@ -254,6 +271,14 @@
       args["delay"] = option["delay"] || 400;
       args["count"] = option["count"] || 5;
       return args;
+    };
+
+    _styleInitialize = function() {
+      var _css, _style;
+      _style = document.createElement("style");
+      _css = "#suggestrap-space li{text-align:left;white-space:nowrap;overflow:hidden;padding:1px 6px}#suggestrap-space li.active,#suggestrap-space li:hover{cursor:pointer;background-color:#4b89bf;color:#fff}";
+      _style.appendChild(document.createTextNode(_css));
+      return document.getElementsByTagName('head')[0].appendChild(_style);
     };
 
     return Suggestrap;

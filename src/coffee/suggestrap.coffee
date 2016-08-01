@@ -6,6 +6,7 @@ class window.Suggestrap
     throw "This browser doesn't support suggestrap." unless @isSupport()
     option = option || {}
     @args = _argsInitialize(req, option)
+    _styleInitialize()
     @suggestInfoInitialize()
     @setSelector()
     @setEventListener()
@@ -31,6 +32,18 @@ class window.Suggestrap
     # サジェスト表示用エレメント
     @suggest = document.createElement "ul"
     @suggest.id = "suggestrap-space"
+    @suggest.style.backgroundColor = "#fff"
+    @suggest.style.borderRadius = "5px"
+    @suggest.style.boxShadow = "-2px 2px 7px rgba(0,0,0,0.3)"
+    @suggest.style.listStyle = "none"
+    @suggest.style.padding = "3px 0px"
+    @suggest.style.fontSize = "1em"
+    @suggest.style.position = "absolute"
+    @suggest.style.top = "95%"
+    @suggest.style.zIndex = "100"
+    @suggest.style.margin = "0"
+    @suggest.style.width = "auto"
+    @suggest.style.height = "auto"
     @hideSuggest()
     # @targetFormの次に@suggestを追加
     @targetForm.parentNode.insertBefore @suggest, @targetForm.nextSibling
@@ -96,6 +109,10 @@ class window.Suggestrap
     # json要素の数だけelementを生成して追加
     for idx, val of _json
       _suggest_li = document.createElement "li"
+      _suggest_li.style.textAlign = "left"
+      _suggest_li.style.whiteSpace = "nowrap"
+      _suggest_li.style.overflow = "hidden"
+      _suggest_li.style.padding = "1px 6px"
       _suggest_li.innerHTML = val[@args["key"]]
       # サジェストclick時
       _suggest_li.addEventListener "click", (event)=>
@@ -204,3 +221,11 @@ class window.Suggestrap
     args["delay"] = option["delay"] || 400
     args["count"] = option["count"] || 5
     return args
+
+  # styleの初期化
+  _styleInitialize = ()->
+    _style = document.createElement "style"
+    _css = "#suggestrap-space li{text-align:left;white-space:nowrap;overflow:hidden;padding:1px 6px}#suggestrap-space li.active,#suggestrap-space li:hover{cursor:pointer;background-color:#4b89bf;color:#fff}"
+    _style.appendChild document.createTextNode _css
+    # headタグの末尾に追加
+    document.getElementsByTagName('head')[0].appendChild _style
