@@ -1,13 +1,14 @@
 {
   "name": "suggestrap",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "suggestrap.main.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "mrhorin",
+  "homepage": "https://github.com/mrhorin/suggestrap",
+  "license": "GPL-2.0 (https://opensource.org/licenses/GPL-2.0)",
   "devDependencies": {
     "browserify": "^13.0.1",
     "gulp": "^3.9.1",
