@@ -79,3 +79,9 @@ I've confirmed operation by these browsers.
 - Opera 38
 - Microsoft Edge 25
 - Internet Explorer 10-11
+
+## License
+[GPL-2.0](https://opensource.org/licenses/GPL-2.0)
+
+## Author
+[mrhorin](https://github.com/mrhorin)
