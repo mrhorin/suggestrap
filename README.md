@@ -37,7 +37,7 @@ window.onload = function(){
     delay: 400,
     count: 5
   };
-  suggestrap = new window.Suggestrap(req, option);
+  suggestrap = new Suggestrap(req, option);
 }
 ```
 The first argument hash in Suggestrap object is required items.
