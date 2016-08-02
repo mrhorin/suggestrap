@@ -5,7 +5,7 @@
   ],
   "description": "The UI component of sugestrap is able to show suggestions from JSON.",
   "main": "dist/suggestrap.main.min.js",
-  "license": "MIT",
+  "license": "GPL-2.0+",
   "homepage": "https://github.com/mrhorin/suggestrap",
   "ignore": [
     "**/.*",
