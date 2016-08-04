@@ -1,6 +1,6 @@
 {
   "name": "suggestrap",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "",
   "main": "suggestrap.main.min.js",
   "scripts": {
@@ -24,6 +24,6 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "underscore": "^1.8.3"
+    "lodash": "^4.14.1"
   }
 }

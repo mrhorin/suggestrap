@@ -1,7 +1,7 @@
 (function() {
   var _;
 
-  _ = require('underscore');
+  _ = require('lodash');
 
   window.Suggestrap = (function() {
     var _argsInitialize, _getSuportedBrowsers, _styleInitialize;
