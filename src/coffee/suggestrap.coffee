@@ -12,8 +12,8 @@ class window.Suggestrap
     @setEventListener()
     # @targetFormのkeyupイベントハンドラ
     @keyupHandler = _.debounce((event)=>
-      # 文字数がminlength以上か
-      if event.target.value.length >= @args["minlength"]
+      # 文字数がminlength以上か && activeElementがターゲット要素か
+      if event.target.value.length >= @args["minlength"] && document.activeElement.id == @args["target"]
         _jsonUrl = @getJsonUrl(event.target.value)
         # JSONの取得
         @fetchSuggestJson _jsonUrl, (json)=>

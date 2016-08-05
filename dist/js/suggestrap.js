@@ -19,7 +19,7 @@
       this.keyupHandler = _.debounce((function(_this) {
         return function(event) {
           var _jsonUrl;
-          if (event.target.value.length >= _this.args["minlength"]) {
+          if (event.target.value.length >= _this.args["minlength"] && document.activeElement.id === _this.args["target"]) {
             _jsonUrl = _this.getJsonUrl(event.target.value);
             return _this.fetchSuggestJson(_jsonUrl, function(json) {
               if (json.length > 0) {
