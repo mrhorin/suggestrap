@@ -12,8 +12,9 @@ class window.Suggestrap
     @setEventListener()
     # @targetFormのkeyupイベントハンドラ
     @keyupHandler = _.debounce((event)=>
-      # 文字数がminlength以上か && activeElementがターゲット要素か
-      if event.target.value.length >= @args["minlength"] && document.activeElement.id == @args["target"]
+      # 文字数がminlength以上か && activeElementがターゲット要素か && 入力クエリと表示中サジェストの文字が異なるか
+      if event.target.value.length >= @args["minlength"] && document.activeElement.id == @args["target"] && @suggestInfo["query"] != event.target.value
+        @suggestInfo["query"] = event.target.value
         _jsonUrl = @getJsonUrl(event.target.value)
         # JSONの取得
         @fetchSuggestJson _jsonUrl, (json)=>
@@ -21,6 +22,7 @@ class window.Suggestrap
             @addSuggest json
             @showSuggest()
       else
+        @suggestInfo["query"] = ""
         @hideSuggest()
         @removeSuggest()
     , @args["delay"])
@@ -69,7 +71,7 @@ class window.Suggestrap
           @keyupHandler(event)
     # Mobile Safariで変換押下時にkeyupが発火しない時対策
     @targetForm.addEventListener "textInput", (event)=>
-      @keyupHandler(event) unless @suggestInfo["show"]
+      @keyupHandler(event)
     # フォームのフォーカス時
     @targetForm.addEventListener "focus", (event)=>
       @keyupHandler(event)
@@ -172,8 +174,8 @@ class window.Suggestrap
 
   # サジェスト情報の初期化
   suggestInfoInitialize: ()->
-    # show:表示状態, length:候補の件数, currentIndex:何番目の候補にいるか
-    @suggestInfo = { show: false, length: 0, currentIndex: -1 }
+    # query: 表示中のクエリ, show:表示状態, length:候補の件数, currentIndex:何番目の候補にいるか
+    @suggestInfo = { query: "", show: false, length: 0, currentIndex: -1 }
 
   # 使用中のブラウザが対応しているか
   isSupport: ()->

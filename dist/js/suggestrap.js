@@ -19,7 +19,8 @@
       this.keyupHandler = _.debounce((function(_this) {
         return function(event) {
           var _jsonUrl;
-          if (event.target.value.length >= _this.args["minlength"] && document.activeElement.id === _this.args["target"]) {
+          if (event.target.value.length >= _this.args["minlength"] && document.activeElement.id === _this.args["target"] && _this.suggestInfo["query"] !== event.target.value) {
+            _this.suggestInfo["query"] = event.target.value;
             _jsonUrl = _this.getJsonUrl(event.target.value);
             return _this.fetchSuggestJson(_jsonUrl, function(json) {
               if (json.length > 0) {
@@ -28,6 +29,7 @@
               }
             });
           } else {
+            _this.suggestInfo["query"] = "";
             _this.hideSuggest();
             return _this.removeSuggest();
           }
@@ -79,9 +81,7 @@
       })(this));
       this.targetForm.addEventListener("textInput", (function(_this) {
         return function(event) {
-          if (!_this.suggestInfo["show"]) {
-            return _this.keyupHandler(event);
-          }
+          return _this.keyupHandler(event);
         };
       })(this));
       this.targetForm.addEventListener("focus", (function(_this) {
@@ -210,6 +210,7 @@
 
     Suggestrap.prototype.suggestInfoInitialize = function() {
       return this.suggestInfo = {
+        query: "",
         show: false,
         length: 0,
         currentIndex: -1
