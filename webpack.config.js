@@ -11,8 +11,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
-    libraryTarget: 'var',
+    filename: '[name].js'
   },
   resolve: {
     modules: [ 'node_modules', path.resolve('./src/'),  ],
@@ -37,11 +36,6 @@ module.exports = {
         query: {
           presets: ['es2015']
         }
-      },
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        loaders: ["style-loader", "css-loader", "resolve-url-loader", "sass-loader"]
       },
       {
         test: /\.pug$/,
