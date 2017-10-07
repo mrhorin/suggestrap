@@ -2,7 +2,7 @@ import Suggestrap from 'js/suggestrap'
 
 const req = {
   target: "target",
-  url: "http://example.com/suggest/json/%QUERY",
+  url: "http://sample.org/json/%QUERY",
   key: "name",
 }
 

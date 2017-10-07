@@ -4,7 +4,7 @@
   "description": "",
   "main": "suggestrap.main.min.js",
   "scripts": {
-    "test": "mocha ./dist/test.js",
+    "test": "mocha ./dist/test/test.js",
     "watch": "webpack --watch",
     "build": "webpack"
   },
@@ -25,6 +25,7 @@
     "webpack-notifier": "^1.5.0"
   },
   "dependencies": {
-    "lodash": "^4.14.1"
+    "lodash": "^4.14.1",
+    "superagent": "^3.6.3"
   }
 }
