@@ -16,12 +16,9 @@ npm install suggestrap
 
 ## Usage
 The suggestion elements are created by suggestrap and then it is inserted into next to the target element.  
-The position depend on a parent element of the target element so the parent element must be relative.
 ```html
-<div style="position: relative;">
-  <input id="target" type="text">
-  <button type="submit" value="submit">
-</div>
+<input id="target" type="text">
+<button type="submit" value="submit">
 ```
 This example is written with ES6.  
 ```javascript

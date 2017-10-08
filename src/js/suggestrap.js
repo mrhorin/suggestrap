@@ -214,7 +214,6 @@ export default class Suggestrap{
       padding: 3px 0;
       margin: 0;
       position: absolute;
-      top: 95%;
       z-index: 1000;
       width: auto;
       height: auto;
