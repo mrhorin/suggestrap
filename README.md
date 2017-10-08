@@ -1,84 +1,78 @@
 # suggestrap
-The UI component of suggestrap is able to show suggestions from JSON.
+![show](https://user-images.githubusercontent.com/6502717/31308201-7997988c-abad-11e7-865d-0507c59b6f6b.gif)  
+This module could show suggestions from JSON on the input element.
+
 ## Install
-Install with [Bower](https://bower.io/).
+Install with [npm](https://www.npmjs.com/).
 ```
-bower install suggestrap
+npm install suggestrap
 ```
 ## Usage
-You need to include `suggestrap.main.min.js` in the head tag element.  
-Suggestions elements as absolute css style will be inserted after the target element by suggestrap. Its position depend on parent element of the target element, so the parent element css style must be relative.
+The suggestion elements are created by suggestrap and then it is inserted into next to the target element.  
+The position depend on a parent element of the target element so the parent element must be relative.
 ```html
 <div style="position: relative;">
   <input id="target" type="text">
-  <input type="submit" value="submit">
+  <button type="submit" value="submit">
 </div>
 ```
-Suggestrap must receive JSON which is nest one hash.
+This example is written with ES6.  
+```javascript
+import Suggestrap from 'js/suggestrap'
+
+const req = {
+  target: "target",
+  url: "http://example.com/json/users/%QUERY",
+  key: "name"
+}
+const option = {
+  minlength: 2,
+  wildcard: "%QUERY",
+  delay: 400,
+  count: 5
+}
+
+var suggestrap = new Suggestrap(req, option)
+```
+Suggestrap's to receive a JSON which is nest one hash.
 ```json
 [
-  {"id":1, "name":"satoru"},
-  {"id":2, "name":"shigeru"},
-  {"id":3, "name":"shigesato"},
-  {"id":4, "name":"satoshi"}
+  {"id":1, "name":"James"},
+  {"id":2, "name":"Jack"},
+  {"id":3, "name":"Jane"},
+  {"id":4, "name":"Jackie"}
 ]
 ```  
-This code must write in after ready event.  
-```javascript
-window.onload = function(){
-  req = {
-    target: "target",
-    url: "http://example.com/name/json/%QUERY",
-    key: "name"
-  };
-  option = {
-    minlength: 2,
-    wildcard: "%QUERY",
-    delay: 400,
-    count: 5
-  };
-  suggestrap = new Suggestrap(req, option);
-}
-```
-The first argument hash in Suggestrap object is required items.
-- `target`: The input tag element's id of target that you would like to suggest.
-- `url`: Link to JSON. '%QUERY' is request params, inputed value in target element is set into its.
-- `key`: if you would like to show name key of JSON in suggestions, this value is 'name'.
 
-The second argument hash in Suggestrap object is optional item.
-- `minlength`: The minimum character length needed before suggestions start getting rendered. Defaults to 2.
-- `wildcard`: Request params's wild card for JSON. Defaults to '%QUERY'.
-- `delay`: If target element fire the keyup event and don't fire the next keyup event until over 400ms, suggestrap would show the suggestions from inputed value. The  option purpose is that don't increase request for JSON URL. Defaults to 400.
-- `count`: If this option is 10, suggestrap would show maxium 10 suggestions. Defaults to 5.
+The first argument hash is required.
+- `target`: Specify element id of target that you would like to show.
+- `url`: The URL is for receive JSON. It must have wildcard. The JSON is used for to show suggestion.
+- `key`: If you would like to show name key of JSON in suggestions, this value is 'name'.
 
-If you don't understand about this README.md document, there are demo.html file in './dist/html/' directory, please show this file from your browser.
+The second argument hash is optional.
+- `minlength`: As Inputted character count reaches minlength, show suggestions. Defaults to 2.
+- `wildcard`: The option is string for specify wildcard in URL. As You input a value in the target form, the wildcard is replaced the value. Defaults to '%QUERY'.
+- `delay`: As the target element fires a keyup event and then doesn't show suggestions soon until over 400 ms. The option is useful for doesn't make suggestrap to do necessary request. Defaults to 400.
+- `count`: If this option is 5, suggestrap would show maxium 5 suggestions. Defaults to 5.
+
 ## Customize
-If you want to customize suggestions css style, you've to override css styles on '#suggestrap-space' or its inner list elements.
+If you want to customize suggestions css style, you've to override css styles.
 ```css
-/* For example */
-#suggestrap-space {
+/* Example */
+ul#suggestrap {
   top: 50px;
   border-radius: 0px;
   padding: 10px 0px;
 }
-#suggestrap-space li {
+ul#suggestrap li {
   font-size: 15px;
 }
-#suggestrap-space li.active,
-#suggestrap-space li:hover {
+ul#suggestrap li.active,
+ul#suggestrap li:hover {
   background-color: #5bc0de;
 }
 
 ```
-## Browser Support
-I've confirmed operation by these browsers.
-- Google Chrome 51
-- Firefox 48
-- Safari 9 OS X El Capitan
-- Safari 9 iOS 9
-- Opera 38
-- Microsoft Edge 25
-- Internet Explorer 10-11
 
 ## License
 [GPL-2.0](https://opensource.org/licenses/GPL-2.0)
