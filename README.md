@@ -1,3 +1,9 @@
+[![Build Status](https://travis-ci.org/mrhorin/suggestrap.svg?branch=master)](https://travis-ci.org/mrhorin/suggestrap)
+[![npm version](https://badge.fury.io/js/suggestrap.svg)](https://badge.fury.io/js/suggestrap)
+[![GitHub license](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/mrhorin/suggestrap/master/LICENSE)  
+
+[![NPM](https://nodei.co/npm/suggestrap.png)](https://nodei.co/npm/suggestrap/)
+
 # suggestrap
 ![show](https://user-images.githubusercontent.com/6502717/31308201-7997988c-abad-11e7-865d-0507c59b6f6b.gif)  
 This module could show suggestions from JSON on the input element.
@@ -7,6 +13,7 @@ Install with [npm](https://www.npmjs.com/).
 ```
 npm install suggestrap
 ```
+
 ## Usage
 The suggestion elements are created by suggestrap and then it is inserted into next to the target element.  
 The position depend on a parent element of the target element so the parent element must be relative.
