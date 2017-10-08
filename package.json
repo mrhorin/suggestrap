@@ -1,6 +1,6 @@
 {
   "name": "suggestrap",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "This module could show suggest from JSON on input element.",
   "main": "./src/js/suggestrap.js",
   "scripts": {
