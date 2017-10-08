@@ -121,7 +121,6 @@ export default class Suggestrap{
           }
         })
     }).then((res) => {
-      console.log(res)
       callbackFunc(res.text)
       }).catch((err) => {
       console.log(err)
@@ -221,6 +220,7 @@ export default class Suggestrap{
       height: auto;
     }
     ul#suggestrap li{
+      color: #333;
       text-align: left;
       white-space: nowrap;
       overflow: hidden;
