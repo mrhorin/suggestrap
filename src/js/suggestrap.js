@@ -171,6 +171,10 @@ export default class Suggestrap{
     this.element['target'].addEventListener('textInput', (event) => {
       this.keyUpHandler(event)
     })
+    // Solve that the displacement of suggestion element's position occurs when resize window
+    window.onresize = () => {
+      if(this['show']) this.show()
+    }
   }
 
   _parseJson(json) {

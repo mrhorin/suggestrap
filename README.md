@@ -22,7 +22,7 @@ The suggestion elements are created by suggestrap and then it is inserted into n
 ```
 This example is written with ES6.  
 ```javascript
-import Suggestrap from 'js/suggestrap'
+import Suggestrap from 'suggestrap'
 
 const req = {
   target: "target",
