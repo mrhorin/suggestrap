@@ -12,7 +12,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'lib'),
-    filename: '[name].js'
+    filename: '[name].js',
+    libraryTarget: 'umd'
   },
   resolve: {
     modules: [ 'node_modules', path.resolve('./src/'),  ],
