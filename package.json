@@ -2,7 +2,7 @@
   "name": "suggestrap",
   "version": "2.1.4",
   "description": "This module could show suggest from JSON on input element.",
-  "main": "./src/js/suggestrap.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha ./dist/test/test.js",
     "watch": "webpack --watch",

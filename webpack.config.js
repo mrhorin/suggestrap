@@ -7,10 +7,10 @@ process.noDeprecation = true
 module.exports = {
   entry: {
     'suggestrap': './src/js/suggestrap.js',
-    './test/browser-test': './src/test/browser-test.js',
+    '../test/browser-test': './src/test/browser-test.js',
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'lib'),
     filename: '[name].js'
   },
   resolve: {
@@ -22,7 +22,7 @@ module.exports = {
   plugins: [
     new WebpackNotifierPlugin(),
     new HtmlWebpackPlugin({
-      filename: './test/index.html',
+      filename: '../test/index.html',
       template: './src/test/index.pug',
       chunks: [],
     }),
