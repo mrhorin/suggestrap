@@ -6,8 +6,8 @@ process.noDeprecation = true
 
 module.exports = {
   entry: {
+    'index': './src/js/index.js',    
     'suggestrap': './src/js/suggestrap.js',
-    '../index': './src/js/index.js',
     '../test/browser-test': './src/test/browser-test.js',
   },
   output: {
