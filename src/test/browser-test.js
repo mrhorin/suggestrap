@@ -1,12 +1,12 @@
 import { assert } from 'chai'
 
-import Suggestrap from 'js/suggestrap'
+import Suggestrap from 'js/index'
 
 describe('Suggestrap', () => {
   let suggest, json
   suggest = new Suggestrap({
     target: "target",
-    url: "http://localhost:3000/json/companies/%QUERY",
+    url: "http://localhost:3000/json/companies/suggest?keyword=%QUERY",
     key: "name",
   })
 

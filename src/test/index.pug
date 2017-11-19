@@ -2,18 +2,18 @@ doctype html
 html(lang="en")
   head
     meta(charset="utf-8")
-    link(href="../../node_modules/mocha/mocha.css")
-    title Suggestrap Test
+    link(href="../node_modules/mocha/mocha.css")
+    title Suggestrap
   body
     .container(style="margin: 0 auto; width: 500px;")
-      h1 Suggestrap Test
+      h1 Suggestrap
       input#target(type="text")
       input(type="submit" value="submit")    
     div#mocha
 
     //- Require test library files
-    script(src="../../node_modules/mocha/mocha.js")
-    script(src="../../node_modules/chai/chai.js")
+    script(src="../node_modules/mocha/mocha.js")
+    script(src="../node_modules/chai/chai.js")
 
     script.
       mocha.setup({ ui: 'bdd' })
