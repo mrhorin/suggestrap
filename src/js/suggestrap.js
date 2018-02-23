@@ -214,6 +214,8 @@ export default class Suggestrap{
       suggest: document.createElement('ul'),
       style: document.createElement('style'),      
     }
+    // Check whether target element exists
+    if(!(element.target)) throw('target element is not found.')
     // Set style element
     let _css = `
     ul#suggestrap{
