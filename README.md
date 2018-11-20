@@ -6,7 +6,7 @@
 
 # suggestrap
 ![show](https://user-images.githubusercontent.com/6502717/31308201-7997988c-abad-11e7-865d-0507c59b6f6b.gif)  
-This module could show suggestions from JSON on the input element.
+This module could show suggestions from JSON on an input element.
 
 ## Install
 Install with [npm](https://www.npmjs.com/).
@@ -38,29 +38,29 @@ const option = {
 
 var suggestrap = new Suggestrap(req, option)
 ```
-Suggestrap's to receive a JSON which is nest one hash.
+Suggestrap have to receive an array which has objects for showing suggestions as JSON.
 ```json
 [
-  {"id":1, "name":"James"},
-  {"id":2, "name":"Jack"},
-  {"id":3, "name":"Jane"},
-  {"id":4, "name":"Jackie"}
+  {"id":1, "age":20, "name":"James"},
+  {"id":2, "age":32, "name":"Jack"},
+  {"id":3, "age":28, "name":"Jane"},
+  {"id":4, "age":41, "name":"Jackie"}
 ]
 ```  
 
 The first argument hash is required.
-- `target`: Specify element id of target that you would like to show.
-- `url`: The URL is for receive JSON. It must have wildcard. The JSON is used for to show suggestion.
-- `key`: If you would like to show name key of JSON in suggestions, this value is 'name'.
+- `target`: Specify a target form element id which you would like to show.
+- `url`: Specify an URL for receiving JSON. The URL have to include a wildcard.
+- `key`: If you would like to show names in suggestions from JSON objects, this value is 'name'.
 
 The second argument hash is optional.
-- `minlength`: As Inputted character count reaches minlength, show suggestions. Defaults to 2.
-- `wildcard`: The option is string for specify wildcard in URL. As You input a value in the target form, the wildcard is replaced the value. Defaults to '%QUERY'.
-- `delay`: As the target element fires a keyup event and then doesn't show suggestions soon until over 400 ms. The option is useful for doesn't make suggestrap to do necessary request. Defaults to 400.
-- `count`: If this option is 5, suggestrap would show maxium 5 suggestions. Defaults to 5.
+- `minlength`: As inputed character count reaches minlength, the suggestions are shown. Defaults to 2.
+- `wildcard`: This option is a string for specifying wildcard in the URL. As You enter a value in the target form, the wildcard is replaced the value which you entered. Defaults to '%QUERY'.
+- `delay`: The suggestions are show after any milliseconds have passed. Defaults to 400.
+- `count`: If this option is 5, suggestrap would show up to 5 suggestions. Defaults to 5.
 
 ## Customize
-If you want to customize suggestions css style, you've to override css styles.
+If you would like to customize suggestions css style, you need to override css styles yourself.
 ```css
 /* Example */
 ul#suggestrap {
