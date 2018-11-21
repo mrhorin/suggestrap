@@ -1,27 +1,36 @@
 import _ from 'lodash'
 import request from 'superagent'
 
-export default class Suggestrap{
+export default class Suggestrap {
 
   constructor(req, option = {}) {
     this.req = this._reqInitialize(req)
     this.option = this._optionInitialize(option)
+    // A state of suggestions
     this.state = this._stateInitialize()
+    // Html elements for showing suggestions
     this.element = this._elementInitialize()
-    this._setEventListener()    
+    this._setEventListener()
     this.hide()
     this.keyUpHandler = _.debounce((event) => {
-      if (document.activeElement.id == this.req['target'] &&
-      event.target.value.length >= this.option['minlength'] &&
-      event.target.value != this.state['query']) {
+      if (this.isReadyToShow(event.target)) {
+        // Show suggestions
         this.state['query'] = event.target.value
-        this._fetchSuggestJson((json) => {
-          if (json.length > 0) {
-            this.add(json)
+        if (this.hasUrl()) {
+          this._fetchJson((json) => {
+            if (json.length > 0) {
+              this.add(json)
+              this.show()
+            }
+          })
+        } else {
+          if (this.req.values.length > 0) {
+            this.add(this.req.values)
             this.show()
           }
-        })
+        }
       } else {
+        // Hide suggestions
         this.state['query'] = ''
         this.hide()
         this.remove()
@@ -30,7 +39,15 @@ export default class Suggestrap{
   }
 
   get jsonUrl() {
-    return this.req['url'].replace(this.option['wildcard'], this.state['query'])
+    if (this.hasUrl()) {
+      if ('values' in this.req) {
+        return this.req.values.replace(this.option.wildcard, this.state.query)
+      } else {
+        return this.req.url.replace(this.option.wildcard, this.state.query)
+      }
+    } else {
+      return ""
+    }
   }
 
   show() {
@@ -38,7 +55,7 @@ export default class Suggestrap{
     let rect = this.element['target'].getBoundingClientRect()
     let x = window.pageXOffset + rect.left
     let y = window.pageYOffset + rect.top + rect.height
-    this.element['suggest'].style.left = Math.round(x).toString() + 'px'    
+    this.element['suggest'].style.left = Math.round(x).toString() + 'px'
     this.element['suggest'].style.top = Math.round(y).toString() + 'px'
     this.element['suggest'].style.display = 'block'
     this.state['isShow'] = true
@@ -77,7 +94,7 @@ export default class Suggestrap{
     }
     switch (this.state['currentIndex']) {
       case -1:
-        break  
+        break
       default:
         this.element['suggest'].childNodes[this.state['currentIndex']].className = 'suggestrap-active'
         // Insert current suggest value into the target form
@@ -102,7 +119,7 @@ export default class Suggestrap{
       this.element['suggest'].appendChild(suggestItem)
       // Break this loop when appendCount reaches this.option['count']
       appendedCount += 1
-      if(appendedCount >= this.option['count']) break
+      if (appendedCount >= this.option['count']) break
     }
     this.state['length'] = this.element['suggest'].childNodes.length
     this.state['currentIndex'] = -1
@@ -115,7 +132,36 @@ export default class Suggestrap{
     this._stateInitialize()
   }
 
-  _fetchSuggestJson(callbackFunc) {
+  isReadyToShow(element) {
+    return (document.activeElement.id == this.req['target'] &&
+      element.value.length >= this.option['minlength'] &&
+      element.value != this.state['query']
+    )
+  }
+
+  hasValues() {
+    return (
+      'values' in this.req &&
+      typeof this.req.values == 'object' &&
+      this.req.values.length > 0
+    )
+  }
+
+  hasUrl() {
+    let pattern = RegExp(/^https?:\/\//, 'i')
+    return (
+      ('values'in this.req &&
+        typeof this.req.values == 'string' &&
+        pattern.test(this.req.values)
+      ) ||
+      ('url' in this.req &&
+        typeof this.req.url == 'string' &&
+        pattern.test(this.req.url)
+      )  
+    )
+  }
+
+  _fetchJson(callbackFunc) {
     new Promise((resolve, reject) => {
       request
         .get(this.jsonUrl)
@@ -183,15 +229,29 @@ export default class Suggestrap{
     } else if (typeof json == 'object') {
       return json
     } else {
-      throw 'It is not JSON or Object.'
+      throw new Error('It must be JSON or Object.')
     }
   }
 
   _reqInitialize(req) {
     // Necessary params
-    if (!('target' in req)) throw ('target is not found in the option. This argument is necessary.')
-    if (!('url' in req)) throw ('url is not found in the option. This argument is necessary.')
-    if (!('key' in req)) throw ('key is not found in the option. This argument is necessary.')
+    if (!('target' in req)) {
+      throw new Error('target is not found. This key is necessary.')
+    } else if (typeof req['target'] != 'string') {
+      throw new Error('target must be a string.')
+    }
+    if (!('key' in req)) {
+      throw new Error('key is not found. This key is necessary.')
+    } else if (typeof req['key'] != 'string') {
+      throw new Error('key must be a string.')
+    }
+    if (!('values' in req) && !('url' in req)) {
+      throw new Error('values and url are not found. Either key is necessary.')
+    } else if ('values' in req && typeof req['values'] != 'string' && typeof req['values'] != 'object') {
+      throw new Error('values must be a string or an array that has hashes.')
+    } else if ('url' in req && typeof req['url'] != 'string') {
+      throw new Error('url must be a string.')
+    }
     return req
   }
 

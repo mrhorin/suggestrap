@@ -3,23 +3,32 @@ import { assert } from 'chai'
 import Suggestrap from 'js/index'
 
 describe('Suggestrap', () => {
-  let suggest, json
+  let suggest, users, jsonUrl, json
+  jsonUrl = "https://localhost:3000/json/users?keyword=%QUERY"
+  users = [
+    { id: 1, name: 'Yamada', },
+    { id: 2, name: 'Yamakawa' },
+    { id: 3, name: 'Yamamoto' },
+    { id: 4, name: 'Nakata', },
+    { id: 5, name: 'Nakamura', },
+    { id: 6, name: 'Nakanishi', },
+  ]
   suggest = new Suggestrap({
     target: "target",
-    url: "http://localhost:3000/json/companies/suggest?keyword=%QUERY",
+    values: users,
     key: "name",
   })
 
   context('when added JSON', () => {
-    json = JSON.stringify([{ id: 1, name: 'Yamada', }, { id: 2, name: 'Kato' }])
+    json = JSON.stringify(users)
     beforeEach((done) => {
       suggest.add(json)
       done()
     })
 
-    describe('#add', () => {      
-      it('should have 2 as state.length', () => {        
-        assert.equal(suggest.state.length, 2)
+    describe('#add', () => {
+      it('should have 2 as state.length when option.count is 5', () => {
+        assert.equal(suggest.state.length, 5)
       })
     })
   
@@ -46,26 +55,55 @@ describe('Suggestrap', () => {
   })
 
   describe('#_parseJson', () => {
-    json
-
-    it('should return Array when Array of JSON', () => {
-      json = JSON.stringify([ { id: 1, name: 'Yamada', }, { id: 2, name: 'Kato' } ])
+    it('should return an Array when input an Array of JSON', () => {
+      json = JSON.stringify(users)
       assert.isArray(suggest._parseJson(json))
     })  
 
-    it('should return Object when Hash of JSON', () => {
-      json = JSON.stringify({ id: 1, name: 'Yamada', })
+    it('should return an Object when input a Hash of JSON', () => {
+      json = JSON.stringify(users[0])
       assert.isObject(suggest._parseJson(json))
     })
 
-    it('should return Array when Array', () => {
-      json = [{ id: 1, name: 'Yamada', }, { id: 2, name: 'Kato', }]
-      assert.isArray(suggest._parseJson(json))
+    it('should return an Array when input an Array', () => {
+      assert.isArray(suggest._parseJson(users))
     })
 
-    it('should thrrow SyntaxError when wrong format string', () => {
+    it('should throw SyntaxError when input a wrong format string', () => {
       json = "[{ id: 1, name: 'Yamada', }, { id: 2, name: 'Kato', }]"
       assert.throws(() => { suggest._parseJson(json) }, SyntaxError, /in JSON/)
     })  
+  })
+
+  describe('#_reqInitialize', () => {
+    it('should throw an exception when values and url are empty', () => {
+      let req = { target: "target", key: "name" }
+      assert.throws(() => new Suggestrap(req), Error)
+    })
+
+    it('should throw an exception when url is object', () => {
+      let req = { target: "target", key: "name", url: users}
+      assert.throws(() => new Suggestrap(req))
+    })
+
+    it('should not throw an exception when url is string', () => {
+      let req = { target: "target", key: "name", url: jsonUrl}
+      assert.doesNotThrow(() => new Suggestrap(req))
+    })
+
+    it('should throw an exception when values is not object or string', () => {
+      let req = { target: "target", key: "name", values: 1234567890 }
+      assert.throws(() => new Suggestrap(req), Error)
+    })
+
+    it('should not throw an exception when values is string', () => {
+      let req = { target: "target", key: "name", values: jsonUrl}
+      assert.doesNotThrow(() => new Suggestrap(req))
+    })
+
+    it('should not throw an exception when values is object', () => {
+      let req = { target: "target", key: "name", values: users}
+      assert.doesNotThrow(() => new Suggestrap(req))
+    })
   })
 })
