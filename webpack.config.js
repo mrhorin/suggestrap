@@ -22,7 +22,7 @@ module.exports = {
   externals: [
   ],
   plugins: [
-    new WebpackNotifierPlugin(),
+    new WebpackNotifierPlugin({title: 'suggestrap'}),
     new HtmlWebpackPlugin({
       filename: '../test/index.html',
       template: './src/test/index.pug',
