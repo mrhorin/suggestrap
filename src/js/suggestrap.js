@@ -84,7 +84,7 @@ export default class Suggestrap {
       if (this.state['currentIndex'] > -1) {
         this.state['currentIndex'] -= 1
       } else {
-        this.state['currentIndex'] = this.state['length'] - 1
+        this.state['currentIndex'] = this.element['suggest'].childNodes.length - 1
       }
       this.activeCurrentSuggest()
     }
@@ -92,7 +92,7 @@ export default class Suggestrap {
 
   moveDownSuggest() {
     if (this.state['isShow']) {
-      if (this.state['currentIndex'] == this.state['length'] - 1) {
+      if (this.state['currentIndex'] == this.element['suggest'].childNodes.length - 1) {
         this.state['currentIndex'] = -1
       } else {
         this.state['currentIndex'] += 1
@@ -134,7 +134,6 @@ export default class Suggestrap {
       appendedCount += 1
       if (appendedCount >= this.option['count']) break
     }
-    this.state['length'] = this.element['suggest'].childNodes.length
     this.state['currentIndex'] = -1
   }
 
@@ -278,7 +277,7 @@ export default class Suggestrap {
   }
 
   _stateInitialize() {
-    return this.state = { query: '', isShow: false, length: 0, currentIndex: -1 }
+    return this.state = { query: '', isShow: false, currentIndex: -1 }
   }
 
   _elementInitialize() {
