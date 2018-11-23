@@ -7,7 +7,6 @@ process.noDeprecation = true
 module.exports = {
   entry: {
     'index': './src/js/index.js',    
-    'suggestrap': './src/js/suggestrap.js',
     '../test/browser-test': './src/test/browser-test.js',
     '../test/test-server': './src/test/test-server.js',
   },
