@@ -4,7 +4,7 @@
   "description": "This module could show suggest from JSON on input element.",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "mocha ./test/test.js",
+    "test": "node ./test/test-server.js",
     "watch": "webpack --watch",
     "build": "webpack"
   },

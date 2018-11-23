@@ -9,6 +9,7 @@ module.exports = {
     'index': './src/js/index.js',    
     'suggestrap': './src/js/suggestrap.js',
     '../test/browser-test': './src/test/browser-test.js',
+    '../test/test-server': './src/test/test-server.js',
   },
   output: {
     path: path.resolve(__dirname, 'lib'),
@@ -20,6 +21,9 @@ module.exports = {
     extensions: ['.js', 'scss'],
   },
   externals: [
+    'http',
+    'fs',
+    'path',
   ],
   plugins: [
     new WebpackNotifierPlugin({title: 'suggestrap'}),
