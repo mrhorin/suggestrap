@@ -25,7 +25,7 @@ export default class Suggestrap {
           })
         } else {
           if (this.req.values.length > 0) {
-            this.add(this.req.values)
+            this.add(this.suggestions)
             this.show()
           }
         }
@@ -48,6 +48,19 @@ export default class Suggestrap {
     } else {
       return ""
     }
+  }
+
+  get suggestions() {
+    let res = []
+    if (this.req.values && this.state.query) {
+      let pattern = new RegExp(this.state.query, 'i')
+      for (let index = 0; index < this.req.values.length && res.length < this.option.count; index++){
+        if (this.req.values[index][this.req.key].match(pattern)) {
+          res.push(this.req.values[index])
+        }
+      }
+    }
+    return res
   }
 
   show() {
@@ -275,7 +288,7 @@ export default class Suggestrap {
       style: document.createElement('style'),      
     }
     // Check whether target element exists
-    if(!(element.target)) throw('target element is not found.')
+    if(!(element.target)) throw(this.req.target + ' element is not found.')
     // Set style element
     let _css = `
     ul#suggestrap{
