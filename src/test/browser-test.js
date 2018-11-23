@@ -19,63 +19,58 @@ describe('Suggestrap', () => {
     { id: 11, name: "German" },
     { id: 12, name: "Japanese" }
   ]
+  json = JSON.stringify(languages)
   suggest = new Suggestrap({
     target: "target-country",
     values: countriesJsonUrl,
     key: "name",
   })
 
-  context('when added JSON', () => {
-    json = JSON.stringify(languages)
-    beforeEach((done) => {
+  describe('#add', () => {
+    it('element.suggest.childNodes.length should have 5 after adding JSON when option.count is 5', () => {
       suggest.add(json)
-      done()
+      assert.equal(suggest.element.suggest.childNodes.length, 5)
     })
+  })
 
-    describe('#add', () => {
-      it('should have 2 as state.length when option.count is 5', () => {
-        assert.equal(suggest.state.length, 5)
-      })
+  describe('#remove', () => {
+    it('element.suggest.childNodes.length should have 0 after adding JSON and then executing remove()', () => {
+      suggest.add(json)
+      suggest.remove()
+      assert.equal(suggest.element.suggest.childNodes.length, 0)
     })
-  
-    describe('#remove', () => {      
-      it('should have 0 as state.length', () => {
-        suggest.remove()
-        assert.equal(suggest.state.length, 0)
-      })
-    })      
+  })
 
-    describe('#show', () => {      
-      it('should have true as state.isShow', () => {     
-        suggest.show()
-        assert.isTrue(suggest.state.isShow)
-      })
+  describe('#show', () => {      
+    it('state.isShow should have true after executing show()', () => {     
+      suggest.show()
+      assert.isTrue(suggest.state.isShow)
     })
+  })
 
-    describe('#hide', () => {      
-      it('should have false as state.isShow', () => {        
-        suggest.hide()
-        assert.isFalse(suggest.state.isShow)
-      })
+  describe('#hide', () => {      
+    it('state.isShow should have true after executing hide()', () => {        
+      suggest.hide()
+      assert.isFalse(suggest.state.isShow)
     })
   })
 
   describe('#_parseJson', () => {
-    it('should return an Array when input an Array of JSON', () => {
+    it('should return an Array when inputed an Array of JSON', () => {
       json = JSON.stringify(languages)
       assert.isArray(suggest._parseJson(json))
     })  
 
-    it('should return an Object when input a Hash of JSON', () => {
+    it('should return an Object when inputed a Hash of JSON', () => {
       json = JSON.stringify(languages[0])
       assert.isObject(suggest._parseJson(json))
     })
 
-    it('should return an Array when input an Array', () => {
+    it('should return an Array when inputed an Array', () => {
       assert.isArray(suggest._parseJson(languages))
     })
 
-    it('should throw SyntaxError when input a wrong format string', () => {
+    it('should throw exception when inputed a wrong format JSON', () => {
       let wrongJson = "[{ id: 1, name: 'Yamada', }, { id: 2, name: 'Kato', }]"
       assert.throws(() => suggest._parseJson(wrongJson) , Error)
     })  
@@ -92,7 +87,7 @@ describe('Suggestrap', () => {
       assert.throws(() => new Suggestrap(req), Error)
     })
 
-    it('should not throw an exception when url is string', () => {
+    it('should not throw any exception when url is string', () => {
       let req = { target: "target-country", key: "name", url: countriesJsonUrl}
       assert.doesNotThrow(() => new Suggestrap(req))
     })
