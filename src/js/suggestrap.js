@@ -13,7 +13,7 @@ export default class Suggestrap {
     this._setEventListener()
     this.hide()
     this.keyUpHandler = _.debounce((event) => {
-      if (this.isReadyToShow(event.target)) {
+      if (this.isReadyToShow()) {
         // Show suggestions
         this.state['query'] = event.target.value
         if (this.hasUrl()) {
@@ -144,10 +144,11 @@ export default class Suggestrap {
     this._stateInitialize()
   }
 
-  isReadyToShow(element) {
-    return (document.activeElement.id == this.req['target'] &&
-      element.value.length >= this.option['minlength'] &&
-      element.value != this.state['query']
+  isReadyToShow() {
+    return (
+      document.activeElement.id == this.req.target &&
+      this.element.target.value.length >= this.option.minlength &&
+      this.element.target.value != this.state.query
     )
   }
 
