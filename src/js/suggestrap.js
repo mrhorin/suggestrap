@@ -262,12 +262,22 @@ export default class Suggestrap {
       throw new Error('key must be a string.')
     }
     if (!('values' in req) && !('url' in req)) {
+      // When not having values and url
       throw new Error('values and url are not found. Either key is necessary.')
     } else if ('values' in req && typeof req['values'] != 'string' && typeof req['values'] != 'object') {
+      // When having values but it isn't string or object
       throw new Error('values must be a string or an array that has hashes.')
+    } else if ('values' in req && typeof req.values == 'string' && !this.validateUrl(req.values)) {
+      // When having values as string but it isn't URL
+      throw new Error(req.values + ' is not URL even if it is string.')
     } else if ('url' in req && typeof req['url'] != 'string') {
+      // When having url but it isn't string
       throw new Error('url must be a string.')
+    } else if ('url' in req && typeof req.url == 'string' && !this.validateUrl(req.url)) {
+      // When having url but it isn't URL
+      throw new Error(req.url + ' is not URL even if it is string.')
     }
+
     return req
   }
 

@@ -77,7 +77,11 @@ describe('Suggestrap', () => {
   })
 
   describe('#_reqInitialize', () => {
-    it('should throw an exception when values and url are empty', () => {
+    it('should throw an exception when not having target')
+
+    it('should throw an exception when not having key')
+
+    it('should throw an exception when not having values and url', () => {
       let req = { target: "target-country", key: "name" }
       assert.throws(() => new Suggestrap(req), Error)
     })
@@ -85,6 +89,11 @@ describe('Suggestrap', () => {
     it('should throw an exception when url is object', () => {
       let req = { target: "target-language", key: "name", url: languages}
       assert.throws(() => new Suggestrap(req), Error)
+    })
+
+    it('should throw an exception when url is string but not URL', () => {
+      let req = { target: "target-country", key: "name", url: 'abcdifg'}
+      assert.throw(() => new Suggestrap(req))
     })
 
     it('should not throw any exception when url is string', () => {
@@ -97,9 +106,9 @@ describe('Suggestrap', () => {
       assert.throws(() => new Suggestrap(req), Error)
     })
 
-    it('should not throw an exception when values is string', () => {
-      let req = { target: "target-country", key: "name", values: countriesJsonUrl}
-      assert.doesNotThrow(() => new Suggestrap(req))
+    it('should throw an exception when values is string but not URL', () => {
+      let req = { target: "target-country", key: "name", values: 'abcdifg'}
+      assert.throws(() => new Suggestrap(req), Error)
     })
 
     it('should not throw an exception when values is object', () => {
