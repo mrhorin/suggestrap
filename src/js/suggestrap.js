@@ -161,17 +161,30 @@ export default class Suggestrap {
   }
 
   hasUrl() {
-    let pattern = RegExp(/^https?:\/\//, 'i')
     return (
       ('values'in this.req &&
         typeof this.req.values == 'string' &&
-        pattern.test(this.req.values)
+        this.validateUrl(this.req.values)
       ) ||
       ('url' in this.req &&
         typeof this.req.url == 'string' &&
-        pattern.test(this.req.url)
+        this.validateUrl(this.req.url)
       )  
     )
+  }
+
+  validateUrl(url) {
+    return RegExp(/^https?:\/\//, 'i').test(url)
+  }
+
+  _parseJson(json) {
+    if (typeof json === 'string') {
+      return JSON.parse(json)
+    } else if (typeof json == 'object') {
+      return json
+    } else {
+      throw new Error('It must be JSON or Object.')
+    }
   }
 
   _fetchJson(callbackFunc) {
@@ -233,16 +246,6 @@ export default class Suggestrap {
     // Solve that the displacement of suggestion element's position occurs when resize window
     window.onresize = () => {
       if(this['show']) this.show()
-    }
-  }
-
-  _parseJson(json) {
-    if (typeof json === 'string') {
-      return JSON.parse(json)
-    } else if (typeof json == 'object') {
-      return json
-    } else {
-      throw new Error('It must be JSON or Object.')
     }
   }
 
