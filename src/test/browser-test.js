@@ -26,6 +26,12 @@ describe('Suggestrap', () => {
     key: "name",
   })
 
+  describe('#getter suggestion', () => {
+    it('should return an empty array when values or url is URL', () => {
+      assert.equal(suggest.suggestions.length, 0)
+    })
+  })
+
   describe('#add', () => {
     it('element.suggest.childNodes.length should have 5 after adding JSON when option.count is 5', () => {
       suggest.add(json)

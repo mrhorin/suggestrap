@@ -38,18 +38,19 @@ export default class Suggestrap {
     }, this.option['delay'])
   }
 
+  // Get a JSON URL replaced a wildcard with a query
   get jsonUrl() {
-    if (this.hasUrl()) {
-      if ('values' in this.req) {
-        return this.req.values.replace(this.option.wildcard, this.state.query)
-      } else {
-        return this.req.url.replace(this.option.wildcard, this.state.query)
-      }
+    if (this.hasUrl() && 'values' in this.req) {
+      return this.req.values.replace(this.option.wildcard, this.state.query)
+    } else if (this.hasUrl() && 'url' in this.req) {
+      return this.req.url.replace(this.option.wildcard, this.state.query)
     } else {
+      console.warn("JSON URL isn't found because Suggestrap don't have an URL.")
       return ""
     }
   }
 
+  // Get suggestions matching query in values
   get suggestions() {
     let res = []
     if (this.req.values && this.state.query) {
@@ -277,7 +278,6 @@ export default class Suggestrap {
       // When having url but it isn't URL
       throw new Error(req.url + ' is not URL even if it is string.')
     }
-
     return req
   }
 
