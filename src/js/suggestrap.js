@@ -300,11 +300,15 @@ export default class Suggestrap {
       suggest: document.createElement('ul'),
       style: document.createElement('style'),      
     }
-    // Check whether target element exists
-    if(!(element.target)) throw(this.req.target + ' element is not found.')
-    // Set style element
+    // Check if target element exists
+    if (!(element.target)) throw new Error(element.target + ' element is not found.')
+    // Create an unique suggetions ID
+    let suggestrapId = 1
+    while (document.getElementById('suggestrap_' + suggestrapId)) suggestrapId++
+    suggestrapId = 'suggestrap_' + suggestrapId
+    // Set a style element for suggestions
     let _css = `
-    ul#suggestrap{
+    ul#${suggestrapId}{
       background: #fff;
       border-radius: 3px;
       box-shadow: -2px 2px 7px rgba(0,0,0,0.3);
@@ -316,19 +320,19 @@ export default class Suggestrap {
       width: auto;
       height: auto;
     }
-    ul#suggestrap li{
+    ul#${suggestrapId} li{
       color: #333;
       text-align: left;
       white-space: nowrap;
       overflow: hidden;
       padding: 1px 6px;
     }
-    ul#suggestrap li.suggestrap-active{
+    ul#${suggestrapId} li.suggestrap-active{
       background: #0099ff;
       color: #fff;
     }
-    ul#suggestrap li.suggestrap-active,
-    ul#suggestrap li:hover{
+    ul#${suggestrapId} li.suggestrap-active,
+    ul#${suggestrapId} li:hover{
       cursor: pointer;
       background: #4b89bf;
       color: #fff;
@@ -339,7 +343,7 @@ export default class Suggestrap {
     // Set target form element
     element['target'].autocomplete = 'off'
     // Set suggest element
-    element['suggest'].id = 'suggestrap'
+    element['suggest'].id = suggestrapId
     // Insert suggest element in the next to target element
     element['target'].parentNode.insertBefore(element['suggest'], element['target'].nextSibling)
     return element
