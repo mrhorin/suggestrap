@@ -32,21 +32,6 @@ describe('Suggestrap', () => {
     })
   })
 
-  describe('#add', () => {
-    it('element.suggest.childNodes.length should have 5 after adding JSON when option.count is 5', () => {
-      suggest.add(json)
-      assert.equal(suggest.element.suggest.childNodes.length, 5)
-    })
-  })
-
-  describe('#remove', () => {
-    it('element.suggest.childNodes.length should have 0 after adding JSON and then executing remove()', () => {
-      suggest.add(json)
-      suggest.remove()
-      assert.equal(suggest.element.suggest.childNodes.length, 0)
-    })
-  })
-
   describe('#show', () => {      
     it('state.isShow should have true after executing show()', () => {     
       suggest.show()
@@ -61,9 +46,23 @@ describe('Suggestrap', () => {
     })
   })
 
+  describe('#_add', () => {
+    it('element.suggest.childNodes.length should have 5 after adding JSON when option.count is 5', () => {
+      suggest._add(json)
+      assert.equal(suggest.element.suggest.childNodes.length, 5)
+    })
+  })
+
+  describe('#_remove', () => {
+    it('element.suggest.childNodes.length should have 0 after adding JSON and then executing _remove()', () => {
+      suggest._add(json)
+      suggest._remove()
+      assert.equal(suggest.element.suggest.childNodes.length, 0)
+    })
+  })
+
   describe('#_parseJson', () => {
     it('should return an Array when inputed an Array of JSON', () => {
-      json = JSON.stringify(languages)
       assert.isArray(suggest._parseJson(json))
     })  
 

@@ -13,19 +13,19 @@ export default class Suggestrap {
     this._setEventListener()
     this.hide()
     this.keyUpHandler = _.debounce((event) => {
-      if (this.isReadyToShow()) {
+      if (this._isReadyToShow()) {
         // Show suggestions
         this.state['query'] = event.target.value
         if (this.hasUrl()) {
           this._fetchJson((json) => {
             if (json.length > 0) {
-              this.add(json)
+              this._add(json)
               this.show()
             }
           })
         } else {
           if (this.req.values.length > 0) {
-            this.add(this.suggestions)
+            this._add(this.suggestions)
             this.show()
           }
         }
@@ -33,7 +33,7 @@ export default class Suggestrap {
         // Hide suggestions
         this.state['query'] = ''
         this.hide()
-        this.remove()
+        this._remove()
       }
     }, this.option['delay'])
   }
@@ -87,7 +87,7 @@ export default class Suggestrap {
       } else {
         this.state['currentIndex'] = this.element['suggest'].childNodes.length - 1
       }
-      this.activeCurrentSuggest()
+      this._activeCurrentSuggest()
     }
   }
 
@@ -98,26 +98,41 @@ export default class Suggestrap {
       } else {
         this.state['currentIndex'] += 1
       }
-      this.activeCurrentSuggest()
+      this._activeCurrentSuggest()
     }
   }
 
-  activeCurrentSuggest() {
-    for (let i = 0; i < this.element['suggest'].childNodes.length; i++) {
-      this.element['suggest'].childNodes[i].className = ''
-    }
-    switch (this.state['currentIndex']) {
-      case -1:
-        break
-      default:
-        this.element['suggest'].childNodes[this.state['currentIndex']].className = 'suggestrap-active'
-        // Insert current suggest value into the target form
-        this.element['target'].value = this.element['suggest'].childNodes[this.state['currentIndex']].innerHTML
-    }
+  hasValues() {
+    return (
+      'values' in this.req &&
+      typeof this.req.values == 'object' &&
+      this.req.values.length > 0
+    )
   }
 
-  add(json) {
-    this.remove()
+  hasUrl() {
+    return (
+      ('values'in this.req &&
+        typeof this.req.values == 'string' &&
+        this._validateUrl(this.req.values)
+      ) ||
+      ('url' in this.req &&
+        typeof this.req.url == 'string' &&
+        this._validateUrl(this.req.url)
+      )  
+    )
+  }
+
+  _isReadyToShow() {
+    return (
+      document.activeElement.id == this.req.target &&
+      this.element.target.value.length >= this.option.minlength &&
+      this.element.target.value != this.state.query
+    )
+  }
+
+  _add(json) {
+    this._remove()
     let appendedCount = 0
     for (let val of this._parseJson(json)) {
       let suggestItem = document.createElement('li')
@@ -138,43 +153,28 @@ export default class Suggestrap {
     this.state['currentIndex'] = -1
   }
 
-  remove() {
+  _remove() {
     while (this.element['suggest'].firstChild) {
       this.element['suggest'].removeChild(this.element['suggest'].firstChild)
     }
     this._stateInitialize()
   }
 
-  isReadyToShow() {
-    return (
-      document.activeElement.id == this.req.target &&
-      this.element.target.value.length >= this.option.minlength &&
-      this.element.target.value != this.state.query
-    )
+  _activeCurrentSuggest() {
+    for (let i = 0; i < this.element['suggest'].childNodes.length; i++) {
+      this.element['suggest'].childNodes[i].className = ''
+    }
+    switch (this.state['currentIndex']) {
+      case -1:
+        break
+      default:
+        this.element['suggest'].childNodes[this.state['currentIndex']].className = 'suggestrap-active'
+        // Insert current suggest value into the target form
+        this.element['target'].value = this.element['suggest'].childNodes[this.state['currentIndex']].innerHTML
+    }
   }
 
-  hasValues() {
-    return (
-      'values' in this.req &&
-      typeof this.req.values == 'object' &&
-      this.req.values.length > 0
-    )
-  }
-
-  hasUrl() {
-    return (
-      ('values'in this.req &&
-        typeof this.req.values == 'string' &&
-        this.validateUrl(this.req.values)
-      ) ||
-      ('url' in this.req &&
-        typeof this.req.url == 'string' &&
-        this.validateUrl(this.req.url)
-      )  
-    )
-  }
-
-  validateUrl(url) {
+  _validateUrl(url) {
     return RegExp(/^https?:\/\//, 'i').test(url)
   }
 
@@ -207,7 +207,7 @@ export default class Suggestrap {
   }
 
   _setEventListener() {
-    // Set event when input text in target
+    // Set event when input a text in target
     this.element['target'].addEventListener('keyup', (event) => {
       let invalidKeyCode = [38, 40, 37, 39, 16, 17, 13]
       let keyCode = event.keyCode
@@ -268,13 +268,13 @@ export default class Suggestrap {
     } else if ('values' in req && typeof req['values'] != 'string' && typeof req['values'] != 'object') {
       // When having values but it isn't string or object
       throw new Error('values must be a string or an array that has hashes.')
-    } else if ('values' in req && typeof req.values == 'string' && !this.validateUrl(req.values)) {
+    } else if ('values' in req && typeof req.values == 'string' && !this._validateUrl(req.values)) {
       // When having values as string but it isn't URL
       throw new Error(req.values + ' is not URL even if it is string.')
     } else if ('url' in req && typeof req['url'] != 'string') {
       // When having url but it isn't string
       throw new Error('url must be a string.')
-    } else if ('url' in req && typeof req.url == 'string' && !this.validateUrl(req.url)) {
+    } else if ('url' in req && typeof req.url == 'string' && !this._validateUrl(req.url)) {
       // When having url but it isn't URL
       throw new Error(req.url + ' is not URL even if it is string.')
     }
