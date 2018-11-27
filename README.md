@@ -5,8 +5,8 @@
 [![NPM](https://nodei.co/npm/suggestrap.png)](https://nodei.co/npm/suggestrap/)
 
 # suggestrap
-![show](https://user-images.githubusercontent.com/6502717/31308201-7997988c-abad-11e7-865d-0507c59b6f6b.gif)  
-This module could show suggestions from JSON on an input element.
+![show](https://user-images.githubusercontent.com/6502717/49056240-4c7db100-f23e-11e8-9a2e-863f59ad84a7.gif)  
+This module could show suggestions from JSON URL on an input form element.
 
 ## Install
 Install with [npm](https://www.npmjs.com/).
@@ -15,10 +15,9 @@ npm install suggestrap
 ```
 
 ## Usage
-The suggestion elements are created by suggestrap and then it is inserted into next to the target element.  
+A suggestion element is created by suggestrap and then it is inserted into next to the target element which you specify.  
 ```html
 <input id="target" type="text">
-<button type="submit" value="submit">
 ```
 This example is written with ES6.  
 ```javascript
@@ -33,34 +32,38 @@ const option = {
   minlength: 2,
   wildcard: "%QUERY",
   delay: 400,
-  count: 5
+  count: 5,
+  id: 'suggestrap'
 }
 
-var suggestrap = new Suggestrap(req, option)
+var suggestion = new Suggestrap(req, option)
 ```
-Suggestrap have to receive an array which has objects for showing suggestions as JSON.
+Suggestrap have to receive a JSON. The JSON format is an array which has objects.
 ```json
 [
-  {"id":1, "age":20, "name":"James"},
-  {"id":2, "age":32, "name":"Jack"},
-  {"id":3, "age":28, "name":"Jane"},
-  {"id":4, "age":41, "name":"Jackie"}
+  {"id":1, "age":32, "name":"Jack"},
+  {"id":2, "age":41, "name":"Jackie"},
+  {"id":3, "age":41, "name":"Jake"},
+  {"id":4, "age":20, "name":"James"},
+  {"id":5, "age":28, "name":"Jane"}
 ]
 ```  
 
 The first argument hash is required.
-- `target`: Specify a target form element id which you would like to show.
-- `url`: Specify an URL for receiving JSON. The URL have to include a wildcard.
-- `key`: If you would like to show names in suggestions from JSON objects, this value is 'name'.
+- `target`: Specify a target form element ID which you would like to show.
+- `url`: Specify an URL for receiving JSON. The URL have to include a wildcard like the example above.
+- `key`: Specify a key name of JSON objects which you'd like to show.
+- `values`: If you'd like to show suggestions from an Array object instead of JSON URL, you can input it with this key. **In that case, the url key isn't required.** Besides, you can specify JSON URL with this key like the url key. When you specify JSON URL, the behavior is same as the url key completely. This key takes priority over the url key when you specify url and values key at same time.
 
 The second argument hash is optional.
-- `minlength`: As inputed character count reaches minlength, the suggestions are shown. Defaults to 2.
+- `minlength`: As inputed character count reaches minlength, the suggestion are shown. Defaults to 2.
 - `wildcard`: This option is a string for specifying wildcard in the URL. As You enter a value in the target form, the wildcard is replaced the value which you entered. Defaults to '%QUERY'.
 - `delay`: The suggestions are show after any milliseconds have passed. Defaults to 400.
-- `count`: If this option is 5, suggestrap would show up to 5 suggestions. Defaults to 5.
+- `count`: When this option is 5, suggestrap would show up to 5 suggestions. Defaults to 5.
+- `id`: Specify a suggestion element ID. Defalults to 'suggestrap'.
 
 ## Customize
-If you would like to customize suggestions css style, you need to override css styles yourself.
+If you would like to customize a css style of a suggestion, you need to override the css style yourself.
 ```css
 /* Example */
 ul#suggestrap {
@@ -75,7 +78,6 @@ ul#suggestrap li.active,
 ul#suggestrap li:hover {
   background-color: #5bc0de;
 }
-
 ```
 
 ## License
