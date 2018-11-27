@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/mrhorin/suggestrap.svg?branch=master)](https://travis-ci.org/mrhorin/suggestrap)
 [![npm version](https://badge.fury.io/js/suggestrap.svg)](https://badge.fury.io/js/suggestrap)
-[![GitHub license](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/mrhorin/suggestrap/master/LICENSE)  
+[![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/mrhorin/suggestrap/master/LICENSE)  
 
 [![NPM](https://nodei.co/npm/suggestrap.png)](https://nodei.co/npm/suggestrap/)
 
@@ -81,7 +81,7 @@ ul#suggestrap li:hover {
 ```
 
 ## License
-[GPL-2.0](https://opensource.org/licenses/GPL-2.0)
+[GPL-3.0](https://opensource.org/licenses/GPL-3.0)
 
 ## Author
 [mrhorin](https://github.com/mrhorin)

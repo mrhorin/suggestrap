@@ -1,6 +1,6 @@
 {
   "name": "suggestrap",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "This module could show suggestions from JSON URL on an input form element.",
   "main": "./lib/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "author": "mrhorin",
   "homepage": "https://github.com/mrhorin/suggestrap",
-  "license": "GPL-2.0 (https://opensource.org/licenses/GPL-2.0)",
+  "license": "GPL-3.0-only",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
