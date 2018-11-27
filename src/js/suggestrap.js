@@ -287,6 +287,7 @@ export default class Suggestrap {
     if (!('minlength' in option)) option['minlength'] = 2
     if (!('delay' in option)) option['delay'] = 400
     if (!('count' in option)) option['count'] = 5
+    if (!('id' in option)) option['id'] = ''
     return option
   }
 
@@ -302,11 +303,20 @@ export default class Suggestrap {
     }
     // Check if target element exists
     if (!(element.target)) throw new Error(element.target + ' element is not found.')
-    // Create an unique suggetions ID
-    let suggestrapId = 1
-    while (document.getElementById('suggestrap_' + suggestrapId)) suggestrapId++
-    suggestrapId = 'suggestrap_' + suggestrapId
-    // Set a style element for suggestions
+    // Create an unique suggetion ID
+    let suggestrapId
+    if (this.option.id) {
+      // When specifying a id
+      suggestrapId = this.option.id
+    } else if (!document.getElementById('suggestrap')) {
+      suggestrapId = 'suggestrap'
+    } else {
+      // Add a suffix when existing id 'suggestrap'
+      let suffix = 2
+      while (document.getElementById('suggestrap_' + suffix)) suffix++
+      suggestrapId = 'suggestrap_' + suffix
+    }
+    // Set a style element for the suggestion element
     let _css = `
     ul#${suggestrapId}{
       background: #fff;
@@ -340,11 +350,11 @@ export default class Suggestrap {
     `
     element['style'].appendChild(document.createTextNode(_css))
     document.getElementsByTagName('head')[0].appendChild(element['style'])
-    // Set target form element
+    // Set the target form element
     element['target'].autocomplete = 'off'
-    // Set suggest element
+    // Set the suggestion element
     element['suggest'].id = suggestrapId
-    // Insert suggest element in the next to target element
+    // Insert the suggestion element in the next to target element
     element['target'].parentNode.insertBefore(element['suggest'], element['target'].nextSibling)
     return element
   }
