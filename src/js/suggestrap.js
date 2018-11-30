@@ -71,12 +71,12 @@ export default class Suggestrap {
     let y = window.pageYOffset + rect.top + rect.height
     this.element['suggest'].style.left = Math.round(x).toString() + 'px'
     this.element['suggest'].style.top = Math.round(y).toString() + 'px'
-    this.element['suggest'].style.display = 'block'
+    this.element['suggest'].style.visibility = 'visible'
     this.state['isShow'] = true
   }
 
   hide() {
-    this.element['suggest'].style.display = 'none'
+    this.element['suggest'].style.visibility = 'hidden'
     this.state['isShow'] = false
   }
 
