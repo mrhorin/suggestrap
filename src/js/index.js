@@ -1,3 +1,5 @@
 import Suggestrap from 'js/suggestrap'
 
-module.exports = Suggestrap
+export default Suggestrap
+
+export { Suggestrap }

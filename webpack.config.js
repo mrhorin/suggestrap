@@ -4,11 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 process.noDeprecation = true
 
-module.exports = {
+const node = {
   entry: {
-    'index': './src/js/index.js',    
-    '../test/browser-test': './src/test/browser-test.js',
     '../test/test-server': './src/test/test-server.js',
+    'index': './src/js/index.js',
   },
   output: {
     path: path.resolve(__dirname, 'lib'),
@@ -17,15 +16,52 @@ module.exports = {
   },
   resolve: {
     modules: [ 'node_modules', path.resolve('./src/'),  ],
-    extensions: ['.js', 'scss'],
   },
   externals: [
     'http',
     'fs',
     'path',
+    'superagent',
+    'lodash',
   ],
+  target: "node",
   plugins: [
-    new WebpackNotifierPlugin({title: 'suggestrap'}),
+    new WebpackNotifierPlugin({title: 'suggestrap node'}),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
+  }  
+}
+
+const web = {
+  entry: {
+    'suggestrap': './src/js/index.js',
+    '../test/browser-test': './src/test/browser-test.js'
+  },
+  output: {
+    path: path.resolve(__dirname, 'lib'),
+    filename: '[name].js',
+    library: 'Suggestrap',
+    libraryExport: 'default',
+    libraryTarget: 'umd',
+  },
+  resolve: {
+    modules: ['node_modules', path.resolve('./src/'),],
+  },
+  target: "web",
+  plugins: [
+    new WebpackNotifierPlugin({title: 'suggestrap web'}),
     new HtmlWebpackPlugin({
       filename: '../test/index.html',
       template: './src/test/index.pug',
@@ -33,13 +69,15 @@ module.exports = {
     }),
   ],
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.js$/,
+        test: /\.m?js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015']
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
         }
       },
       {
@@ -50,3 +88,5 @@ module.exports = {
     ]
   }
 }
+
+module.exports = [ node, web ]
