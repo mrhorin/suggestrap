@@ -7,7 +7,7 @@
 
 # suggestrap
 ![show](https://user-images.githubusercontent.com/6502717/49056240-4c7db100-f23e-11e8-9a2e-863f59ad84a7.gif)  
-This module could shows suggestions with a JSON file.
+This module could show suggestions with a JSON file.
 
 ## Install
 Install with [npm](https://www.npmjs.com/).
