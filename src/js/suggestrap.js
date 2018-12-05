@@ -67,8 +67,8 @@ export default class Suggestrap {
   show() {
     // Set suggest position
     let rect = this.element['target'].getBoundingClientRect()
-    let x = window.pageXOffset + rect.left
-    let y = window.pageYOffset + rect.top + rect.height
+    let x = this.element['target'].offsetLeft
+    let y = this.element['target'].offsetTop + rect.height
     this.element['suggest'].style.left = Math.round(x).toString() + 'px'
     this.element['suggest'].style.top = Math.round(y).toString() + 'px'
     this.element['suggest'].style.visibility = 'visible'
