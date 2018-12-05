@@ -336,15 +336,11 @@ export default class Suggestrap {
       box-shadow: -2px 2px 7px rgba(0,0,0,0.3);
     }
     ul#${suggestrapId} li{
-      color: #333;
-      text-align: left;
       white-space: nowrap;
       overflow: hidden;
+      color: #333;
       padding: 1px 6px;
-    }
-    ul#${suggestrapId} li.suggestrap-active{
-      background: #0099ff;
-      color: #fff;
+      text-align: left;
     }
     ul#${suggestrapId} li.suggestrap-active,
     ul#${suggestrapId} li:hover{
