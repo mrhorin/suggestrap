@@ -69,14 +69,14 @@ export default class Suggestrap {
     let rect = this.element['target'].getBoundingClientRect()
     let x = this.element['target'].offsetLeft
     let y = this.element['target'].offsetTop + rect.height
-    this.element['suggest'].style.left = Math.round(x).toString() + 'px'
-    this.element['suggest'].style.top = Math.round(y).toString() + 'px'
-    this.element['suggest'].style.visibility = 'visible'
+    this.element['suggestrap'].style.left = Math.round(x).toString() + 'px'
+    this.element['suggestrap'].style.top = Math.round(y).toString() + 'px'
+    this.element['suggestrap'].style.visibility = 'visible'
     this.state['isShow'] = true
   }
 
   hide() {
-    this.element['suggest'].style.visibility = 'hidden'
+    this.element['suggestrap'].style.visibility = 'hidden'
     this.state['isShow'] = false
   }
 
@@ -85,7 +85,7 @@ export default class Suggestrap {
       if (this.state['currentIndex'] > -1) {
         this.state['currentIndex'] -= 1
       } else {
-        this.state['currentIndex'] = this.element['suggest'].childNodes.length - 1
+        this.state['currentIndex'] = this.element['suggestrap'].childNodes.length - 1
       }
       this._activeCurrentSuggest()
     }
@@ -93,7 +93,7 @@ export default class Suggestrap {
 
   moveDownSuggest() {
     if (this.state['isShow']) {
-      if (this.state['currentIndex'] == this.element['suggest'].childNodes.length - 1) {
+      if (this.state['currentIndex'] == this.element['suggestrap'].childNodes.length - 1) {
         this.state['currentIndex'] = -1
       } else {
         this.state['currentIndex'] += 1
@@ -145,7 +145,7 @@ export default class Suggestrap {
         this.element['target'].value = event.target.innerHTML
         this.hide()
       })
-      this.element['suggest'].appendChild(suggestItem)
+      this.element['suggestrap'].appendChild(suggestItem)
       // Break this loop when appendCount reaches this.option['count']
       appendedCount += 1
       if (appendedCount >= this.option['count']) break
@@ -154,23 +154,23 @@ export default class Suggestrap {
   }
 
   _remove() {
-    while (this.element['suggest'].firstChild) {
-      this.element['suggest'].removeChild(this.element['suggest'].firstChild)
+    while (this.element['suggestrap'].firstChild) {
+      this.element['suggestrap'].removeChild(this.element['suggestrap'].firstChild)
     }
     this._stateInitialize()
   }
 
   _activeCurrentSuggest() {
-    for (let i = 0; i < this.element['suggest'].childNodes.length; i++) {
-      this.element['suggest'].childNodes[i].className = ''
+    for (let i = 0; i < this.element['suggestrap'].childNodes.length; i++) {
+      this.element['suggestrap'].childNodes[i].className = ''
     }
     switch (this.state['currentIndex']) {
       case -1:
         break
       default:
-        this.element['suggest'].childNodes[this.state['currentIndex']].className = 'suggestrap-active'
+        this.element['suggestrap'].childNodes[this.state['currentIndex']].className = 'suggestrap-active'
         // Insert current suggest value into the target form
-        this.element['target'].value = this.element['suggest'].childNodes[this.state['currentIndex']].innerHTML
+        this.element['target'].value = this.element['suggestrap'].childNodes[this.state['currentIndex']].innerHTML
     }
   }
 
@@ -298,12 +298,12 @@ export default class Suggestrap {
   _elementInitialize() {
     let element = {
       target: document.getElementById(this.req['target']),
-      suggest: document.createElement('ul'),
+      suggestrap: document.createElement('ul'),
       style: document.createElement('style'),      
     }
     // Check if target element exists
     if (!(element.target)) throw new Error(element.target + ' element is not found.')
-    // Create an unique suggetion ID
+    // Create an unique id of suggetrap element
     let suggestrapId
     if (this.option.id) {
       // When specifying a id
@@ -311,7 +311,7 @@ export default class Suggestrap {
     } else if (!document.getElementById('suggestrap')) {
       suggestrapId = 'suggestrap'
     } else {
-      // Add a suffix when existing id 'suggestrap'
+      // Add an unique suffix into the id when existing id 'suggestrap'
       let suffix = 2
       while (document.getElementById('suggestrap_' + suffix)) suffix++
       suggestrapId = 'suggestrap_' + suffix
@@ -319,16 +319,16 @@ export default class Suggestrap {
     // Set a style element for the suggestion element
     let _css = `
     ul#${suggestrapId}{
+      position: absolute;
+      z-index: 99999;
+      padding: 3px 0;
+      margin: 0;
+      width: auto;
+      height: auto;
+      list-style: none;
       background: #fff;
       border-radius: 3px;
       box-shadow: -2px 2px 7px rgba(0,0,0,0.3);
-      list-style: none;
-      padding: 3px 0;
-      margin: 0;
-      position: absolute;
-      z-index: 1000;
-      width: auto;
-      height: auto;
     }
     ul#${suggestrapId} li{
       color: #333;
@@ -353,9 +353,9 @@ export default class Suggestrap {
     // Set the target form element
     element['target'].autocomplete = 'off'
     // Set the suggestion element
-    element['suggest'].id = suggestrapId
-    // Insert the suggestion element in the next to target element
-    element['target'].parentNode.insertBefore(element['suggest'], element['target'].nextSibling)
+    element['suggestrap'].id = suggestrapId
+    // Insert the suggestrap element in the next to target element
+    element['target'].parentNode.insertBefore(element['suggestrap'], element['target'].nextSibling)
     return element
   }
 

@@ -49,7 +49,7 @@ describe('Suggestrap', () => {
   describe('#_add', () => {
     it('element.suggest.childNodes.length should have 5 after adding JSON when option.count is 5', () => {
       suggest._add(json)
-      assert.equal(suggest.element.suggest.childNodes.length, 5)
+      assert.equal(suggest.element.suggestrap.childNodes.length, 5)
     })
   })
 
@@ -57,7 +57,7 @@ describe('Suggestrap', () => {
     it('element.suggest.childNodes.length should have 0 after adding JSON and then executing _remove()', () => {
       suggest._add(json)
       suggest._remove()
-      assert.equal(suggest.element.suggest.childNodes.length, 0)
+      assert.equal(suggest.element.suggestrap.childNodes.length, 0)
     })
   })
 
