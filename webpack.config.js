@@ -1,8 +1,7 @@
 const path = require('path')
 const WebpackNotifierPlugin = require('webpack-notifier')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
-process.noDeprecation = true
+const LicenseInfoWebpackPlugin = require('license-info-webpack-plugin').default;
 
 const node = {
   entry: {
@@ -26,7 +25,8 @@ const node = {
   ],
   target: "node",
   plugins: [
-    new WebpackNotifierPlugin({title: 'suggestrap node'}),
+    new WebpackNotifierPlugin({ title: 'suggestrap node' }),
+    new LicenseInfoWebpackPlugin({ glob: '{LICENSE,license,License}*' }),
   ],
   module: {
     rules: [
@@ -61,7 +61,8 @@ const web = {
   },
   target: "web",
   plugins: [
-    new WebpackNotifierPlugin({title: 'suggestrap web'}),
+    new WebpackNotifierPlugin({ title: 'suggestrap web' }),
+    new LicenseInfoWebpackPlugin({ glob: '{LICENSE,license,License}*' }),
     new HtmlWebpackPlugin({
       filename: '../test/index.html',
       template: './src/test/index.pug',
