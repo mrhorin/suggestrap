@@ -246,7 +246,7 @@ export default class Suggestrap {
     })
     // Solve that the displacement of suggestion element's position occurs when resize window
     window.onresize = () => {
-      if(this['show']) this.show()
+      if(this.state['isShow']) this.hide()
     }
   }
 
