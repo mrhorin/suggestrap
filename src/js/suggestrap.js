@@ -76,8 +76,10 @@ export default class Suggestrap {
   }
 
   hide() {
-    this.element['suggestrap'].style.visibility = 'hidden'
-    this.state['isShow'] = false
+    if (this.state['isShow']) {
+      this.element['suggestrap'].style.visibility = 'hidden'
+      this.state['isShow'] = false      
+    }
   }
 
   moveUpSuggest() {
@@ -209,7 +211,7 @@ export default class Suggestrap {
   _setEventListener() {
     // Set event when input a text in target
     this.element['target'].addEventListener('keyup', (event) => {
-      let invalidKeyCode = [38, 40, 37, 39, 16, 17, 13]
+      let invalidKeyCode = [38, 40, 37, 39, 16, 17, 27, 13]
       let keyCode = event.keyCode
       if (!invalidKeyCode.includes(keyCode)) {
         // When valid key
@@ -220,9 +222,12 @@ export default class Suggestrap {
       } else if (keyCode == 40) {
         // When press Down key
         this.moveDownSuggest()
+      } else if (keyCode == 27) {
+        // When press ESC key
+        this.hide()
       } else if (keyCode == 13) {
         // When press Enter key
-        if (this.state['isShow'] && this.state['currentIndex'] != -1) {
+        if (this.state['currentIndex'] != -1) {
           this.hide()
         } else {
           this.keyUpHandler(event)
@@ -246,7 +251,7 @@ export default class Suggestrap {
     })
     // Solve that the displacement of suggestion element's position occurs when resize window
     window.onresize = () => {
-      if(this.state['isShow']) this.hide()
+      this.hide()
     }
   }
 
