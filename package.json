@@ -1,6 +1,6 @@
 {
   "name": "suggestrap",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "This module could show suggestions from JSON URL on an input form element.",
   "main": "./lib/index.js",
   "scripts": {
