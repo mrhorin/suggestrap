@@ -16,7 +16,7 @@ npm install suggestrap
 ```
 
 ## Usage
-Prepare a JSON server for suggestions. The JSON server needs to provide suggestions as a JSON file when Suggestrap requests a JSON file for suggetions. The JSON format is an array that has hashes like the following example.
+Prepare a JSON server for suggestions. When suggestrap requests a JSON file for suggestions, the server needs to generate a JSON file with a request parameter, which is a part of the request URL, and then returns it. The JSON format is an array, which has hashes like the following example. (However, you can also specify an array object for suggestions in a local environment without the JSON server instead of requesting a JSON file to the server. If you'd like to do that, refer [Note](#note) for details.)
 ```json
 [
   {"id":1, "age":32, "name":"Jack"},
@@ -26,7 +26,7 @@ Prepare a JSON server for suggestions. The JSON server needs to provide suggesti
   {"id":5, "age":28, "name":"Jane"}
 ]
 ```  
-When an user types a value into a target form, Suggestrap replaces a wildcard, which is a part of a JSON URL, with the value. For example, if the JSON URL is 'https://example.com/json/users/%QUERY' and the inputed value is 'ja', Suggestrap genetates 'https://example.com/json/users/ja' and requests a JSON file from the server. The server searches suggestions with the value and returns the JSON file. A suggestion element is created by suggestrap and then it is inserted into next to the target element that you specify.
+When an user types a value into a target form, Suggestrap replaces a wildcard, which is a part of a JSON URL, with the value. For example, if the JSON URL is 'https://example.com/json/users/%QUERY' and the inputed value is 'ja', Suggestrap genetates 'https://example.com/json/users/ja' and requests a JSON file to the server. The server searches suggestions with the value and returns the JSON file. A suggestion element is created by suggestrap and then it is inserted into next to the target element, which you specify.
 ```html
 <input id="target" type="text">
 
@@ -67,8 +67,8 @@ const option = {
 let suggestion = new Suggestrap(req, option)
 ```
 The first argument hash is required.
-- `target`: Specify an ID of a target form element that you would like to show.
-- `url`: Specify an URL for receiving a JSON. The URL needs to include a wildcard like the example above. You can specify a string of the wildcard with the option of the second argument. Suggestrap replaces the wildcard with a value that an user types.
+- `target`: Specify an ID of a target form element, which you would like to show.
+- `url`: Specify an URL for requesting a JSON file. The URL needs to include a wildcard like the example above. You can specify a string of the wildcard with the option of the second argument. Suggestrap replaces the wildcard with a value that an user types.
 - `key`: Specify a key name of the JSON objects that you'd like to show.
 - `values`: If you'd like to show suggestions from an Array object instead of the JSON URL, you can input it with this key. **In that case, the url key isn't required.** Besides, you can specify the JSON URL with this key like the url key. As you specify the JSON URL with this key, the behavior is same as the url key completely. This key takes priority over the url key when you specify url and values key at same time. Please refer [Note](#note) for more infomation and a concrete example.
 
@@ -80,7 +80,7 @@ The second argument hash is optional.
 - `id`: Specify a suggestion element ID. Defalults to 'suggestrap'.
 
 ### Note
-If you'd like to specify an Array object in a local environment instead of requesting a JSON file from a JSON server, you could use the values key. When an user inputs a value into a target form, Suggestrap extracts suggestions from the Array object with the value, which the user inputs. **In that case, the url key isn't required.** You don't have to specify the url key in the first argument. When you specify the values key and the url key at same time, the values key takes priority over the url key. This example is written with ES6.
+If you'd like to specify an Array object in a local environment instead of requesting a JSON file to a JSON server, you could use the values key. When an user inputs a value into a target form, Suggestrap extracts suggestions from the Array object with the value, which the user inputs. **In that case, the url key isn't required.** You don't have to specify the url key in the first argument. When you specify the values key and the url key at same time, the values key takes priority over the url key. This example is written with ES6.
 ```javascript
 import Suggestrap from 'suggestrap'
 
@@ -100,7 +100,7 @@ let suggestion = new Suggestrap(req)
 ```
 
 ## Customize
-If you would like to customize a css style of a suggestion, you need to override the css style yourself.
+If you'd like to customize a css style of a suggestion element, you need to override the css style yourself.
 ```css
 /* Example */
 ul#suggestrap {
