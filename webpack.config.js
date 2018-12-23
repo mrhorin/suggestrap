@@ -39,6 +39,12 @@ const node = {
             presets: ['@babel/preset-env']
           }
         }
+      },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: {
+          loader: 'url-loader'
+        }
       }
     ]
   }  
