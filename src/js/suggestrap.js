@@ -1,3 +1,4 @@
+import '@babel/polyfill'
 import _ from 'lodash'
 import request from 'superagent'
 
@@ -190,22 +191,13 @@ export default class Suggestrap {
     }
   }
 
-  _fetchJson(callbackFunc) {
-    new Promise((resolve, reject) => {
-      request
-        .get(this.jsonUrl)
-        .end((err, res) => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve(res)
-          }
-        })
-    }).then((res) => {
-      callbackFunc(res.text)
-      }).catch((err) => {
-      console.log(err)
-    })
+  async _fetchJson(callbackFunc) {
+    let res = await request.get(this.jsonUrl)
+    if (res.error) {
+      console.error(res.error)
+    } else {
+      callbackFunc(res.text)      
+    }
   }
 
   _setEventListener() {
