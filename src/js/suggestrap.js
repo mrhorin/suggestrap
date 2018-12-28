@@ -140,6 +140,11 @@ export default class Suggestrap {
     for (let val of this._parseJson(json)) {
       let item = document.createElement('li')
       item.setAttribute('value', val[this.req['key']])
+      if (this.option['imageKey']) {
+        let img = document.createElement('img')
+        img.src = val[this.option['imageKey']]
+        item.appendChild(img)
+      }
       item.innerHTML += val[this.req['key']]
       item.addEventListener('click', (event) => {
         this.element['target'].value = event.target.getAttribute('value')
@@ -282,6 +287,7 @@ export default class Suggestrap {
     if (!('delay' in option)) option['delay'] = 400
     if (!('count' in option)) option['count'] = 5
     if (!('id' in option)) option['id'] = ''
+    if (!('imageKey' in option)) option['imageKey'] = null
     return option
   }
 
@@ -311,14 +317,13 @@ export default class Suggestrap {
       suggestrapId = 'suggestrap_' + suffix
     }
     // Set a style element for the suggestion element
-    let _css = `
+    let css = `
     ul#${suggestrapId}{
       position: absolute;
-      z-index: 99999;
-      padding: 3px 0;
+      z-index: 1000;
+      padding: 0;
       margin: 0;
-      width: auto;
-      height: auto;
+      line-height: 30px;
       list-style: none;
       background: #fff;
       border-radius: 3px;
@@ -327,9 +332,10 @@ export default class Suggestrap {
     ul#${suggestrapId} li{
       white-space: nowrap;
       overflow: hidden;
+      padding: 0 5px;
+      display: flex;
+      align-items: center;
       color: #333;
-      padding: 1px 6px;
-      text-align: left;
     }
     ul#${suggestrapId} li.suggestrap-active,
     ul#${suggestrapId} li:hover{
@@ -337,8 +343,13 @@ export default class Suggestrap {
       background: #4b89bf;
       color: #fff;
     }
+    ul#${suggestrapId} li img{
+      max-width: 30px;
+      max-height: 30px;
+      margin-right: 3px;
+    }
     `
-    element['style'].appendChild(document.createTextNode(_css))
+    element['style'].appendChild(document.createTextNode(css))
     document.getElementsByTagName('head')[0].appendChild(element['style'])
     // Set the target form element
     element['target'].autocomplete = 'off'
