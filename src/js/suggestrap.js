@@ -286,7 +286,7 @@ export default class Suggestrap {
     if (!('minlength' in option)) option['minlength'] = 2
     if (!('delay' in option)) option['delay'] = 400
     if (!('count' in option)) option['count'] = 5
-    if (!('id' in option)) option['id'] = ''
+    if (!('id' in option)) option['id'] = 'suggestrap'
     if (!('imageKey' in option)) option['imageKey'] = null
     return option
   }
@@ -305,18 +305,14 @@ export default class Suggestrap {
     if (!(element.target)) throw new Error(element.target + ' element is not found.')
     // Create an unique id of suggetrap element
     let suggestrapId
-    if (this.option.id) {
-      // When specifying a id
-      suggestrapId = this.option.id
-    } else if (!document.getElementById('suggestrap')) {
-      suggestrapId = 'suggestrap'
-    } else {
-      // Add an unique suffix into the id when existing id 'suggestrap'
+    if (document.getElementById(this.option['id'])) {
+      // Add an unique suffix into the id when existing id
       let suffix = 2
-      while (document.getElementById('suggestrap_' + suffix)) suffix++
-      suggestrapId = 'suggestrap_' + suffix
+      while (document.getElementById(this.option['id'] + '_' + suffix)) suffix++
+      suggestrapId = this.option['id'] + '_' + suffix      
+    } else {
+      suggestrapId = this.option['id']
     }
-    // Set a style element for the suggestion element
     let css = `
     ul#${suggestrapId}{
       position: absolute;
