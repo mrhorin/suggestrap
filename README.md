@@ -7,7 +7,7 @@
 
 # suggestrap
 ![show](https://user-images.githubusercontent.com/6502717/49056240-4c7db100-f23e-11e8-9a2e-863f59ad84a7.gif)  
-This module could show suggestions with a JSON file.
+This module can show suggestions with a JSON file.
 
 ## Install
 Install with [npm](https://www.npmjs.com/).
@@ -16,7 +16,7 @@ npm install suggestrap
 ```
 
 ## Usage
-Prepare a JSON server for suggestions. When suggestrap requests a JSON file for suggestions, the server needs to generate the JSON file with a request parameter that is a part of the request URL and then returns it. The JSON format is an array that has hashes like the following example. (However, you can also specify an array object for suggestions in a browser side without the JSON server instead of requesting the JSON file to the server. If you'd like to do that, refer [Note](#note) for details.)
+Prepare a JSON server for suggestions yourself. When Suggestrap requests a JSON file for suggestions, the server needs to generate the JSON file with a request parameter, a part of the request URL, and then return it. The JSON format is an array which has hashes like the following example. (However, you can also specify an array object for suggestions on the browser side without the JSON server instead of requesting the JSON file to the server. Refer [Note](#note) for details, if you want.)
 ```json
 [
   {"id":1, "age":32, "name":"Jack"},
@@ -26,7 +26,7 @@ Prepare a JSON server for suggestions. When suggestrap requests a JSON file for 
   {"id":5, "age":28, "name":"Jane"}
 ]
 ```  
-When an user types a value into a target form, Suggestrap replaces a wildcard, a part of a JSON URL, with the value. For example, if the JSON URL is 'https://example.com/json/users/%QUERY' and the inputed value is 'ja', Suggestrap genetates 'https://example.com/json/users/ja' and requests a JSON file to the server. The server searches suggestions with the value and returns the JSON file. A suggestion element is created by suggestrap, and then it is inserted into next to the target element, which you specify.
+When an user types a value into a target form, Suggestrap replaces a wildcard, a part of the JSON URL, with the value. For example, if the JSON URL is 'https://example.com/json/users/%QUERY' and the inputed value is 'ja', Suggestrap genetates 'https://example.com/json/users/ja' and requests a JSON file to the server. The server searches suggestions from the database with the value and returns the JSON file. The suggestion element is created by Suggestrap, and then it is inserted into next to the target element, which you specify.
 ```html
 <input id="target" type="text">
 
