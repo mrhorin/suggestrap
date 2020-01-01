@@ -47,7 +47,7 @@ const node = {
         }
       }
     ]
-  }  
+  }
 }
 
 const web = {
@@ -75,6 +75,7 @@ const web = {
       chunks: [],
     }),
   ],
+  performance: { hints: false },
   module: {
     rules: [
       {
