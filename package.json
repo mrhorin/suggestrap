@@ -1,6 +1,6 @@
 {
   "name": "suggestrap",
-  "version": "2.5.4",
+  "version": "2.6.0",
   "description": "This module could show suggestions from JSON URL on an input form element.",
   "main": "./lib/index.js",
   "scripts": {
@@ -32,6 +32,6 @@
     "superagent": "^3.6.3"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=10.0.0"
   }
 }
