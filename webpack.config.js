@@ -39,9 +39,15 @@ const node = {
             presets: ['@babel/preset-env']
           }
         }
+      },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: {
+          loader: 'url-loader'
+        }
       }
     ]
-  }  
+  }
 }
 
 const web = {
@@ -69,6 +75,7 @@ const web = {
       chunks: [],
     }),
   ],
+  performance: { hints: false },
   module: {
     rules: [
       {

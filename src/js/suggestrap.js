@@ -1,3 +1,4 @@
+import '@babel/polyfill'
 import _ from 'lodash'
 import request from 'superagent'
 
@@ -137,17 +138,19 @@ export default class Suggestrap {
     this._remove()
     let appendedCount = 0
     for (let val of this._parseJson(json)) {
-      let suggestItem = document.createElement('li')
-      suggestItem.style.textAlign = 'left'
-      suggestItem.style.whiteSpace = 'nowrap'
-      suggestItem.style.overflow = 'hidden'
-      suggestItem.style.padding = '1px 6px'
-      suggestItem.innerHTML = val[this.req['key']]
-      suggestItem.addEventListener('click', (event) => {
-        this.element['target'].value = event.target.innerHTML
+      let item = document.createElement('li')
+      item.setAttribute('value', val[this.req['key']])
+      if (this.option['imageKey']) {
+        let img = document.createElement('img')
+        img.src = val[this.option['imageKey']]
+        item.appendChild(img)
+      }
+      item.innerHTML += val[this.req['key']]
+      item.addEventListener('click', (event) => {
+        this.element['target'].value = event.target.getAttribute('value')
         this.hide()
       })
-      this.element['suggestrap'].appendChild(suggestItem)
+      this.element['suggestrap'].appendChild(item)
       // Break this loop when appendCount reaches this.option['count']
       appendedCount += 1
       if (appendedCount >= this.option['count']) break
@@ -164,15 +167,15 @@ export default class Suggestrap {
 
   _activeCurrentSuggest() {
     for (let i = 0; i < this.element['suggestrap'].childNodes.length; i++) {
-      this.element['suggestrap'].childNodes[i].className = ''
+      this.element['suggestrap'].childNodes[i].classList.remove('suggestrap-active')
     }
     switch (this.state['currentIndex']) {
       case -1:
         break
       default:
-        this.element['suggestrap'].childNodes[this.state['currentIndex']].className = 'suggestrap-active'
+        this.element['suggestrap'].childNodes[this.state['currentIndex']].classList.add('suggestrap-active')
         // Insert current suggest value into the target form
-        this.element['target'].value = this.element['suggestrap'].childNodes[this.state['currentIndex']].innerHTML
+        this.element['target'].value = this.element['suggestrap'].childNodes[this.state['currentIndex']].getAttribute('value')
     }
   }
 
@@ -190,22 +193,13 @@ export default class Suggestrap {
     }
   }
 
-  _fetchJson(callbackFunc) {
-    new Promise((resolve, reject) => {
-      request
-        .get(this.jsonUrl)
-        .end((err, res) => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve(res)
-          }
-        })
-    }).then((res) => {
-      callbackFunc(res.text)
-      }).catch((err) => {
-      console.log(err)
-    })
+  async _fetchJson(callbackFunc) {
+    let res = await request.get(this.jsonUrl)
+    if (res.error) {
+      console.error(res.error)
+    } else {
+      callbackFunc(res.text)      
+    }
   }
 
   _setEventListener() {
@@ -292,7 +286,8 @@ export default class Suggestrap {
     if (!('minlength' in option)) option['minlength'] = 2
     if (!('delay' in option)) option['delay'] = 400
     if (!('count' in option)) option['count'] = 5
-    if (!('id' in option)) option['id'] = ''
+    if (!('id' in option)) option['id'] = 'suggestrap'
+    if (!('imageKey' in option)) option['imageKey'] = null
     return option
   }
 
@@ -310,26 +305,21 @@ export default class Suggestrap {
     if (!(element.target)) throw new Error(element.target + ' element is not found.')
     // Create an unique id of suggetrap element
     let suggestrapId
-    if (this.option.id) {
-      // When specifying a id
-      suggestrapId = this.option.id
-    } else if (!document.getElementById('suggestrap')) {
-      suggestrapId = 'suggestrap'
-    } else {
-      // Add an unique suffix into the id when existing id 'suggestrap'
+    if (document.getElementById(this.option['id'])) {
+      // Add an unique suffix into the id when existing id
       let suffix = 2
-      while (document.getElementById('suggestrap_' + suffix)) suffix++
-      suggestrapId = 'suggestrap_' + suffix
+      while (document.getElementById(this.option['id'] + '_' + suffix)) suffix++
+      suggestrapId = this.option['id'] + '_' + suffix      
+    } else {
+      suggestrapId = this.option['id']
     }
-    // Set a style element for the suggestion element
-    let _css = `
+    let css = `
     ul#${suggestrapId}{
       position: absolute;
-      z-index: 99999;
-      padding: 3px 0;
+      z-index: 1000;
+      padding: 0;
       margin: 0;
-      width: auto;
-      height: auto;
+      line-height: 30px;
       list-style: none;
       background: #fff;
       border-radius: 3px;
@@ -338,9 +328,10 @@ export default class Suggestrap {
     ul#${suggestrapId} li{
       white-space: nowrap;
       overflow: hidden;
+      padding: 0 5px;
+      display: flex;
+      align-items: center;
       color: #333;
-      padding: 1px 6px;
-      text-align: left;
     }
     ul#${suggestrapId} li.suggestrap-active,
     ul#${suggestrapId} li:hover{
@@ -348,8 +339,13 @@ export default class Suggestrap {
       background: #4b89bf;
       color: #fff;
     }
+    ul#${suggestrapId} li img{
+      max-width: 30px;
+      max-height: 30px;
+      margin-right: 3px;
+    }
     `
-    element['style'].appendChild(document.createTextNode(_css))
+    element['style'].appendChild(document.createTextNode(css))
     document.getElementsByTagName('head')[0].appendChild(element['style'])
     // Set the target form element
     element['target'].autocomplete = 'off'

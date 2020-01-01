@@ -13,6 +13,7 @@
   "license": "GPL-3.0-only",
   "devDependencies": {
     "@babel/core": "^7.1.6",
+    "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.1.6",
     "babel-loader": "^8.0.4",
     "chai": "4.2.0",
@@ -21,12 +22,13 @@
     "mocha": "5.2.0",
     "pug": "^2.0.0-rc.4",
     "pug-loader": "^2.3.0",
+    "url-loader": "^1.1.2",
     "webpack": "^4.26.1",
     "webpack-cli": "^3.1.2",
     "webpack-notifier": "1.7.0"
   },
   "dependencies": {
-    "lodash": "^4.14.1",
+    "lodash": "^4.17.15",
     "superagent": "^3.6.3"
   },
   "engines": {
