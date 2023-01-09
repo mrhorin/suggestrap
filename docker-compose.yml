@@ -1,0 +1,11 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  node:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/suggestrap
+    tty: true
+    environment:
+      NODE_OPTIONS: --openssl-legacy-provider=value
