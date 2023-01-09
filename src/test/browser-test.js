@@ -32,15 +32,15 @@ describe('Suggestrap', () => {
     })
   })
 
-  describe('#show', () => {      
-    it('state.isShow should have true after executing show()', () => {     
+  describe('#show', () => {
+    it('state.isShow should have true after executing show()', () => {
       suggest.show()
       assert.isTrue(suggest.state.isShow)
     })
   })
 
-  describe('#hide', () => {      
-    it('state.isShow should have true after executing hide()', () => {        
+  describe('#hide', () => {
+    it('state.isShow should have true after executing hide()', () => {
       suggest.hide()
       assert.isFalse(suggest.state.isShow)
     })
@@ -64,7 +64,7 @@ describe('Suggestrap', () => {
   describe('#_parseJson', () => {
     it('should return an Array when inputed an Array of JSON', () => {
       assert.isArray(suggest._parseJson(json))
-    })  
+    })
 
     it('should return an Object when inputed a Hash of JSON', () => {
       json = JSON.stringify(languages[0])
@@ -78,7 +78,7 @@ describe('Suggestrap', () => {
     it('should throw exception when inputed a wrong format JSON', () => {
       let wrongJson = "[{ id: 1, name: 'Yamada', }, { id: 2, name: 'Kato', }]"
       assert.throws(() => suggest._parseJson(wrongJson) , Error)
-    })  
+    })
   })
 
   describe('#_reqInitialize', () => {

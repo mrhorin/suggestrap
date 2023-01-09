@@ -1,12 +1,12 @@
 [![Build Status](https://travis-ci.org/mrhorin/suggestrap.svg?branch=master)](https://travis-ci.org/mrhorin/suggestrap)
 [![npm version](https://badge.fury.io/js/suggestrap.svg)](https://badge.fury.io/js/suggestrap)
 ![npm](https://img.shields.io/npm/dt/suggestrap.svg)
-[![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/mrhorin/suggestrap/master/LICENSE)  
+[![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/mrhorin/suggestrap/master/LICENSE)
 
 [![NPM](https://nodei.co/npm/suggestrap.png)](https://nodei.co/npm/suggestrap/)
 
 # suggestrap
-![show](https://user-images.githubusercontent.com/6502717/49056240-4c7db100-f23e-11e8-9a2e-863f59ad84a7.gif)  
+![show](https://user-images.githubusercontent.com/6502717/49056240-4c7db100-f23e-11e8-9a2e-863f59ad84a7.gif)
 This module can show suggestions with a JSON file.
 
 ## Install
@@ -25,7 +25,7 @@ Prepare a JSON server for suggestions yourself. When Suggestrap requests a JSON 
   {"id":4, "age":20, "name":"James"},
   {"id":5, "age":28, "name":"Jane"}
 ]
-```  
+```
 When an user types a value into a target form, Suggestrap replaces a wildcard, a part of the JSON URL, with the value. For example, if the JSON URL is 'https://example.com/json/users/%QUERY' and the inputed value is 'ja', Suggestrap genetates 'https://example.com/json/users/ja' and requests a JSON file to the server. The server searches suggestions from the database with the value and returns the JSON file. The suggestion element is created by Suggestrap, and then it is inserted into next to the target element, which you specify.
 ```html
 <input id="target" type="text">
@@ -78,6 +78,7 @@ The second argument hash is optional.
 - **delay**: The suggestions are show after any **milliseconds** have passed. Defaulults to `400`.
 - **count**: When this option is 5, suggestrap would show up to 5 suggestions. Defaulults to `5`.
 - **id**: Specify an ID of a suggestion element. When the ID exists, suggestrap adds a suffix like `_2` to the end of the ID. Defaulults to `'suggestrap'`.
+- **onClick**: Specify a click handler as an anonymous function for the suggestions.
 
 ### Note
 When you'd like to specify an array object in a browser side instead of requesting a JSON file to a JSON server, you could use the values key. When an user inputs a value into a target form, suggestrap extracts suggestions from the array object with the value, which the user inputs. **In that case, the url key isn't required.** You don't need to specify the url key in the first argument. If you specify the values key and the url key at same time, the values key takes priority over the url key. This example is written with ES6.

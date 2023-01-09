@@ -79,7 +79,7 @@ export default class Suggestrap {
   hide() {
     if (this.state['isShow']) {
       this.element['suggestrap'].style.visibility = 'hidden'
-      this.state['isShow'] = false      
+      this.state['isShow'] = false
     }
   }
 
@@ -122,7 +122,7 @@ export default class Suggestrap {
       ('url' in this.req &&
         typeof this.req.url == 'string' &&
         this._validateUrl(this.req.url)
-      )  
+      )
     )
   }
 
@@ -149,6 +149,7 @@ export default class Suggestrap {
       item.addEventListener('click', (event) => {
         this.element['target'].value = event.target.getAttribute('value')
         this.hide()
+        if (this.option['onClick']) this.option['onClick'](event)
       })
       this.element['suggestrap'].appendChild(item)
       // Break this loop when appendCount reaches this.option['count']
@@ -198,7 +199,7 @@ export default class Suggestrap {
     if (res.error) {
       console.error(res.error)
     } else {
-      callbackFunc(res.text)      
+      callbackFunc(res.text)
     }
   }
 
@@ -226,7 +227,7 @@ export default class Suggestrap {
         } else {
           this.keyUpHandler(event)
         }
-      }   
+      }
     })
     // Set event when blur on target
     this.element['target'].addEventListener('blur', (event) => {
@@ -288,6 +289,7 @@ export default class Suggestrap {
     if (!('count' in option)) option['count'] = 5
     if (!('id' in option)) option['id'] = 'suggestrap'
     if (!('imageKey' in option)) option['imageKey'] = null
+    if (!('onClick' in option)) option['onClick'] = null
     return option
   }
 
@@ -299,7 +301,7 @@ export default class Suggestrap {
     let element = {
       target: document.getElementById(this.req['target']),
       suggestrap: document.createElement('ul'),
-      style: document.createElement('style'),      
+      style: document.createElement('style'),
     }
     // Check if target element exists
     if (!(element.target)) throw new Error(element.target + ' element is not found.')
@@ -309,7 +311,7 @@ export default class Suggestrap {
       // Add an unique suffix into the id when existing id
       let suffix = 2
       while (document.getElementById(this.option['id'] + '_' + suffix)) suffix++
-      suggestrapId = this.option['id'] + '_' + suffix      
+      suggestrapId = this.option['id'] + '_' + suffix
     } else {
       suggestrapId = this.option['id']
     }
