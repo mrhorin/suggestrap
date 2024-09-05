@@ -124,6 +124,14 @@ ul#suggestrap li:hover {
 }
 ```
 
+## Development
+
+### How to start test-server.js
+```bash
+dokcer-compose exec node yarn run test
+```
+And then, access http:localhost:8080 with your browesr.
+
 ## License
 [GPL-3.0](https://opensource.org/licenses/GPL-3.0)
 
