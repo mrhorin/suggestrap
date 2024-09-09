@@ -145,20 +145,25 @@ let suggestion = new Suggestrap(req, option)
 ## request
 
 The first argument is required.
-- **target**: Specify an ID of a target form element, on which suggestrap show suggestions.
-- **url**: Specify an URL, e.g. https://example.com/json/users/%QUERY, for requesting a JSON file. The URL needs to include a wildcard like the example. You can also specify a string of the wildcard with the wildcard key in the second argument. When an user input a value into the target form element, suggestrap replaces the wildcard with the input value.
-- **key**: Specify a key name of the JSON file that you'd like to show as suggestions.
-- **values**: You can specify an array object that has hash objects to show suggestions instead of requesting a JSON file. **In that case, the url key isn't required.** Besides, you can specify the JSON URL with this key like the url key. When you specify the JSON URL with this key, the behavior is completely same as the url key. This key takes priority over the url key when you specify both of url and values key at the same time.
+
+|Key|Format|Description|
+|---|------|-----------|
+|target|string|Specify an ID of a target form element, on which suggestrap show suggestions|
+|url|string|Specify an URL, e.g. https://example.com/json/users/%QUERY, for requesting a JSON file. The URL needs to include a wildcard like the example. You can also specify a string of the wildcard with the wildcard key in the second argument. When an user input a value into the target form element, suggestrap replaces the wildcard with the input value.|
+|key|string|Specify a key name of the JSON file that you'd like to show as suggestions.|
+|values|array|You can specify an array object that has hash objects to show suggestions instead of requesting a JSON file. **In that case, the url key isn't required.** Besides, you can specify the JSON URL with this key like the url key. When you specify the JSON URL with this key, the behavior is completely same as the url key. It means that this key takes priority over the url key when you specify both of url and values key at the same time.|
 
 ## option
 
 The second argument is optional.
-- **minlength**: As an input character count reaches minlength, the suggestions are shown. Defaults to `2`.
-- **wildcard**: This option is a string for specifying wildcard in the URL. As an user inputs a value in the target form, the wildcard is replaced with the input value. Defaults to `'%QUERY'`.
-- **delay**: The suggestions are show after any **milliseconds** have passed. Defaults to `400`.
-- **count**: When this option is 5, suggestrap would show up to 5 suggestions. Defaults to `5`.
-- **id**: Specify an ID of the suggestion element. If the ID already exists, suggestrap will add a suffix like `_2` to the end of the ID. Defaults to `'suggestrap'`.
-- **onClick**: Specify a click handler as an anonymous function for the suggestions.
+
+|Key|Format|Default|Description|
+|---|------|-------|-----------|
+|minlength|number|2|Once an input character count reaches minlength, the suggestions are shown.|
+|wildcard|string|"%QUERY"|This option is a string for specifying wildcard in the URL. Since an user input a value in the target form, the wildcard is replaced with the input value.|
+|delay|number|400|The suggestions are show after any **milliseconds** have passed.|
+|id|string|"suggestrap"|Specify an ID for the suggestion element. If the ID already exists, suggestrap will add `_2` as a suffix to the end of the ID.|
+|onClick|function(event, value)||Specify an anonymous function with 2 arguments as a click handler for the suggestion elements. `event` is the Event interface for DOM. `value` is the value that an user clicked. By default, the value clicked by an user in the suggestion elements is set into the tartget form element, and then the suggetion elements hide.|
 
 ## Customization
 

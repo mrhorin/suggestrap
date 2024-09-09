@@ -147,9 +147,12 @@ export default class Suggestrap {
       }
       item.innerHTML += val[this.req['key']]
       item.addEventListener('click', (event) => {
-        this.element['target'].value = event.target.getAttribute('value')
-        this.hide()
-        if (this.option['onClick']) this.option['onClick'](event)
+        if (this.option['onClick']) {
+          this.option['onClick'](event, val)
+        } else {
+          this.element['target'].value = event.target.getAttribute('value')
+          this.hide()
+        }
       })
       this.element['suggestrap'].appendChild(item)
       // Break this loop when appendCount reaches this.option['count']

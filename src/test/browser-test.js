@@ -3,8 +3,7 @@ import { assert } from 'chai'
 import Suggestrap from 'js/index'
 
 describe('Suggestrap', () => {
-  let suggest, languages, countriesJsonUrl, json
-  countriesJsonUrl = "http://localhost:8080/countries.json?keyword=%QUERY"
+  let suggest, req, option, languages, countriesJsonUrl, json
   languages = [
     { id: 1, name: 'English' },
     { id: 2, name: 'Chinese' },
@@ -20,11 +19,19 @@ describe('Suggestrap', () => {
     { id: 12, name: "Japanese" }
   ]
   json = JSON.stringify(languages)
-  suggest = new Suggestrap({
+  countriesJsonUrl = "http://localhost:8080/countries.json?keyword=%QUERY"
+
+  req = {
     target: "target-country",
     values: countriesJsonUrl,
     key: "name",
-  })
+  }
+  option = {
+    'onClick': (event, value) => {
+      console.log(value)
+    }
+  }
+  suggest = new Suggestrap(req, option)
 
   describe('#getter suggestion', () => {
     it('should return an empty array when values or url is URL', () => {
@@ -47,8 +54,11 @@ describe('Suggestrap', () => {
   })
 
   describe('#_add', () => {
-    it('element.suggest.childNodes.length should have 5 after adding JSON when option.count is 5', () => {
+    before(() => {
       suggest._add(json)
+    })
+
+    it('element.suggestrap.childNodes.length should be 5 after adding JSON when option.count is 5', () => {
       assert.equal(suggest.element.suggestrap.childNodes.length, 5)
     })
   })
@@ -81,44 +91,44 @@ describe('Suggestrap', () => {
     })
   })
 
-  describe('#_reqInitialize', () => {
+  describe('#_initializeReq', () => {
     it('should throw an exception when not having target')
 
     it('should throw an exception when not having key')
 
     it('should throw an exception when not having values and url', () => {
       let req = { target: "target-country", key: "name" }
-      assert.throws(() => new Suggestrap(req), Error)
+      assert.throws(() => new Suggestrap(req, option), Error)
     })
 
     it('should throw an exception when url is object', () => {
       let req = { target: "target-language", key: "name", url: languages}
-      assert.throws(() => new Suggestrap(req), Error)
+      assert.throws(() => new Suggestrap(req, option), Error)
     })
 
     it('should throw an exception when url is string but not URL', () => {
       let req = { target: "target-country", key: "name", url: 'abcdifg'}
-      assert.throw(() => new Suggestrap(req))
+      assert.throw(() => new Suggestrap(req, option))
     })
 
     it('should not throw any exception when url is string', () => {
       let req = { target: "target-country", key: "name", url: countriesJsonUrl}
-      assert.doesNotThrow(() => new Suggestrap(req))
+      assert.doesNotThrow(() => new Suggestrap(req, option))
     })
 
     it('should throw an exception when values is not object or string', () => {
       let req = { target: "target-country", key: "name", values: 1234567890 }
-      assert.throws(() => new Suggestrap(req), Error)
+      assert.throws(() => new Suggestrap(req, option), Error)
     })
 
     it('should throw an exception when values is string but not URL', () => {
       let req = { target: "target-country", key: "name", values: 'abcdifg'}
-      assert.throws(() => new Suggestrap(req), Error)
+      assert.throws(() => new Suggestrap(req, option), Error)
     })
 
     it('should not throw an exception when values is object', () => {
       let req = { target: "target-language", key: "name", values: languages}
-      assert.doesNotThrow(() => new Suggestrap(req))
+      assert.doesNotThrow(() => new Suggestrap(req, option))
     })
   })
 })
