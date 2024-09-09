@@ -5,12 +5,12 @@ import request from 'superagent'
 export default class Suggestrap {
 
   constructor(req, option = {}) {
-    this.req = this._reqInitialize(req)
-    this.option = this._optionInitialize(option)
+    this.req = this._initializeReq(req)
+    this.option = this._initializeOption(option)
     // A state of suggestions
-    this.state = this._stateInitialize()
+    this.state = this._initializeState()
     // Html elements for showing suggestions
-    this.element = this._elementInitialize()
+    this.element = this._initializeElements()
     this._setEventListener()
     this.hide()
     this.keyUpHandler = _.debounce((event) => {
@@ -163,7 +163,7 @@ export default class Suggestrap {
     while (this.element['suggestrap'].firstChild) {
       this.element['suggestrap'].removeChild(this.element['suggestrap'].firstChild)
     }
-    this._stateInitialize()
+    this._initializeState()
   }
 
   _activeCurrentSuggest() {
@@ -250,7 +250,7 @@ export default class Suggestrap {
     }
   }
 
-  _reqInitialize(req) {
+  _initializeReq(req) {
     // Necessary params
     if (!('target' in req)) {
       throw new Error('target is not found. This key is necessary.')
@@ -281,7 +281,7 @@ export default class Suggestrap {
     return req
   }
 
-  _optionInitialize(option) {
+  _initializeOption(option) {
     // Set default options
     if (!('wildcard' in option)) option['wildcard'] = '%QUERY'
     if (!('minlength' in option)) option['minlength'] = 2
@@ -293,11 +293,11 @@ export default class Suggestrap {
     return option
   }
 
-  _stateInitialize() {
+  _initializeState() {
     return this.state = { query: '', isShow: false, currentIndex: -1 }
   }
 
-  _elementInitialize() {
+  _initializeElements() {
     let element = {
       target: document.getElementById(this.req['target']),
       suggestrap: document.createElement('ul'),
