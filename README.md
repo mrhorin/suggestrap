@@ -157,12 +157,12 @@ The second argument is optional.
 - **wildcard**: This option is a string for specifying wildcard in the URL. As an user inputs a value in the target form, the wildcard is replaced with the input value. Defaults to `'%QUERY'`.
 - **delay**: The suggestions are show after any **milliseconds** have passed. Defaults to `400`.
 - **count**: When this option is 5, suggestrap would show up to 5 suggestions. Defaults to `5`.
-- **id**: Specify an ID of a suggestion element. When the ID exists, suggestrap adds a suffix like `_2` to the end of the ID. Defaults to `'suggestrap'`.
+- **id**: Specify an ID of the suggestion element. If the ID already exists, suggestrap will add a suffix like `_2` to the end of the ID. Defaults to `'suggestrap'`.
 - **onClick**: Specify a click handler as an anonymous function for the suggestions.
 
 ## Customization
 
-You can customize a css style of a suggestion element by overriding the css style.
+You can customize the CSS for the suggestion elements by overriding the style sheet and also specify an ID of the suggestion element with the id key in the second argument.
 ```css
 /* Example */
 ul#suggestrap {
