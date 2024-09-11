@@ -34,23 +34,21 @@ describe('Suggestrap', () => {
   }
   suggest = new Suggestrap(req, option)
 
-  describe('#getter suggestion', () => {
+  describe('#getter suggestions', () => {
     it('should return an empty array when values or url is URL', () => {
       assert.equal(suggest.suggestions.length, 0)
     })
   })
 
   describe('#show', () => {
-    it('state.isShow should have true after executing show()', () => {
-      suggest.show()
-      assert.isTrue(suggest.state.isShow)
+    it('should return true after executing show()', () => {
+      assert.isTrue(suggest.show())
     })
   })
 
   describe('#hide', () => {
-    it('state.isShow should have true after executing hide()', () => {
-      suggest.hide()
-      assert.isFalse(suggest.state.isShow)
+    it('should return false after executing hide()', () => {
+      assert.isFalse(suggest.hide())
     })
   })
 
