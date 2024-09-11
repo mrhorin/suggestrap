@@ -21,8 +21,8 @@ yarn add suggestrap
 ```
 
 ## Usage
-1. Prepare a JSON server for suggestions yourself. When suggestrap requests a JSON file to your server, the server needs to generate a JSON file with a request parameter, a part of the request URL and then to return the JSON file.
-2. The JSON format is an array object that has hash objects like the following example. (However, you can also specify an array object for suggestions on the browser side instead of requesting the JSON file to the server. For more details, please refer to [Example](#example) and [Option](#option))
+1. Set up a JSON server to handle suggestions. When Suggestrap makes a request to your server for a JSON file, the server should generate the JSON file using the request parameters from the URL and return it.
+2. The JSON format should be an Array that has Objects like the following example. (However, you can also specify an Array using `values` key in the first argument instead of requesting the JSON file to the server. For more details, please refer to [Example](#example) and [Option](#option))
 ```json
 [
   {"id":1, "age":32, "name":"Jack"},
@@ -32,8 +32,8 @@ yarn add suggestrap
   {"id":5, "age":28, "name":"Jane"}
 ]
 ```
-3. When an user types a value into a target form, suggestrap replaces a wildcard, a part of the JSON URL, with the value. For example, if the JSON URL is 'https://example.com/json/users/%QUERY' and the input value is 'ja', suggestrap genetates 'https://example.com/json/users/ja' and then requests a JSON file to the server. After that, the server generates a JSON with the value and then returns it.
-4. Since suggestrap received the JSON, it genarates a suggestion element next to the target form element from the JSON.
+3. After an user has typed a value into the target form, suggestrap replaces the wildcard, a part of the URL, with the value. For example, if the URL is 'https://example.com/json/users/%QUERY' and the input value is 'ja', suggestrap generates 'https://example.com/json/users/ja' and then requests a JSON file to the server. After that, the server generates the JSON file and then returns it.
+4. Since suggestrap received the JSON, it genarates a suggestion element next to the target form element using the JSON.
 
 ## Example
 
