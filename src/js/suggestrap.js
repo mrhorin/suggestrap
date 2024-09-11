@@ -39,7 +39,7 @@ export default class Suggestrap {
     }, this.option['delay'])
   }
 
-  // Get a JSON URL replaced a wildcard with a query
+  // A JSON URL with wildcards replaced by queries
   get jsonUrl() {
     if (this.hasUrl() && 'values' in this.req) {
       return this.req.values.replace(this.option.wildcard, this.state.query)
@@ -51,7 +51,7 @@ export default class Suggestrap {
     }
   }
 
-  // Get suggestions matching query in values
+  // Suggestions matching query with values in the first argument
   get suggestions() {
     let res = []
     if (this.req.values && this.state.query) {
@@ -74,6 +74,7 @@ export default class Suggestrap {
     this.element['suggestrap'].style.top = Math.round(y).toString() + 'px'
     this.element['suggestrap'].style.visibility = 'visible'
     this.state['isShow'] = true
+    return this.state['isShow']
   }
 
   hide() {
@@ -81,9 +82,10 @@ export default class Suggestrap {
       this.element['suggestrap'].style.visibility = 'hidden'
       this.state['isShow'] = false
     }
+    return this.state['isShow']
   }
 
-  moveUpSuggest() {
+  moveUp() {
     if (this.state['isShow']) {
       if (this.state['currentIndex'] > -1) {
         this.state['currentIndex'] -= 1
@@ -92,9 +94,10 @@ export default class Suggestrap {
       }
       this._activeCurrentSuggest()
     }
+    return this.state['currentIndex']
   }
 
-  moveDownSuggest() {
+  moveDown() {
     if (this.state['isShow']) {
       if (this.state['currentIndex'] == this.element['suggestrap'].childNodes.length - 1) {
         this.state['currentIndex'] = -1
@@ -103,6 +106,7 @@ export default class Suggestrap {
       }
       this._activeCurrentSuggest()
     }
+    return this.state['currentIndex']
   }
 
   hasValues() {
@@ -211,10 +215,10 @@ export default class Suggestrap {
         this.keyUpHandler(event)
       } else if (keyCode == 38) {
         // When press Up key
-        this.moveUpSuggest()
+        this.moveUp()
       } else if (keyCode == 40) {
         // When press Down key
-        this.moveDownSuggest()
+        this.moveDown()
       } else if (keyCode == 27) {
         // When press ESC key
         this.hide()
