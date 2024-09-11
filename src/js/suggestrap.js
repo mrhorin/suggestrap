@@ -147,12 +147,7 @@ export default class Suggestrap {
       }
       item.innerHTML += val[this.req['key']]
       item.addEventListener('click', (event) => {
-        if (this.option['onClick']) {
-          this.option['onClick'](event, val)
-        } else {
-          this.element['target'].value = event.target.getAttribute('value')
-          this.hide()
-        }
+        this.option['clickHandler'](event, val)
       })
       this.element['suggestrap'].appendChild(item)
       // Break this loop when appendCount reaches this.option['count']
@@ -224,7 +219,7 @@ export default class Suggestrap {
         // When press ESC key
         this.hide()
       } else if (keyCode == 13) {
-        // When press Enter key
+        // When pressing Enter key
         if (this.state['currentIndex'] != -1) {
           this.hide()
         } else {
@@ -232,14 +227,14 @@ export default class Suggestrap {
         }
       }
     })
-    // Set event when blur on target
+    // Set blur event on the target
     this.element['target'].addEventListener('blur', (event) => {
-      // Do delay for give proprity to event that suggest is clicked
+      // Make it delay to give priority to the onClick event when a suggestion element is clicked
       _.delay(() => {
         this.hide()
       }, 200)
     })
-    // Set event when focus on target
+    // Set focus event on the target
     this.element['target'].addEventListener('focus', (event) => {
       this.keyUpHandler(event)
     })
@@ -247,7 +242,7 @@ export default class Suggestrap {
     this.element['target'].addEventListener('textInput', (event) => {
       this.keyUpHandler(event)
     })
-    // Solve that the displacement of suggestion element's position occurs when resize window
+    // Solve that the displacement of suggestion element's position occurs when resizing window
     window.onresize = () => {
       this.hide()
     }
@@ -292,7 +287,12 @@ export default class Suggestrap {
     if (!('count' in option)) option['count'] = 5
     if (!('id' in option)) option['id'] = 'suggestrap'
     if (!('imageKey' in option)) option['imageKey'] = null
-    if (!('onClick' in option)) option['onClick'] = null
+    if (!('clickHandler' in option)) {
+      option['clickHandler'] = (event, value) => {
+        this.element['target'].value = event.target.getAttribute('value')
+        this.hide()
+      }
+    }
     return option
   }
 

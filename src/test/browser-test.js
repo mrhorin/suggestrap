@@ -27,8 +27,9 @@ describe('Suggestrap', () => {
     key: "name",
   }
   option = {
-    'onClick': (event, value) => {
-      console.log(value)
+    'clickHandler': (event, value) => {
+      document.getElementById('target-language').value = value.name
+      console.log('clickHander fired')
     }
   }
   suggest = new Suggestrap(req, option)

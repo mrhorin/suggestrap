@@ -163,7 +163,7 @@ The second argument is optional.
 |wildcard|string|"%QUERY"|This option is a string for specifying wildcard in the URL. Since an user input a value in the target form, the wildcard is replaced with the input value.|
 |delay|number|400|The suggestions are show after any **milliseconds** have passed.|
 |id|string|"suggestrap"|Specify an ID for the suggestion element. If the ID already exists, suggestrap will add `_2` as a suffix to the end of the ID.|
-|onClick|function(event, value)||Specify an anonymous function with 2 arguments as a click handler for the suggestion elements. `event` is the Event interface for DOM. `value` is the value that an user clicked. By default, the value clicked by an user in the suggestion elements is set into the tartget form element, and then the suggetion elements hide.|
+|clickHandler|function(event, value)||Specify an anonymous function with 2 arguments as a click handler for the suggestion elements. `event` is the Event interface for DOM. `value` is the value that an user clicked. By default, the value clicked by an user in the suggestion elements is set into the tartget form element, and then the suggetion elements hide.|
 
 ## Customization
 
