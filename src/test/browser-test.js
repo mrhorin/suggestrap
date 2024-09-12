@@ -47,8 +47,12 @@ describe('Suggestrap', () => {
   })
 
   describe('#hide', () => {
-    it('should return false after executing hide()', () => {
+    it('should return false', () => {
       assert.isFalse(suggest.hide())
+    })
+    it('should set -1 to state.currentIndex', () => {
+      suggest.hide()
+      assert.equal(suggest.state.currentIndex, -1)
     })
   })
 

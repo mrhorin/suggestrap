@@ -58,6 +58,7 @@ export default class Suggestrap {
     if (this.state['isShow']) {
       this.element['suggestrap'].style.visibility = 'hidden'
       this.state['isShow'] = false
+      this.state['currentIndex'] = -1
     }
     return this.state['isShow']
   }
