@@ -226,11 +226,8 @@ export default class Suggestrap {
         this.hide()
       } else if (keyCode == 13) {
         // When pressing Enter key
-        if (this.state['currentIndex'] != -1) {
-          this.hide()
-        } else {
-          this.keyUpHandler(event)
-        }
+        this.option['pressEnterHandler'](event, this.json[this.state.currentIndex])
+        this.hide()
       }
     })
     // Set blur event on the target
@@ -297,6 +294,15 @@ export default class Suggestrap {
       option['clickHandler'] = (event, value) => {
         this.element['target'].value = event.target.getAttribute('value')
         this.hide()
+      }
+    }
+    if (!('pressEnterHandler' in option)) {
+      option['pressEnterHandler'] = (event, value) => {
+        if (this.state['currentIndex'] != -1) {
+          this.hide()
+        } else {
+          this.keyUpHandler(event)
+        }
       }
     }
     return option
