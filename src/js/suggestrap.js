@@ -14,30 +14,6 @@ export default class Suggestrap {
     this.element = this._initializeElements()
     this._setEventListener()
     this.hide()
-    this.keyUpHandler = _.debounce((event) => {
-      if (this._isReadyToShow()) {
-        // Fetch suggetions and then show them
-        this.state['query'] = event.target.value
-        if (this.hasUrl()) {
-          this._fetchJson((json) => {
-            if (json.length > 0) {
-              this._add(json)
-              this.show()
-            }
-          })
-        } else {
-          if (this.req.values.length > 0) {
-            this._add(this.suggestions)
-            this.show()
-          }
-        }
-      } else {
-        // Hide suggestions
-        this.state['query'] = ''
-        this.hide()
-        this._remove()
-      }
-    }, this.option['delay'])
   }
 
   // A JSON URL with wildcards replaced by queries
@@ -208,40 +184,50 @@ export default class Suggestrap {
   }
 
   _setEventListener() {
-    // Set event when input a text into the target element
-    this.element['target'].addEventListener('keyup', (event) => {
-      let key = event.key
-      let invalidKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "ShiftLeft", "ShiftRight",
-        "ControlLeft", "ControlRight", "Escape", "Enter"
-      ]
-      if (!invalidKeys.includes(key)) {
-        // When valid key
-        this.keyUpHandler(event)
-      } else if (key == "ArrowUp") {
+    let keyupHandler = (event) => {
+      if (event.key == "ArrowUp") {
         this.moveUp()
-      } else if (key == "ArrowDown") {
+      } else if (event.key == "ArrowDown") {
         this.moveDown()
-      } else if (key == "Escape") {
+      } else if (event.key == "Escape") {
         this.hide()
-      } else if (key == "Enter") {
+      } else if (event.key == "Enter") {
         this.option['pressEnterHandler'](event, this.json[this.state.currentIndex])
         this.hide()
       }
-    })
-    // Set blur event on the target
+    }
+    let textInputHandler = _.debounce((event) => {
+      if (this._isReadyToShow()) {
+        // Fetch suggetions and then show them
+        this.state['query'] = event.target.value
+        if (this.hasUrl()) {
+          this._fetchJson((json) => {
+            if (json.length > 0) {
+              this._add(json)
+              this.show()
+            }
+          })
+        } else {
+          if (this.req.values.length > 0) {
+            this._add(this.suggestions)
+            this.show()
+          }
+        }
+      } else {
+        // Hide suggestions
+        this.state['query'] = ''
+        this.hide()
+        this._remove()
+      }
+    }, this.option['delay'])
+    this.element['target'].addEventListener('keyup', keyupHandler)
+    this.element['target'].addEventListener('textInput', textInputHandler)
+    this.element['target'].addEventListener('focus', textInputHandler)
     this.element['target'].addEventListener('blur', (event) => {
       // Make it delay to give priority to the onClick event when a suggestion element is clicked
       _.delay(() => {
         this.hide()
       }, 200)
-    })
-    // Set focus event on the target
-    this.element['target'].addEventListener('focus', (event) => {
-      this.keyUpHandler(event)
-    })
-    // Solve that the target can't fire keyup event when do auto correct in Mobile Safari
-    this.element['target'].addEventListener('textInput', (event) => {
-      this.keyUpHandler(event)
     })
     // Solve that the displacement of suggestion element's position occurs when resizing window
     window.onresize = () => {
@@ -296,11 +282,7 @@ export default class Suggestrap {
     }
     if (!('pressEnterHandler' in option)) {
       option['pressEnterHandler'] = (event, value) => {
-        if (this.state['currentIndex'] != -1) {
-          this.hide()
-        } else {
-          this.keyUpHandler(event)
-        }
+        if (this.state['currentIndex'] != -1) this.hide()
       }
     }
     return option
