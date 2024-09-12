@@ -7,6 +7,7 @@ export default class Suggestrap {
   constructor(req, option = {}) {
     this.req = this._initializeReq(req)
     this.option = this._initializeOption(option)
+    this.json = []
     // A state of suggestions
     this.state = this._initializeState()
     // Html elements for showing suggestions
@@ -15,7 +16,7 @@ export default class Suggestrap {
     this.hide()
     this.keyUpHandler = _.debounce((event) => {
       if (this._isReadyToShow()) {
-        // Show suggestions
+        // Fetch suggetions and then show them
         this.state['query'] = event.target.value
         if (this.hasUrl()) {
           this._fetchJson((json) => {
@@ -51,7 +52,7 @@ export default class Suggestrap {
     }
   }
 
-  // Suggestions matching query with values in the first argument
+  // A list of suggestions matching query with the values in the first argument
   get suggestions() {
     let res = []
     if (this.req.values && this.state.query) {
@@ -140,8 +141,9 @@ export default class Suggestrap {
 
   _add(json) {
     this._remove()
+    this.json = this._parseJson(json)
     let appendedCount = 0
-    for (let val of this._parseJson(json)) {
+    for (let val of this.json) {
       let item = document.createElement('li')
       item.setAttribute('value', val[this.req['key']])
       if (this.option['imageKey']) {
@@ -206,7 +208,7 @@ export default class Suggestrap {
   }
 
   _setEventListener() {
-    // Set event when input a text in target
+    // Set event when input a text into the target element
     this.element['target'].addEventListener('keyup', (event) => {
       let invalidKeyCode = [38, 40, 37, 39, 16, 17, 27, 13]
       let keyCode = event.keyCode
