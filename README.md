@@ -150,10 +150,10 @@ The first argument is required.
 
 |Key|Format|Description|
 |---|------|-----------|
-|target|string|Specify an ID of a target form element, on which suggestrap show suggestions|
+|target|string|Specify an ID of a target form element, on which suggestrap shows suggestions|
 |url|string|Specify an URL, e.g. https://example.com/json/users/%QUERY, for requesting a JSON file. The URL needs to include a wildcard like the example. You can also specify a string of the wildcard with the `wildcard` key in the second argument. When an user input a value into the target form element, suggestrap replaces the wildcard with the input value.|
 |key|string|Specify a key name of the JSON file that you'd like to show as suggestions.|
-|values|Array|You can specify an Array that has Objects to show suggestions instead of requesting a JSON file. **In that case, the url key isn't required.** Besides, you can specify the JSON URL with this key like the `url` key. When you specify the JSON URL with this key, the behavior is completely same as the `url` key. It means that this key takes priority over the `url` key when you specify both of url and the `values` key at the same time.|
+|values|Array|You can specify an Array that has Objects to show suggestions instead of requesting a JSON file. **In that case, the url key isn't required.** Besides, you can specify the JSON URL with this key like the `url` key. When you specify the JSON URL with this key, the behavior is completely same as the `url` key. It means that this key takes priority over the `url` key when you specify both of the `url` key and the `values` key at the same time.|
 
 ### option: Object
 
@@ -162,9 +162,9 @@ The second argument is optional.
 |Key|Format|Default|Description|
 |---|------|-------|-----------|
 |minlength|number|2|Once an input character count reaches minlength, the suggestions are shown.|
-|wildcard|string|"%QUERY"|This option is a string for specifying wildcard in the URL. Since an user input a value in the target form, the wildcard is replaced with the input value.|
-|delay|number|400|The suggestions are show after any **milliseconds** have passed.|
-|id|string|"suggestrap"|Specify an ID for the suggestion element. If the ID already exists, suggestrap will add `_2` as a suffix to the end of the ID.|
+|wildcard|string|"%QUERY"|This option is a string for specifying wildcard in the URL. Once an user input a value in the target form, the wildcard is replaced with the input value.|
+|delay|number|400|When an user input a value into the form element, the suggestions are shown after the `delay` key **milliseconds** have passed.|
+|id|string|"suggestrap"|Specify an ID of the suggestion element. If the ID already exists, suggestrap will add `_2` as a suffix to the end of the ID.|
 |clickHandler|function(event, value)||Specify an anonymous function with 2 arguments as a click handler for the suggestion elements. `event` is the Event interface for DOM. `value` is the value that an user clicked. By default, the value clicked by an user in the suggestion elements is set into the tartget form element, and then the suggetion elements hide.|
 
 ## Properties
