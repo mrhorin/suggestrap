@@ -210,22 +210,20 @@ export default class Suggestrap {
   _setEventListener() {
     // Set event when input a text into the target element
     this.element['target'].addEventListener('keyup', (event) => {
-      let invalidKeyCode = [38, 40, 37, 39, 16, 17, 27, 13]
-      let keyCode = event.keyCode
-      if (!invalidKeyCode.includes(keyCode)) {
+      let key = event.key
+      let invalidKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "ShiftLeft", "ShiftRight",
+        "ControlLeft", "ControlRight", "Escape", "Enter"
+      ]
+      if (!invalidKeys.includes(key)) {
         // When valid key
         this.keyUpHandler(event)
-      } else if (keyCode == 38) {
-        // When press Up key
+      } else if (key == "ArrowUp") {
         this.moveUp()
-      } else if (keyCode == 40) {
-        // When press Down key
+      } else if (key == "ArrowDown") {
         this.moveDown()
-      } else if (keyCode == 27) {
-        // When press ESC key
+      } else if (key == "Escape") {
         this.hide()
-      } else if (keyCode == 13) {
-        // When pressing Enter key
+      } else if (key == "Enter") {
         this.option['pressEnterHandler'](event, this.json[this.state.currentIndex])
         this.hide()
       }
