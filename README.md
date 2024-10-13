@@ -22,7 +22,7 @@ yarn add suggestrap
 
 ## Usage
 1. Set up a JSON server to handle suggestions. When suggestrap makes a request to your server for a JSON file, the server should generate the JSON file using the request parameters from the URL and return it.
-2. The JSON format should be an Array that has Objects like the following example. (However, you can also specify an Array using the `values` key in the first argument instead of requesting the JSON file to the server. For more details, please refer to [Example](#example) and [Option](#option))
+2. The JSON format should be an Array containing Objects like the following example. (However, you can also pass an Array using the `values` key in the first argument instead of requesting the JSON file to the server. For more details, please refer to [Example](#example) and [Option](#option))
 ```json
 [
   {"id":1, "age":32, "name":"Jack"},
@@ -32,8 +32,8 @@ yarn add suggestrap
   {"id":5, "age":28, "name":"Jane"}
 ]
 ```
-3. After an user has typed a value into the target form, suggestrap replaces the wildcard, a part of the URL, with the value. For example, if the URL is 'https://example.com/json/users/%QUERY' and the input value is 'ja', suggestrap generates 'https://example.com/json/users/ja' and then requests a JSON file to the server. After that, the server generates the JSON file and then returns it.
-4. Once suggestrap received the JSON file from your server, it genarates a suggestion element next to the target form element using the JSON.
+3. After a user types a value into the target form, suggestrap replaces the wildcard in the URL with the value. For example, if the URL is 'https://example.com/json/users/%QUERY' and the input value is 'ja', suggestrap generates 'https://example.com/json/users/ja' and sends a requests to the server for the JSON file. The server then generates and returns the JSON file.
+4. Once suggestrap receives the JSON file from your server, it generates a suggestion element next to the target form element using the JSON.
 
 ## Example
 
@@ -151,9 +151,9 @@ The first argument is required.
 |Key|Format|Description|
 |---|------|-----------|
 |target|string|Specify an ID of a target form element, on which suggestrap shows suggestions|
-|url|string|Specify an URL, e.g. https://example.com/json/users/%QUERY, for requesting a JSON file. The URL needs to include a wildcard like the example. You can also specify a string of the wildcard with the `wildcard` key in the second argument. When an user input a value into the target form element, suggestrap replaces the wildcard with the input value.|
+|url|string|Specify an URL, e.g. https://example.com/json/users/%QUERY, for requesting a JSON file. The URL needs to include a wildcard like the example. You can also specify a string of the wildcard with the `wildcard` key in the second argument. When a user enters a value into the target form element, suggestrap replaces the wildcard with the input value.|
 |key|string|Specify a key name of the JSON file that you'd like to show as suggestions.|
-|values|Array|You can specify an Array that has Objects to show suggestions instead of requesting a JSON file. **In that case, the url key isn't required.** Besides, you can specify the JSON URL with this key like the `url` key. When you specify the JSON URL with this key, the behavior is completely same as the `url` key. It means that this key takes priority over the `url` key when you specify both of the `url` key and the `values` key at the same time.|
+|values|Array|You can specify an Array containing Objects to show suggestions instead of requesting a JSON file. **In that case, the url key isn't required.** Besides, you can specify the JSON URL with this key like the `url` key. When you specify the JSON URL with this key, the behavior is completely same as the `url` key. It means that this key takes priority over the `url` key when you specify both of the `url` key and the `values` key at the same time.|
 
 ### option: Object
 
@@ -162,21 +162,21 @@ The second argument is optional.
 |Key|Format|Default|Description|
 |---|------|-------|-----------|
 |minlength|number|2|Once an input character count reaches minlength, the suggestions are shown.|
-|wildcard|string|"%QUERY"|This option is a string for specifying wildcard in the URL. Once an user input a value in the target form, the wildcard is replaced with the input value.|
-|delay|number|400|When an user input a value into the form element, the suggestions are shown after the `delay` key **milliseconds** have passed.|
+|wildcard|string|"%QUERY"|This option is a string used to specify the wildcard in the URL. Once a user enters a value into the target form, the wildcard is replaced with the input value.|
+|delay|number|400|Once a user enters a value into the form element, the suggestions are displayed after the `delay` key **milliseconds** have passed.|
 |id|string|"suggestrap"|Specify an ID of the suggestion element. If the ID already exists, suggestrap will add `_2` as a suffix to the end of the ID.|
-|clickHandler|function(event, value)||Specify an anonymous function with 2 arguments as a click handler for the suggestion elements. `event` is the Event interface for DOM. `value` is the value that an user clicked. By default, the value clicked by an user in the suggestion elements is set into the tartget form element, and then the suggetion elements hide.|
-|pressEnterHandler|function(event, value)||Specify an anonymous function with 2 arguments. It's fired once an user pressed Enter key on the target form element. `event` is the Event interface for DOM. `value` is the value that an user selected. By default, the suggetions elements hide.|
+|clickHandler|function(event, value)||Specify an anonymous function with 2 arguments as a click handler for the suggestion elements. `event` is the Event interface for DOM. `value` is the value a user clicked. By default, the value clicked by the user in the suggestion elements is inserted into the tartget form element, and then the suggetion elements are hidden.|
+|pressEnterHandler|function(event, value)||Specify an anonymous function with 2 arguments. It's triggered once a user pressed the Enter key on the target form element. `event` is the Event interface for DOM. `value` is the value the user selected. By default, the suggetions elements are hidden.|
 
 ## Properties
 |Name|Format|Description|
 |----|------|-----------|
 |req|Object|The Object that you passed to the first argument.|
 |option|Object|The Object that you passed to the second argument.|
-|element|Object|The Object that has 3 Element objects. the `target` key has the target form element that you specified. the `suggestrap` key has an `<ul>` element that is generated by suggestrap to show suggestions. the `style` key has a `<style>` element that is generated by suggestrap and applied to suggestion elements.|
+|element|Object|The Object containing 3 Element objects. the `target` key holds the target form element you specified. the `suggestrap` key holds an `<ul>` element generated by suggestrap to show suggestions. the `style` key holds a `<style>` element generated by suggestrap and applied to the suggestion elements.|
 |jsonUrl|string|A JSON URL with wildcards replaced by queries.|
-|json|Array|A list of JSON that suggestrap fetched from a JSON server.|
-|suggestions|Array|A list of strings matching with a value that an user typed into the target form element when you passed values to the `values` key in the first argument.|
+|json|Array|A list of JSON suggestrap fetched from a JSON server.|
+|suggestions|Array|A list of strings matching with a value a user typed into the target form element ,when you pass values to the `values` key in the first argument.|
 
 ## Methods
 
