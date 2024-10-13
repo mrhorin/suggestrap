@@ -8,7 +8,7 @@
 # suggestrap
 ![show](https://user-images.githubusercontent.com/6502717/49056240-4c7db100-f23e-11e8-9a2e-863f59ad84a7.gif)
 
-suggestrap can show suggestions by requesting a JSON file to a JSON API server that you prepared.
+suggestrap can show suggestions by requesting a JSON file to a JSON API server you prepared in advance.
 
 ## Installation
 npm:
@@ -216,7 +216,7 @@ ul#suggestrap li:hover {
 ```bash
 dokcer-compose exec node yarn run test
 ```
-And then, access http://localhost:8080 with your browesr.
+And then, access http://localhost:8080 with your web browesr.
 
 ## License
 [GPL-3.0](https://opensource.org/licenses/GPL-3.0)
